@@ -1,0 +1,165 @@
+<html>
+    <head>
+        <link rel="stylesheet/less" type="text/css" href="styles.less" />
+        <script src="//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script> 
+        <script src="https://raw.github.com/leonidas/transparency/master/dist/transparency.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="src/index.js" type="module"></script>
+
+
+    </head>
+    <body>
+        <!-- <div id="root">here sjould be a number</div>
+        <div class="test">test</div>
+
+        <div id="container">
+          <div id="hello"></div>
+          <div class="goodbye"></div>
+          <input type="text" name="greeting" />
+          <button class="hi-button" data-bind="hi-label"></button>
+        </div> -->
+        <div id="root" class="root" >
+          <div class="container">
+            <div class="header">
+              <div class="logo-container" >
+                <div class="logo">
+                  <i class="fa fa-paw"></i>
+                  Dogs chat
+                </div>
+              </div>
+
+              <div class="options-container">
+                <div style="font-size: 18; padding: 10px 30px">
+                  <a href="">
+                    <img class="userpic" src="static/userpic_example.png"/>
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            <div class="main">
+              <div class="chat-wrapper">
+                <div class="chat-lists-wrapper">
+                  <div class="chats">
+                    <div class="chats-header">
+                      <div class="chats-title">
+                        private
+                      </div>
+                      <div class="chats-add">
+                        <i class="fa fa-plus"></i>
+                      </div>
+                    </div>
+
+                    <div class="user-container active">
+                      <div class="user-name-container">
+                        <div class="user-avatar online">
+                          <i class="fa fa-user"></i>
+                        </div>
+                        <div class="user-name">Ivan (mastiff)</div>
+                      </div>
+                      <div class="count-messages">1</div>
+                    </div>
+
+                    <div class="user-container">
+                      <div class="user-name-container">
+                        <div class="user-avatar">
+                          <i class="fa fa-user"></i>
+                        </div>
+                        <div class="user-name">Vladimir Volkov (kolley)</div>
+                      </div>
+                      <div class="count-messages">1</div>
+                    </div>
+
+
+                    <div class="user-container">
+                      <div class="user-name-container">
+                        <div class="user-avatar">
+                          <i class="fa fa-user"></i>
+                        </div>
+                        <div class="user-name">Michael Dal (pudel)</div>
+                      </div>
+                    </div>
+
+
+                  </div>
+                  <div class="chats">
+                    <div class="chats-header">
+                      <div class="chats-title">
+                        groups
+                      </div>
+                      <div class="chats-add">
+                        <i class="fa fa-plus"></i>
+                      </div>
+                    </div>
+
+                    <div class="user-container">
+                      <div class="user-avatar">
+                        <i class="fa fa-users"></i>
+                      </div>
+                      <div class="user-name">Park walkers</div>
+                    </div>
+
+                    <div class="user-container">
+                      <div class="user-avatar">
+                        <i class="fa fa-users"></i>
+                      </div>
+                      <div class="user-name">Pudels</div>
+                    </div>
+
+                  </div>
+                </div>
+                <div class="conversation-wrapper">
+                  <div class="conversation-container">
+                    <div class="conversation-part">
+                      <div class="user-bar">
+                        <i class="fa fa-user"></i>
+                        <div class="user-bar-username">Ivan</div>
+                        <div class="chat-delete">
+                          <i class="fa fa-times"></i>
+                        </div>
+                      </div>
+                      <div class="scroll">
+
+                        <div class="message-container-income">
+                          <i class="fa fa-user"></i>
+                          <div class="message-income">
+                            <div class="message-text">Test message trololo </div>
+                            <div class="message-time">11:31</div>
+                          </div>
+                        </div>
+
+                        <div class="message-container-outcome">
+                          <div class="message-outcome">
+                            <div class="message-text">Totaly agree</div>
+                            <div class="message-time">11:38</div>
+                          </div>
+                        </div>
+
+                        <div class="message-container-income">
+                          <i class="fa fa-user"></i>
+                          <div class="message-income">
+                            <div class="message-text">Test message trololo Test message trololo Test message trololo Test message trololo Test message trololo </div>
+                            <div class="message-time">11:31</div>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    <div class="send-part">
+                      <div class="input-line">
+                        <input type="text" placeholder="type here" name="message" class="send-input"/>
+                        <div class="send-icon">
+                          <i class="fa fa-send"></i>
+                        </div>
+                        
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+    </body>
+</html> 
