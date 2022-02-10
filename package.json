@@ -2,26 +2,17 @@
   "name": "DogChat",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
-    "start":  "node ./server.js",
-    "dev": "parcel index.html",
+    "start":  "node server.js",
+    "dev": "parcel index.html -p 3000",
     "build": "parcel build index.html"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/transformer-less": "^2.2.1",
     "express": "^4.17.2",
     "less": "^4.1.2",
-    "parcel": "^2.3.0"
-  },
-  "dependencies": {
     "transparency": "^1.0.0"
-  },
-  "engines": {
-    "npm": ">=8.1.2",
-    "node": ">=16.13.2"
   }
 }
