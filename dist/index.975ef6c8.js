@@ -520,8 +520,8 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"8lqZg":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _transparency = require("transparency");
-var _transparencyDefault = parcelHelpers.interopDefault(_transparency);
+var _indexJs = require("transparency/index.js");
+var _indexJsDefault = parcelHelpers.interopDefault(_indexJs);
 var _dataJs = require("../data.js");
 const breeds = [
     "poodle",
@@ -537,7 +537,7 @@ const breeds = [
 const userNameDecorator = function() {
     return "<b>" + this.title + "</b>  (" + breeds[Math.floor(Math.random() * breeds.length)] + ")";
 };
-directives = {
+const directives = {
     title: {
         html: userNameDecorator
     }
@@ -574,15 +574,15 @@ const ownMessage = function(message, time) {
     </div>
   </div>`;
 };
-directivesMessage = {
+const directivesMessage = {
     insert: {
         html: getHTML
     }
 };
-_transparencyDefault.default.render(document.getElementById("user-wrapper"), _dataJs.privatChats, directives);
-_transparencyDefault.default.render(document.getElementById("message"), _dataJs.messages, directivesMessage);
+_indexJsDefault.default.render(document.getElementById("user-wrapper"), _dataJs.privatChats, directives);
+_indexJsDefault.default.render(document.getElementById("message"), _dataJs.messages, directivesMessage);
 
-},{"transparency":"iTZ6d","../data.js":"5pclG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTZ6d":[function(require,module,exports) {
+},{"transparency/index.js":"iTZ6d","../data.js":"5pclG","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iTZ6d":[function(require,module,exports) {
 module.exports = require('./lib/transparency');
 
 },{"./lib/transparency":"heKgN"}],"heKgN":[function(require,module,exports) {

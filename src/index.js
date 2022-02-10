@@ -1,5 +1,5 @@
-import Transparency from "transparency";
-import { privatChats, groupChats, messages } from "../data.js";
+import Transparency from "transparency/index.js";
+import { privatChats, messages } from "../data.js";
 
 const breeds = [
   "poodle",
@@ -16,7 +16,7 @@ const userNameDecorator = function () {
   return "<b>" + this.title + "</b>  (" + breeds[Math.floor(Math.random() * breeds.length)] + ")";
 };
 
-directives = {
+const directives = {
   title: { html: userNameDecorator },
 };
 
@@ -58,7 +58,7 @@ const ownMessage = function (message, time) {
   </div>`;
 };
 
-directivesMessage = {
+const directivesMessage = {
   insert: { html: getHTML },
 };
 
