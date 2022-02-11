@@ -5,7 +5,7 @@
   "scripts": {
     "start":  "parcel build index.html & node server.js",
     "dev": "parcel index.html -p 3000 --no-cache",
-    "build": "parcel build index.html"
+    "build": "pwd & ls & parcel build index.html"
   },
   "keywords": [],
   "author": "",
