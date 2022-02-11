@@ -9,4 +9,4 @@ Netlify:
 https://relaxed-fermi-340da5.netlify.app/
 
 Pull request #1:
-https://github.com/glukomania/middle.messenger.praktikum.yandex/pull/1
+https://github.com/glukomania/middle.messenger.praktikum.yandex/pull/2
