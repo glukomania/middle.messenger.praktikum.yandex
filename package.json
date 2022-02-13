@@ -3,20 +3,34 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "start":  "parcel build index.html & node server.js",
-    "dev": "parcel index.html -p 3000 --no-cache",
-    "build": "pwd & ls & parcel build index.html"
+    "start": "npm run build & node server.js",
+    "dev": "parcel src/pages/signup.pug -p 3000 --no-cache",
+    "old": "parcel index.html -p 4000 --no-cache",
+
+    "build": "parcel src/pages/signup.pug"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@parcel/config-default": "^2.2.1",
+    "@parcel/core": "^2.2.1",
+    "@parcel/diagnostic": "^2.2.1",
+    "@parcel/events": "^2.2.1",
+    "@parcel/fs": "^2.2.1",
+    "@parcel/logger": "^2.2.1",
+    "@parcel/package-manager": "^2.2.1",
+    "@parcel/reporter-cli": "^2.2.1",
+    "@parcel/reporter-dev-server": "^2.2.1",
     "@parcel/transformer-less": "^2.2.1",
+    "@parcel/transformer-pug": "^2.3.1",
+    "@parcel/utils": "^2.2.1",
     "express": "^4.17.2",
     "less": "^4.1.2",
-    "parcel": "^2.3.0"
+    "parcel": "^2.2.1"
   },
   "dependencies": {
+    "pug": "^3.0.2",
     "transparency": "^1.0.0"
   }
 }

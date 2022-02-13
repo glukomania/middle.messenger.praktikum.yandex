@@ -8,23 +8,23 @@
 
 .error-logo {
   color: @brownText;
-  font-size: 80;
+  font-size: 80px;
 }
 
 .error-number {
   color: @greyText;
-  font-size: 18;
+  font-size: 18px;
 }
 
 .error-title {
   margin-top: 40px;
   color: @brownText;
-  font-size: 25;
+  font-size: 25px;
 }
 
 .error-advise {
   color: @salmon;
-  font-size: 14;
+  font-size: 14px;
   margin-top: 20px;
 }
 
@@ -66,19 +66,25 @@
   flex-direction: row;
   flex-wrap: nowrap;
 }
-.chats-search,
 .chats-add {
   font-size: 14px;
   color: @greyText;
+  padding-top: 25px;
+  padding-right: 5px;
+  text-align: right;
+}
+.chats-search-container {
+  padding: 10px;
 }
 .chats-search {
   width: 90%;
-  padding: 10px 0px 10px 20px;
+  font-size: 14px;
+  color: @greyText;
 }
 .chats-add {
   width: 10%;
   font-size: 18px;
-  padding: 25px 20px 0 0;
+  margin: 10px;
 }
 .avatar {
   border: 1px dashed @greyText;
@@ -90,7 +96,7 @@
 .user-container {
   display: flex;
   flex-direction: row;
-  font-size: 14;
+  font-size: 14px;
   padding: 10px 20px;
 }
 
@@ -152,7 +158,7 @@
   border-bottom: 1px solid @bordergrey;
   display: flex;
   flex-direction: row;
-  font-size: 18;
+  font-size: 18px;
   color: @brownText;
 }
 
@@ -227,7 +233,6 @@
 .send-input {
   border: 1px solid @lightgrey;
   border-radius: 10px;
-  min-height: 50px;
   padding: 15px;
   width: 100%;
 }
