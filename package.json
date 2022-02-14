@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start": "npm run build & node server.js",
-    "dev": "parcel src/pages/signup.pug -p 3000 --no-cache",
+    "dev": "parcel src/pages/chat.pug -p 3000 --no-cache",
     "old": "parcel index.html -p 4000 --no-cache",
 
     "build": "parcel src/pages/signup.pug"

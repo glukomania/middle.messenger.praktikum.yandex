@@ -4,7 +4,8 @@ block header
   div(class="header")
     div(class="logo-container")
       div(class='logo')
-        i(class='fa fa-paw')
+        i(class='fa fa-paw') 
+        div(class='chatName') Dogs chat
     div(class='options-container')
       div(class='user-container')
         a(href='')
@@ -19,13 +20,8 @@ block main
             input(class='common-input chats-search', type="text", name="search", placeholder="Search in chats")
           div(class='chats-add')
             i(class='fa fa-plus')
-        div#user-wrapper
-          div(class='user-container')
-            div(class='user-name-container')
-              div(class='user-avatar online')
-                img(class='avatar', src='../../static/userpic_example.png')
-              div(class='title') Ivan bulldog
-            div(class='unread_count') 3
+        include ../mixins/mixinChat 
+        +chatName('Ivan', 'Viktor')
     div(class='conversation-wrapper')
       div(class='conversation-container')
         div(class='conversation-part')
@@ -52,3 +48,5 @@ block main
             input(type='text', placeholder='type here', name='message', class='send-input')
             div(class='send-icon')
               i(class='fa fa-send')
+
+block profile
