@@ -4,10 +4,9 @@
   "description": "",
   "scripts": {
     "start": "npm run build & node server.js",
-    "dev": "parcel src/pages/chat.pug -p 3000 --no-cache",
-    "old": "parcel index.html -p 4000 --no-cache",
-
-    "build": "parcel src/pages/signup.pug"
+    "dev": "parcel src/pages/login.pug -p 3000 --no-cache",
+    "build": "parcel src/pages/login.pug -p 3000 --no-cache",
+    "old": "parcel index.html -p 4000 --no-cache"
   },
   "keywords": [],
   "author": "",
