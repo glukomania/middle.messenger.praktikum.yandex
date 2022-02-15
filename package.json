@@ -5,7 +5,7 @@
   "scripts": {
     "start": "parcel src/pages/index.pug & node server.js",
     "dev": "parcel src/pages/index.pug -p 3000 --no-cache",
-    "build": "pwd & ls & parcel src/pages/index.pug"
+    "build": "pwd & ls & parcel build src/pages/index.pug"
   },
   "keywords": [],
   "author": "",
