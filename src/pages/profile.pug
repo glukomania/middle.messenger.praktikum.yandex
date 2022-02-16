@@ -1,0 +1,36 @@
+extends chat.pug
+
+block profile 
+  div(class='modal')
+    div(class='modal-container')
+      div(class='model-close__wrapper')
+        i(class='fa fa-times')
+      div(class='user-profile-container')
+        div(class='profile-avatar-wrapper')
+          img(src='../../static/userpic_example.png', class='profile-avatar')
+        div(class='profile-display-name') Sashok
+        div(class='profile-info-container')
+          div(class='profile-value-container')
+            div(class='profile-label') First name
+            div(class='profile-value') Alexandre
+          div(class='profile-value-container')
+            div(class='profile-label') Last name
+            div(class='profile-value') Vovk
+          div(class='profile-value-container')
+            div(class='profile-label') Email
+            div(class='profile-value') sashok@mail.mail
+          div(class='profile-value-container')
+            div(class='profile-label') Phone
+            div(class='profile-value') 777123456
+          div(class='profile-value-container')
+            div(class='profile-label') Login
+            div(class='profile-value') sashok
+          div(class='profile-value-container')
+            div(class='profile-label') Display name
+            div(class='profile-value') sashok
+        div(class='profile-options')
+          block profileOptions
+            a(href='./editProfile.pug', class='headerLink')
+              div(class='profile-edit') Edit profile
+            a(href='./changePassord.pug', class='headerLink')
+              div(class='profile-changePassword') Change password

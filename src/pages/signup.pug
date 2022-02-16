@@ -1,0 +1,23 @@
+extends ../layout/base.pug
+
+block main
+  div(class='signup-container')
+    div(class='signup-form-container')
+      form(class='signup-form')
+        div(class='signup-title-container')
+          div(class='signup-title') Welcome to dogs chat!
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='text', name='first_name', placeholder='first name')
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='text', name='second_name', placeholder='second name')
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='text', name='login', placeholder='login')
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='password', name='password', placeholder='password', autocomplete='false')
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='text', name='phone', placeholder='phone')
+        div(class='signup-input-container')
+          input(class='common-input signup-input', type='text', name='email', placeholder='email')
+    div(class='login-button-container')
+      a(href='./chat.pug', class='headerLink')
+        div(class='button') Sign up

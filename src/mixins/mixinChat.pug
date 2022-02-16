@@ -1,0 +1,9 @@
+mixin chatList(items)
+  each item in items
+    div#user-wrapper
+      div(class='user-container')
+        div(class='user-name-container')
+          div(class='user-avatar online')
+            img(class='avatar', src='../../static/userpic_example.png')
+          div(class='title')= item.name
+        div(class='unread_count')= item.count

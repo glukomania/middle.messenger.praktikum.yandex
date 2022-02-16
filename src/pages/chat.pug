@@ -1,0 +1,53 @@
+extends ../layout/base.pug
+
+include ../mixins/mixinChat.pug
+
+block header 
+  div(class='header')
+    div(class="logo-container")
+      div(class='logo')
+        i(class='fa fa-paw') 
+        div(class='chatName') Dogs chat
+    div(class='options-container')
+      div(class='user-container')
+        a(href='./profile.pug')
+          img(class='userpic', src='../../static/userpic_example.png')
+
+block main
+  div(class='chat-wrapper')
+    section(class='chat-lists-wrapper')
+      div(class='chats')
+        div(class='chats-header')
+          div(class='chats-search-container')
+            input(class='common-input chats-search', type='text', name='search', placeholder='Search in chats')
+          div(class='chats-add')
+            i(class='fa fa-plus')
+        +chatList([{name: 'Ivan', count: 1}, {name: 'Viktor', count: 3}])
+    section(class='conversation-wrapper')
+      div(class='conversation-container')
+        div(class='conversation-part')
+          div(class='user-bar')
+            i(class='fa fa-user')
+            div(class='user-bar-username') Ivan
+            div(class='chat-delete')
+              i(class='fa fa-times')
+          div(class='scroll')
+            div#message
+              div(class='insert')
+                div(class='message-container-outcome')
+                  i(class='fa fa-user')
+                  div(class='message-outcome')
+                    div(class='message-text') outcome message 
+                    div(class='message-time') 11:33
+                div(class='message-container-income')
+                  i(class='fa fa-user')
+                  div(class='message-income')
+                    div(class='message-text') income message 
+                    div(class='message-time') 11:33    
+        div(class='send-part')
+          div(class='input-line')
+            input(type='text', placeholder='type here', name='message', class='send-input')
+            div(class='send-icon')
+              i(class='fa fa-send')
+
+block profile

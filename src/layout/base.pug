@@ -1,0 +1,16 @@
+doctype html
+html
+    head
+      link(rel='stylesheet/less', type='text/css' href='../../static/less/styles.less')
+      link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css')
+      script(src='//cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js')
+
+    block body
+      body
+        div#root(class='root')
+          div(class='container')
+            block header
+              include components/header.pug
+            div(class='main')
+              block main
+              block profile
