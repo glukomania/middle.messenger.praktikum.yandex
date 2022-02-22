@@ -1,0 +1,15 @@
+extends ../layout/base.pug
+
+block main
+    div(class='login_container')
+        div(class='login-header') Dogs chat 
+            i(class='fa fa-paw')
+        div(class='login-form-container')
+            form
+                div(class='input-container')
+                    input(class='common-input', type='text',  placeholder='login')
+                div(class='input-container')
+                    input(class='common-input', type='password',  placeholder='password', autocomplete='false')
+        div(class='login-button-container')
+            a(href='./chat.pug', class='headerLink')
+                div(class='button') Sign up
