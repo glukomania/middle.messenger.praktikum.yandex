@@ -21,10 +21,9 @@ class Block {
    *
    * @returns {void}
    */
-
+  
   constructor(tagName: string = 'div', props: any = {}) {
     const eventBus = new EventBus();
-
     this._meta = {
       tagName,
       props,

@@ -1,8 +1,7 @@
 import * as pug from "pug";
 import Block from "../utils/block";
 import renderDOM from "../utils/dom";
-import loginTmpl from "../layout/templates/pages/loginTmpl.tmpl.ts";
-import Header from "../components/header.ts";
+import login from "../templates/login.tmpl.ts";
 
 export default class Login extends Block {
   constructor(props) {
@@ -10,7 +9,7 @@ export default class Login extends Block {
   }
 
   render() {
-    return pug.compile(loginTmpl, {})(this.props);
+    return pug.compile(login, {})(this.props);
   }
 }
 
@@ -19,10 +18,4 @@ const loginPage = new Login({
   classNames: ["container"],
 });
 
-const header = new Header({
-  header: "header",
-  classNames: ["logo-container"],
-});
-
 renderDOM(".root", loginPage, "container");
-renderDOM(".header", header, "logo-container");

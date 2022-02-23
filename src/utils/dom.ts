@@ -7,6 +7,7 @@ export default function renderDOM(query: string, block: Block, className: string
     if (className) {
       block.getContent()!.classList.add(className)
     }
+
     root.appendChild(block.getContent()!);
   }
   

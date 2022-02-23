@@ -4,7 +4,7 @@ import header from './header.tmpl'
 
 export default class Header extends Block {
   constructor(props) {
-    super("div", { ...props, classNames: ["header"] });
+    super("div", { ...props, classNames: ["logo_container"] });
   }
 
   render() {
