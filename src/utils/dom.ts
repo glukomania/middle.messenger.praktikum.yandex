@@ -1,6 +1,6 @@
 import Block from './block';
 
-export default function renderDOM(query: string, block: Block, className: string) {
+export default function renderDOM(query: string, block: Block, className?: string) {
   const root = document.querySelector(query);
 
   if (root) {

@@ -6,6 +6,3 @@ div(class='user-container')
     div(class='title') #{chatName}
   div(class='unread_count') #{newMessages}
 `
-
-// ../../static/userpic_example.png
-// "/#{url}"

@@ -25,5 +25,4 @@ div(class='main')
             div(class='send-icon')
               i(class='fa fa-send')
 
-block profile
 `
