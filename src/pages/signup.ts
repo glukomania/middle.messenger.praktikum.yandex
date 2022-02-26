@@ -1,21 +1,21 @@
 import * as pug from "pug";
 import Block from "../utils/block";
 import renderDOM from "../utils/dom";
-import login from "../templates/login.tmpl.ts";
+import signup from "../components/signup.tmpl";
 
-export default class Login extends Block {
+export default class Signup extends Block {
   constructor(props) {
     super("div", { ...props, classNames: ["login_container"] });
   }
 
   render() {
-    return pug.compile(login, {})(this.props);
+    return pug.compile(signup, {})(this.props);
   }
 }
 
-const loginPage = new Login({
-  header: "Log in",
+const signupPage = new Signup({
+  buttonName: "Sign up",
   classNames: ["container"],
 });
 
-renderDOM(".root", loginPage, "container");
+renderDOM(".root", signupPage, "container");
