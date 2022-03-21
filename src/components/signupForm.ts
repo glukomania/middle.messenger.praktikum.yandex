@@ -1,8 +1,8 @@
 import * as pug from "pug";
 import Block from "../utils/block";
-import formTmpl from './form.tmpl'
+import formTmpl from './signupForm.tmpl'
 
-export default class Form extends Block {
+export default class SignupForm extends Block {
   constructor(props) {
     super("form", { ...props});
   }

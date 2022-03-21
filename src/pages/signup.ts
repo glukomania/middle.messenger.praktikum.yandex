@@ -5,7 +5,7 @@ import signup from "../components/signup.tmpl";
 import Input from '../components/input';
 import {validate} from "../utils/validation";
 import Button from "../components/button";
-import Form from '../components/form'
+import SignupForm from '../components/signupForm'
 
 export default class Signup extends Block {
   constructor(props) {
@@ -22,7 +22,7 @@ const signupPage = new Signup({
   classNames: ["container"],
 });
 
-const form = new Form({
+const form = new SignupForm({
   type: 'submit',
   classNames: ['signup-form'],
   events: {
