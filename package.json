@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "start": "npm run build & node server.js",
-    "dev": "parcel src/pages/index.html -p 3000 --no-cache",
-    "build": "parcel build src/pages/index.html src/pages/chat.html src/pages/signup.html src/pages/err404.html src/pages/err500.html"
+    "dev": "parcel src/pages/signup.html -p 3000 --no-cache",
+    "build": "parcel build src/pages/index.html src/pages/chat.html src/pages/profile.html src/pages/editprofile.html src/pages/signup.html src/pages/err404.html src/pages/err500.html"
   },
   "keywords": [],
   "author": "",

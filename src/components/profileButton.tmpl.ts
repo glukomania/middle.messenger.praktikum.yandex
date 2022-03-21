@@ -1,3 +1,4 @@
 export default `
-img(class='userpic', src='../../static/userpic_example.png')
+a(href='./profile.html')
+  img(class='userpic', src='')
 `

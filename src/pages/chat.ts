@@ -9,10 +9,7 @@ import MessagesList from '../components/MessagesList';
 import ProfileButton from '../components/profileButton';
 import DeleteChat from '../components/deleteChat';
 import ProfileModal from '../components/profileModal';
-import CloseProfile from '../components/closeProfile';
-import EditProfile from '../components/editProfile';
 import Profile from '../components/profile'
-
 
 export default class Chat extends Block {
   constructor(props) {
@@ -80,21 +77,9 @@ const messagesList = new MessagesList({
   messages,
 })
 
-
-
-document.addEventListener('DOMContentLoaded', () => {
-  const profileButton = new ProfileButton({
-    label: 'click me',
-    events: {
-      click: () =>  {
-        console.log('click')
-        const modalElement = document.querySelector('.modal-wrapper')
-        modalElement?.classList.remove('hidden')
-      }
-    }
-  })
-
-  renderDOM('.options-container', profileButton, 'user-container')
+const profileButton = new ProfileButton({
+  label: 'click me',
+  // src: '../../static/userpic_example.png'
 })
 
 const profileModal = new ProfileModal({})
@@ -108,49 +93,10 @@ const profile = new Profile({
   phone: '777123456',
 })
 
-document.addEventListener('DOMContentLoaded', () => {
-  const closeProfile = new CloseProfile({
-    events: {
-      click: () => {
-        console.log('close modal')
-        const modalElement = document.querySelector('.modal-wrapper')
-        modalElement?.classList.add('hidden')
-      }
-    }
-  })
-
-  renderDOM('.model-close__wrapper', closeProfile);
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-  const editProfileLink = new EditProfile({
-    events: {
-      click: () => {
-        console.log('edit profile')
-
-        //open modal afrer page refresh ???
-        const modalElement = document.querySelector('.modal-wrapper')
-        modalElement?.classList.remove('hidden')
-
-        //hide profile part
-        const profileElement = document.querySelector('.profile-wrapper')
-        modalElement?.classList.add('hidden')
-
-        //show edit profile part
-        const editProfileElement = document.querySelector('.edit-profile-wrapper')
-        editProfileElement?.classList.remove('hidden')
-
-      }
-    }
-  })
-
-  renderDOM('.edit-profile-wrapper', editProfileLink);
-});
 
 renderDOM('.root', chatPage, 'container');
 renderDOM('.header', header, 'header');
+renderDOM('.options-container', profileButton, 'user-container')
 renderDOM('.chats', chatItem, 'user-wrapper');
 renderDOM('.user-bar', chatBar, 'user-bar');
 renderDOM('.message', messagesList, 'insert');
-renderDOM('.root', profileModal);
-renderDOM('.modal-container', profile, 'user-profile-container');

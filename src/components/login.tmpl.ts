@@ -15,12 +15,13 @@ div(class='main')
       div(class='login-header') Dogs chat 
           i(class='fa fa-paw')
       div(class='login-form-container')
-          form
-              div(class='input-container')
-                  input(class='common-input', type='text',  placeholder='login')
-              div(class='input-container')
-                  input(class='common-input', type='password',  placeholder='password', autocomplete='false')
+          form(class='login-form')
       div(class='login-button-container')
-          a(href='./chat.html', class='headerLink')
-              div(class='button') #{buttonName}
+        div(class='login-button-container')
+        a(href='./chat.html', class='headerLink')
+          div(class='button') #{buttonName}
 `
+
+
+//               div(class='input-container')
+// input(class='common-input', type='password',  placeholder='password', autocomplete='false')

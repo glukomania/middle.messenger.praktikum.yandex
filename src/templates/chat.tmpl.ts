@@ -24,5 +24,4 @@ div(class='main')
             input(type='text', placeholder='type here', name='message', class='send-input')
             div(class='send-icon')
               i(class='fa fa-send')
-
 `
