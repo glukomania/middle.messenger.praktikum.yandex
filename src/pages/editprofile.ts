@@ -43,7 +43,6 @@ const editProfilePage = new EditProfile ({
         }
       } 
       
-      console.log('isOk', isOk)
       if (isOk === '') {
         console.log('data can be sent')
       } else {
