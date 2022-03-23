@@ -8,7 +8,6 @@ export default class ChatBar extends Block {
   }
 
   render() {
-    console.log(pug.compile(chatBarTmpl, {})(this.props))
     return pug.compile(chatBarTmpl, {})(this.props);
   }
 }

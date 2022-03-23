@@ -26,7 +26,6 @@ export const validate = (type: string, value: string | null | undefined) => {
         }
 
         if (patterns.login.test(value)) {
-          console.log('it is ok')
           return ''
         } else {
           return 'Your login must contain only letters and numbers'

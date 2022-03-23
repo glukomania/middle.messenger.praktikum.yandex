@@ -75,13 +75,10 @@ const changePasswodLink = new ChangePasswodLink({
       const hideElement = document.querySelector('.change-password-link')
       hideElement?.classList.add('hidden')
       renderDOM('.change-password-wrapper', changePassword, 'profile-options');
-      // renderDOM('.profile-button-container', changePasswordButton, 'profile-button-container')
     }
   }
 })
 
-const changePasswordButton = new ChangePasswordButton({
-})
 
 renderDOM('.root', profileModal);
 renderDOM('.modal-container', closeButton, 'model-close__wrapper')

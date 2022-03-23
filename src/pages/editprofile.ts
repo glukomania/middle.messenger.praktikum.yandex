@@ -33,7 +33,6 @@ const editProfilePage = new EditProfile ({
         lastName: formData.get('last_name'),
         displayName: formData.get('display_name'),
       }
-      console.log('dataToSend', dataToSend)
 
       let isOk: string = '';
       for (let key in dataToSend) {
