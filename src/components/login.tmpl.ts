@@ -21,7 +21,3 @@ div(class='main')
         a(href='./chat.html', class='headerLink')
           div(class='button') #{buttonName}
 `
-
-
-//               div(class='input-container')
-// input(class='common-input', type='password',  placeholder='password', autocomplete='false')

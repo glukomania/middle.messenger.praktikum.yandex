@@ -2,6 +2,9 @@ import renderDOM from "../utils/dom";
 import ProfileModal from '../components/profileModal';
 import CloseProfile from '../components/closeProfile';
 import EditProfile from '../components/editProfile';
+import {validate} from "../utils/validation";
+import {validateFields} from '../utils/validation'
+
 
 const profileModal = new ProfileModal({})
 
@@ -13,7 +16,43 @@ const editProfilePage = new EditProfile ({
   lastName: 'Vovk',
   email: 'sashok@mail.com',
   login: 'sashok',
-  phone: '777123456',
+  phone: '7771234536',
+  events: {
+    'submit': (e) => {
+      e.preventDefault()
+      const warning = document.querySelector('.warning')
+
+      const target = e.target
+      const formData = new FormData(target)
+
+      const dataToSend: object = {
+        login: formData.get('login'),
+        email: formData.get('email'),
+        phone: formData.get('phone'),
+        firstName: formData.get('first_name'),
+        lastName: formData.get('last_name'),
+        displayName: formData.get('display_name'),
+      }
+      console.log('dataToSend', dataToSend)
+
+      let isOk: string = '';
+      for (let key in dataToSend) {
+        if (key.includes('Name')) {
+          isOk = isOk + validate('names', dataToSend[key])
+        } else {
+          isOk = isOk + validate(key, dataToSend[key])
+        }
+      } 
+      
+      console.log('isOk', isOk)
+      if (isOk === '') {
+        console.log('data can be sent')
+      } else {
+        warning!.textContent = 'Check your data once again'
+      }
+
+    }
+  }
 })
 
 const closeButton = new CloseProfile({
@@ -23,3 +62,10 @@ const closeButton = new CloseProfile({
 renderDOM('.root', profileModal);
 renderDOM('.modal-container', closeButton, 'model-close__wrapper')
 renderDOM('.modal-container', editProfilePage, 'profile-wrapper');
+
+validateFields('names', 'firstName')
+validateFields('names', 'lastName')
+validateFields('email', 'email')
+validateFields('phone', 'phone')
+validateFields('names', 'displayName')
+validateFields('login', 'login')

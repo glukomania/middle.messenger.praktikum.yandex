@@ -9,15 +9,15 @@ export const validate = (type: string, value: string | null | undefined) => {
     names: /^([A-Z]+[A-z]*)$/,
   }
 
-  if(value !== null || value !== undefined) {
+  if(value !== null || value !== undefined || value.length === 0) {
 
     switch (type) {
       case 'login':
         
-        if (value.length < 3) {
+        if (value && value.length < 3) {
           return 'Your login should have 3 or more symbols.'
         }
-        if (value.length >20) {
+        if (value && value.length >20) {
           return 'Your login should have less than 20 symbols.'
         }
 
@@ -32,11 +32,11 @@ export const validate = (type: string, value: string | null | undefined) => {
           return 'Your login must contain only letters and numbers'
         }
       case 'password':
-        if (value.length < 8) {
+        if (value && value.length < 8) {
           return 'Your password is too short'
         }
 
-        if (value.length > 40) {
+        if (value && value.length > 40) {
           return 'Your password is too long'
         }
 
@@ -52,10 +52,10 @@ export const validate = (type: string, value: string | null | undefined) => {
         }
         return ''
       case 'phone':
-        if (value.length < 10) {
+        if (value && value.length < 10) {
           return 'Your phone is too short. Please check.'
         }
-        if (value.length > 15) {
+        if (value && value.length > 15) {
           return 'Your phone is too long. Please check.'
         }
 
@@ -65,7 +65,7 @@ export const validate = (type: string, value: string | null | undefined) => {
         return ''
       case 'names': 
         if (!patterns.names.test(value)) {
-          return 'Name must contain only letters and '
+          return 'Name must start with a capital letter and contain only letters'
         }
         return ''
       case 'message': 
@@ -82,3 +82,13 @@ export const validate = (type: string, value: string | null | undefined) => {
     return 'check the value'
   }
 }
+
+const check = (type, element) => {
+  const warningPlace = document.querySelector('.warning')
+  warningPlace!.textContent = validate(type, element.value)
+}
+
+export const validateFields = (type, selector) => {
+  const element = document.querySelector(`.${selector}`);
+  element?.addEventListener("focusout", () => check(type, element));
+};

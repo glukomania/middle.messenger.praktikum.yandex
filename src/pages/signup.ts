@@ -39,7 +39,8 @@ const form = new SignupForm({
         secondName: formData.get('secondName'),
         password: formData.get('password'),
       }
-      let isOk = '';
+      
+      let isOk: string = '';
       for (let key in dataToSend) {
         isOk = isOk + validate(key, dataToSend[key])
       }
@@ -48,7 +49,6 @@ const form = new SignupForm({
 
       if (isOk === '') {
         console.log('data can be sent')
-        // wariningElement?.classList.add('hidden')
       } else {
         wariningElement?.classList.remove('hidden')
 
