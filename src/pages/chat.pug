@@ -1,7 +1,9 @@
 extends ../layout/base.pug
 
+include ../mixins/mixinChat.pug
+
 block header 
-  div(class="header")
+  div(class='header')
     div(class="logo-container")
       div(class='logo')
         i(class='fa fa-paw') 
@@ -9,20 +11,19 @@ block header
     div(class='options-container')
       div(class='user-container')
         a(href='./profile.pug')
-          img(class="userpic", src="../../static/userpic_example.png")
+          img(class='userpic', src='../../static/userpic_example.png')
 
 block main
   div(class='chat-wrapper')
-    div(class='chat-lists-wrapper')
+    section(class='chat-lists-wrapper')
       div(class='chats')
         div(class='chats-header')
           div(class='chats-search-container')
-            input(class='common-input chats-search', type="text", name="search", placeholder="Search in chats")
+            input(class='common-input chats-search', type='text', name='search', placeholder='Search in chats')
           div(class='chats-add')
             i(class='fa fa-plus')
-        include ../mixins/mixinChat 
-        +chatName('Ivan', 'Viktor')
-    div(class='conversation-wrapper')
+        +chatList([{name: 'Ivan', count: 1}, {name: 'Viktor', count: 3}])
+    section(class='conversation-wrapper')
       div(class='conversation-container')
         div(class='conversation-part')
           div(class='user-bar')
