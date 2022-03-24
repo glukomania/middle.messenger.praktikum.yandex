@@ -161,5 +161,3 @@ renderDOM('.signup-form', passwordInput, 'signup-input-container')
 renderDOM('.signup-form', phoneInput, 'signup-input-container')
 renderDOM('.signup-form', emailInput, 'signup-input-container')
 renderDOM('.signup-form', buttonSubmit, 'signup-container')
-
-// renderDOM('.signup-container', buttonSubmit, 'login-button-container')

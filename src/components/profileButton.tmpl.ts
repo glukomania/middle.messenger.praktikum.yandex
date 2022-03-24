@@ -1,4 +1,4 @@
 export default `
 a(href='./profile.html')
-  img(class='userpic', src='')
+  img(class='userpic', src=avatarUrl)
 `

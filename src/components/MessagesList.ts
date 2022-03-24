@@ -6,7 +6,6 @@ import messageIn from './messageIn.tmpl'
 export default class MessagesList extends Block {
   constructor(props) {
     super("div", { ...props });
-    console.log('props', props)
     this.props = props;
   }
 

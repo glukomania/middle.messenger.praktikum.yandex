@@ -90,6 +90,5 @@ renderDOM('.change-password-wrapper', changePasswodLink, 'change-password-link')
 
 const savePasswordButton = document.querySelector('.button')
 if (savePasswordButton) {
-  console.log('button is here')
   savePasswordButton.addEventListener('click', () => console.log('button click'))
 }

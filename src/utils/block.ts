@@ -44,21 +44,6 @@ class Block {
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
-  // _getChildren(propsAndChildren) {
-  //   const children = {};
-  //   const props = {};
-
-  //   Object.entries(propsAndChildren).forEach(([key, value]) => {
-  //     if (Array.isArray(value) && value[0] instanceof Block) {
-  //       children[key] = value;
-  //     } else {
-  //       props[key] = value;
-  //     }
-  //   });
-
-  //   return { children, props };
-  // }
-
   _createResources() {
     const { tagName } = this._meta;
     this._element = this._createDocumentElement(tagName);
