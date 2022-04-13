@@ -25,12 +25,15 @@
     "@parcel/utils": "^2.2.1",
     "assert": "^2.0.0",
     "buffer": "^6.0.3",
+    "eslint": "^8.11.0",
     "express": "^4.17.2",
     "less": "^4.1.2",
     "os-browserify": "^0.3.0",
     "parcel": "^2.3.2",
     "path-browserify": "^1.0.1",
-    "process": "^0.11.10"
+    "process": "^0.11.10",
+    "stylelint": "^14.6.0",
+    "typescript": "^4.6.2"
   },
   "dependencies": {
     "nanoid": "^3.3.1",
