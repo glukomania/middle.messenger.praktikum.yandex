@@ -4,8 +4,8 @@
   "description": "",
   "scripts": {
     "start": "npm run build & node server.js",
-    "dev": "parcel src/pages/index.pug -p 3000 --no-cache",
-    "build": "parcel build src/pages/index.pug"
+    "dev": "parcel src/pages/signup.html -p 3000 --no-cache",
+    "build": "parcel build src/pages/index.html src/pages/chat.html src/pages/profile.html src/pages/editprofile.html src/pages/signup.html src/pages/err404.html src/pages/err500.html"
   },
   "keywords": [],
   "author": "",
@@ -23,11 +23,20 @@
     "@parcel/transformer-less": "^2.2.1",
     "@parcel/transformer-pug": "^2.3.1",
     "@parcel/utils": "^2.2.1",
+    "assert": "^2.0.0",
+    "buffer": "^6.0.3",
+    "eslint": "^8.11.0",
     "express": "^4.17.2",
     "less": "^4.1.2",
-    "parcel": "^2.2.1"
+    "os-browserify": "^0.3.0",
+    "parcel": "^2.3.2",
+    "path-browserify": "^1.0.1",
+    "process": "^0.11.10",
+    "stylelint": "^14.6.0",
+    "typescript": "^4.6.2"
   },
   "dependencies": {
+    "nanoid": "^3.3.1",
     "pug": "^3.0.2",
     "transparency": "^1.0.0"
   }
