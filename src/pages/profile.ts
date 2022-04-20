@@ -6,6 +6,9 @@ import Profile from '../components/profile';
 import ChangePasswodLink from '../components/changePasswordLink'
 import ChangePasswod from '../components/ChangePasswod'
 import {validate} from "../utils/validation"
+import BrowserRouter from '../utils/browserRouter'
+import EditProfile from "../components/editProfile";
+
 
 const profileModal = new ProfileModal({})
 
@@ -25,6 +28,14 @@ const closeButton = new CloseProfile({
 })
 
 const editProfileLink = new EditProfileLink({
+  events: {
+    'click': () => {
+      console.log('edit')
+      const router = new BrowserRouter()
+      router.use('/editprofile', EditProfile, {selector: '.modal-container'}).start()
+      console.log(window.history)
+    }
+  }
 })
 
 const changePassword = new ChangePasswod({

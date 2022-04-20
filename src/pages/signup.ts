@@ -6,9 +6,10 @@ import Input from '../components/input';
 import {validate} from "../utils/validation";
 import Button from "../components/button";
 import SignupForm from '../components/signupForm'
+import Router from '../utils/browserRouter'
 
 export default class Signup extends Block {
-  constructor(props) {
+  constructor(props: any) {
     super("div", { ...props, classNames: ["login_container"] });
   }
 
@@ -31,7 +32,7 @@ const form = new SignupForm({
       const target = event.target
       const formData = new FormData(target)
 
-      const dataToSend = {
+      const dataToSend: object = {
         login: formData.get('login'),
         email: formData.get('email'),
         phone: formData.get('phone'),
@@ -42,13 +43,19 @@ const form = new SignupForm({
       
       let isOk: string = '';
       for (let key in dataToSend) {
-        isOk = isOk + validate(key, dataToSend[key])
-      }
+        if (key.includes('Name')) {
+          isOk = isOk + validate('names', dataToSend[key])
+        } else {
+          isOk = isOk + validate(key, dataToSend[key])
+        }
+      } 
 
       const wariningElement = document.querySelector('.submit-warning')
-
+      console.log('isOk', isOk)
       if (isOk === '') {
         console.log('data can be sent')
+        const router = new Router(".app");
+        router.go("/profile");
       } else {
         wariningElement?.classList.remove('hidden')
 

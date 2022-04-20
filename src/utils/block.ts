@@ -1,13 +1,14 @@
 import {nanoid} from 'nanoid';
 import EventBus from './eventBus';
 
-class Block {
+class Block<P = any> {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
-  };
+    FLOW_RENDER: 'flow:render',
+    FLOW_CWU: 'flow:component-will-unmount',
+  } as const;
   
   public id = nanoid(6);
   private _element: HTMLElement | null = null;
@@ -36,11 +37,23 @@ class Block {
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
+
+  _checkInDom() {
+    const elementInDOM = document.body.contains(this._element);
+
+    if (elementInDOM) {
+      setTimeout(() => this._checkInDom(), 1000);
+      return;
+    }
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CWU, this.props);
+  }
   
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -58,6 +71,13 @@ class Block {
     this.componentDidMount();
   }
 
+  componentWillUnmount() {}
+
+  _componentWillUnmount() {
+    this.eventBus().destroy();
+    this.componentWillUnmount();
+  }
+
   componentDidMount() {}
 
   dispatchComponentDidMoun() {
@@ -65,6 +85,10 @@ class Block {
   }
 
   _componentDidUpdate(oldProps: any, newProps: any) {
+    if (this._element && this._element.style.display === 'none') {
+      return;
+    }
+
     if (!this.componentDidUpdate(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
@@ -153,10 +177,12 @@ class Block {
   }
 
   show() {
-    this._element!.style.display = 'block';
+    console.log('show!')
+    this._element!.style.display = 'flex';
   }
 
   hide() {
+    console.log('hide!')
     this._element!.style.display = 'none';
   }
 

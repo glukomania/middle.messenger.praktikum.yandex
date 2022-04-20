@@ -3,7 +3,8 @@ import ProfileModal from '../components/profileModal';
 import CloseProfile from '../components/closeProfile';
 import EditProfile from '../components/editProfile';
 import {validate} from "../utils/validation";
-import {validateFields} from '../utils/validation'
+import {validateFields} from '../utils/validation';
+import Router from '../utils/browserRouter';
 
 
 const profileModal = new ProfileModal({})
@@ -45,6 +46,15 @@ const editProfilePage = new EditProfile ({
       
       if (isOk === '') {
         console.log('data can be sent')
+        const router = new Router();
+
+        // router
+        // .use("/", Chats)
+        // .use("/users", Users)
+        // .start();
+
+
+        router.go("/profile");
       } else {
         warning!.textContent = 'Check your data once again'
       }

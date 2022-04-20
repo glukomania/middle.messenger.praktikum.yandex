@@ -1,0 +1,135 @@
+
+import renderDOM from './dom';
+import Block from './block';
+
+
+export enum RouterLinks {
+  LOGIN = '/',
+  SIGNUP = '/signup',
+  CHAT = '/chat',
+  PROFILE = '/profile',
+  EDIT_PROFILE = '/settings/editprofile',
+  CHANGE_PASSWORD = '/settings/changepassword',
+  ERROR_404 = '/404',
+  ERROR_500 = '/500',
+}
+
+type TRouteProps = {
+  rootQuery: string;
+  accessRight: ROUTE_ACCESS;
+};
+
+enum ROUTE_ACCESS {
+  PUBLIC = 'public',
+  PRIVATE = 'private',
+  ERROR = 'error',
+}
+
+function isEqual(lhs, rhs) {
+  return lhs === rhs;
+}
+
+export default class BrowserRouter {
+  constructor() {
+      if (BrowserRouter.__instance) {
+          return BrowserRouter.__instance;
+      }
+
+      this.routes = [];
+      this.history = window.history;
+      this._currentRoute = null;
+
+      BrowserRouter.__instance = this;
+      console.log('br')
+  }
+
+  use(pathname, block, props) {
+      const route = new Route(pathname, block, props);
+
+      this.routes.push(route);
+      console.log('this.routes', this.routes)
+      return this;
+  }
+
+  start() {
+      window.onpopstate = (event => {
+        this._onRoute(event.currentTarget.location.pathname);
+          
+      }).bind(this);
+
+      this._onRoute(window.location.pathname);
+  }
+
+  _onRoute(pathname) {
+      let route = this.getRoute(pathname);
+      if (!route) {
+          return;
+      }
+      console.log('this._currentRoute', this._currentRoute)
+      console.log('route', route)
+      if (this._currentRoute && this._currentRoute !== route) {
+          console.log('start to leave')
+          this._currentRoute.leave();
+      }
+
+      this._currentRoute = route;
+      route.render();
+  }
+
+  go(pathname: string) {
+      this.history.pushState({}, '', pathname);
+      this._onRoute(pathname);
+  }
+
+  back() {
+      this.history.back();
+  }
+
+  forward() {
+      this.history.forward();
+  }
+
+  getRoute(pathname) {
+      const route = this.routes.find(route => route.match(pathname));
+      return route || this.routes.find(route => route.match('*'));
+  }
+}
+
+
+class Route {
+  protected _pathname;
+  protected _blockClass;
+  protected _block;
+  protected _props;
+
+  constructor(pathname: string, view: Block<any>, props: object) {
+      this._pathname = pathname;
+      this._blockClass = view;
+      this._block = null;
+      this._props = props;
+  }
+  navigate(pathname: string) {
+      if (this.match(pathname)) {
+          this.render();
+      }
+  }
+  leave() {
+      if (this._block) {
+      this._block.hide();
+      }
+  }
+  match(pathname: string) {
+      return isEqual(pathname, this._pathname);
+  }
+  render() {
+    console.log('render')
+    if (!this._block) {
+      this._block = new this._blockClass(this._props);
+      console.log('this._props', this._props)
+      renderDOM(this._props.selector, this._block)
+      return;
+    }
+    console.log('start to show')
+    this._block.show();
+  }
+}

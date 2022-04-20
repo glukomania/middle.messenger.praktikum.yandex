@@ -67,6 +67,16 @@ export const validate = (type: string, value: string | null | undefined) => {
           return 'Name must start with a capital letter and contain only letters'
         }
         return ''
+      case 'secondName': 
+        if (!patterns.names.test(value)) {
+          return 'Name must start with a capital letter and contain only letters'
+        }
+        return ''
+      case 'firstName': 
+        if (!patterns.names.test(value)) {
+          return 'Name must start with a capital letter and contain only letters'
+        }
+        return ''
       case 'message': 
         if (value.length === 0) {
           return 'No message'
