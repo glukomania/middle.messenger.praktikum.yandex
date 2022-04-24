@@ -11,3 +11,11 @@ export default function renderDOM(query: string, block: Block, className?: strin
   }
   return root;
 }
+
+export function addToBlock(block: Block, className: string, child: Block, childClass: string ) {
+  let root = block.getContent()?.querySelector(className)
+  if (childClass) {
+    child.getContent()!.classList.add(childClass)
+  }
+  root?.appendChild(child.getContent()!)
+}

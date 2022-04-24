@@ -1,6 +1,6 @@
-import * as pug from "pug";
 import Block from "../utils/block";
-import renderDOM from "../utils/dom";
+import {addToBlock} from "../utils/dom";
+import * as pug from "pug";
 import chat from "../templates/chat.tmpl";
 import Header from '../components/header';
 import ChatItem from '../components/chatItem';
@@ -9,7 +9,33 @@ import MessagesList from '../components/MessagesList';
 import ProfileButton from '../components/profileButton';
 import DeleteChat from '../components/deleteChat';
 
-export default class Chat extends Block {
+
+
+export default class ChatContainer extends Block {
+  constructor(props: any) {
+    super("div", { ...props, classNames: ["login_container"] });
+  }
+  
+  render() {
+    addToBlock(chatPage, ".header", header, "header");
+    addToBlock(chatPage, ".options-container", profileButton, 'user-container');
+
+    chats.map((item) => {
+      const chatItem = new ChatItem(item)
+      addToBlock(chatPage, '.chats', chatItem, 'user-wrapper');
+    })
+
+
+    addToBlock(chatPage, ".user-bar", chatBar, 'user-bar');
+    addToBlock(chatPage, ".chat-delete", deleteChat, 'chat-delete');
+    addToBlock(chatPage, ".message", messagesList, 'incert');
+
+    return chatPage.getContent() != null ? chatPage.getContent().innerHTML : '';
+  }
+
+}
+
+class ChatPage extends Block {
   constructor(props) {
     super("div", { ...props, classNames: ["container"] });
   }
@@ -18,8 +44,6 @@ export default class Chat extends Block {
     return pug.compile(chat, {})(this.props);
   }
 }
-
-// data to display:
 
 const chats = [
   {
@@ -60,62 +84,32 @@ const messages=[
 
 // render page frame:
 
-const chatPage = new Chat({
+const chatPage = new ChatPage({
   header: "Chat",
   classNames: ["container"],
   chatName: 'Petr',
 });
 
-renderDOM('.root', chatPage, 'container');
-
-
-// render header:
-
 const header = new Header({})
-renderDOM('.header', header, 'header');
-
-// render profile button:
 
 const profileButton = new ProfileButton({
   label: 'click me',
-  avatarUrl: 'https://us.123rf.com/450wm/in8finity/in8finity2102/in8finity210200060/163959727-cute-overweight-boy-avatar-character-young-man-cartoon-style-userpic-icon.jpg'
+  avatarUrl: 'https://us.123rf.com/450wm/in8finity/in8finity2102/in8finity210200060/163959727-cute-overweight-boy-avatar-character-young-man-cartoon-style-userpic-icon.jpg',
+  events: {
+    'click': () => console.log('click profile')
+  }
 })
 
-renderDOM('.options-container', profileButton, 'user-container')
-
-
-// render chat list:
-
-chats.map((item) => {
-  const chatItem = new ChatItem(item)
-  renderDOM('.chats', chatItem, 'user-wrapper');
-})
-
-
-// render chat header: 
 const chatBar = new ChatBar({
   chatName: 'Ivan',
 })
 
-renderDOM('.user-bar', chatBar, 'user-bar');
-
-document.addEventListener('DOMContentLoaded', () => {
-  const deleteChat = new DeleteChat({
-    events: {
-      click: () => console.log('delete chat modal must open')
-    }
-  })
-
-  renderDOM('.chat-delete', deleteChat, 'chat-delete')
+const deleteChat = new DeleteChat({
+  events: {
+    click: () => console.log('delete chat modal must open')
+  }
 })
-
-
-// render messages:
 
 const messagesList = new MessagesList({
   messages,
 })
-
-renderDOM('.message', messagesList, 'insert');
-
-

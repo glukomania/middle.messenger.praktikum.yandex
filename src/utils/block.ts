@@ -1,5 +1,6 @@
 import {nanoid} from 'nanoid';
 import EventBus from './eventBus';
+import * as pug from "pug";
 
 class Block<P = any> {
   static EVENTS = {
@@ -115,13 +116,38 @@ class Block<P = any> {
   _render() {
     const block = this.render();
     this._removeEvents();
-    this._element!.innerHTML = block;
+    if((typeof block) === 'string') {
+      this._element!.innerHTML = block;
+    } else {
+       this._element = block;
+    }
     this._addEvents();
+
   }
 
-  render(): string {
-    return ''
+  render(): HTMLElement | String | null {
+    return this.getContent();
   }
+
+  compile(template, props: Object) {
+    const propsAndStubs = { ...props };
+
+    Object.entries(this.children).forEach(([key, child]) => {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+    });
+
+    const fragment = this._createDocumentElement('template');
+
+    fragment.innerHTML = pug.compile(template, propsAndStubs);
+
+    Object.values(this.children).forEach(child => {
+        const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+        
+        stub.replaceWith(child.getContent());
+    });
+
+    return fragment.content;
+}
 
   getContent(): HTMLElement | null {
     return this.element;
@@ -162,11 +188,13 @@ class Block<P = any> {
   _addEvents() {
     const events: Record<string, () => void> = (this.props as any).events;
     
+    console.log('events', events)
     if (!events) {
       return
     }
     
     Object.entries(events).forEach(([event, listener]) => {
+      console.log('this.element', this.element)
       this.element!.addEventListener(event, listener);
     })
   }

@@ -1,4 +1,4 @@
 export default `
-a(href='./chat.html' class='headerlink')
+a(href='./chat' class='headerlink')
   i(class='fa fa-times')
 `

@@ -14,16 +14,6 @@ export enum RouterLinks {
   ERROR_500 = '/500',
 }
 
-type TRouteProps = {
-  rootQuery: string;
-  accessRight: ROUTE_ACCESS;
-};
-
-enum ROUTE_ACCESS {
-  PUBLIC = 'public',
-  PRIVATE = 'private',
-  ERROR = 'error',
-}
 
 function isEqual(lhs, rhs) {
   return lhs === rhs;
@@ -40,14 +30,12 @@ export default class BrowserRouter {
       this._currentRoute = null;
 
       BrowserRouter.__instance = this;
-      console.log('br')
   }
 
   use(pathname, block, props) {
       const route = new Route(pathname, block, props);
 
       this.routes.push(route);
-      console.log('this.routes', this.routes)
       return this;
   }
 
@@ -65,10 +53,7 @@ export default class BrowserRouter {
       if (!route) {
           return;
       }
-      console.log('this._currentRoute', this._currentRoute)
-      console.log('route', route)
       if (this._currentRoute && this._currentRoute !== route) {
-          console.log('start to leave')
           this._currentRoute.leave();
       }
 
@@ -122,14 +107,11 @@ class Route {
       return isEqual(pathname, this._pathname);
   }
   render() {
-    console.log('render')
     if (!this._block) {
       this._block = new this._blockClass(this._props);
-      console.log('this._props', this._props)
-      renderDOM(this._props.selector, this._block)
+      renderDOM(this._props.selector, this._block, this._props.className)
       return;
     }
-    console.log('start to show')
     this._block.show();
   }
 }

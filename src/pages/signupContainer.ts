@@ -1,27 +1,39 @@
-import * as pug from "pug";
 import Block from "../utils/block";
-import renderDOM from "../utils/dom";
-import signup from "../components/signup.tmpl";
-import Input from '../components/input';
 import {validate} from "../utils/validation";
+import Signup from "../components/signup";
+import {addToBlock} from "../utils/dom";
+import Input from '../components/input';
 import Button from "../components/button";
 import SignupForm from '../components/signupForm'
 import Router from '../utils/browserRouter'
 
-export default class Signup extends Block {
+
+
+export default class SignupContainer extends Block {
   constructor(props: any) {
     super("div", { ...props, classNames: ["login_container"] });
   }
-
+  
   render() {
-    return pug.compile(signup, {})(this.props);
+    addToBlock(signupPage, ".signup-form-container", form, "signup-form");
+    addToBlock(signupPage, ".signup-form", firstNameInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", secondNameInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", loginInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", passwordInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", phoneInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", emailInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", buttonSubmit, 'signup-container');
+
+    return signupPage.getContent() != null ? signupPage.getContent().innerHTML : '';
   }
+
 }
 
 const signupPage = new Signup({
   buttonName: "Sign up",
   classNames: ["container"],
 });
+
 
 const form = new SignupForm({
   type: 'submit',
@@ -51,7 +63,6 @@ const form = new SignupForm({
       } 
 
       const wariningElement = document.querySelector('.submit-warning')
-      console.log('isOk', isOk)
       if (isOk === '') {
         console.log('data can be sent')
         const router = new Router(".app");
@@ -158,13 +169,3 @@ const buttonSubmit = new Button({
   buttonName: 'Sign up',
   classNames: ['login-button-container'],
 })
-
-renderDOM(".root", signupPage, "container");
-renderDOM('.signup-form-container', form, 'signup-form')
-renderDOM('.signup-form', firstNameInput, 'signup-input-container')
-renderDOM('.signup-form', secondNameInput, 'signup-input-container')
-renderDOM('.signup-form', loginInput, 'signup-input-container')
-renderDOM('.signup-form', passwordInput, 'signup-input-container')
-renderDOM('.signup-form', phoneInput, 'signup-input-container')
-renderDOM('.signup-form', emailInput, 'signup-input-container')
-renderDOM('.signup-form', buttonSubmit, 'signup-container')
