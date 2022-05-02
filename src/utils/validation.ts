@@ -67,12 +67,12 @@ export const validate = (type: string, value: string | null | undefined) => {
           return 'Name must start with a capital letter and contain only letters'
         }
         return ''
-      case 'secondName': 
+      case 'second_name': 
         if (!patterns.names.test(value)) {
           return 'Name must start with a capital letter and contain only letters'
         }
         return ''
-      case 'firstName': 
+      case 'first_name': 
         if (!patterns.names.test(value)) {
           return 'Name must start with a capital letter and contain only letters'
         }
@@ -82,9 +82,14 @@ export const validate = (type: string, value: string | null | undefined) => {
           return 'No message'
         }
         return ''
+
+      case 'display_name':
+        if(value.length ===0){
+          return 'No message'
+        }
+        return ''
       default:
-        console.log('type', type)
-        return 'unknown type'
+        return ''
     }
 
   } else {

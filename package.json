@@ -5,9 +5,7 @@
   "scripts": {
     "start": "npm run build & node server.js",
     "dev": "parcel src/pages/index.html -p 3000 --no-cache",
-    "start2": "parcel src/pages/index.html --no-source-maps",
-    "build2": "parcel build src/pages/index.html --no-source-maps --no-cache --public-url ./",
-    "build": "parcel build src/pages/index.html src/pages/profile.html src/pages/editprofile.html src/pages/err404.html src/pages/err500.html",
+    "build": "parcel build src/pages/index.html",
     "test": "./node_modules/.bin/mocha"
   },
   "keywords": [],

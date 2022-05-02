@@ -19,11 +19,6 @@ type Contact = {
   contacts: object,
 }
 
-
-export enum StoreEvents {
-  Updated = 'updated',
-}
-
 export type Dispatch<State> = (
   nextStateOrAction: Partial<State> | Action<State>,
   payload?: any,
@@ -36,7 +31,6 @@ export type Action<State> = (
 ) => void;
 
 export const defaultState = {
-  screen: null,
   isLoading: false,
   loginFormError: null,
   user: null,
@@ -48,9 +42,9 @@ export class Store<State extends Record<string, any>> extends EventBus {
 
   constructor(defaultState: State) {
     super();
-
     this.state = defaultState;
-    this.set(defaultState);
+    this.on('updated', () => {
+    });
   }
 
   public getState() {
@@ -65,7 +59,7 @@ export class Store<State extends Record<string, any>> extends EventBus {
     this.emit('changed', prevState, nextState);
   }
 
-  dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
+  public dispatch(nextStateOrAction: Partial<State> | Action<State>, payload?: any) {
     if (typeof nextStateOrAction === 'function') {
       nextStateOrAction(this.dispatch.bind(this), this.state, payload);
     } else {
@@ -73,3 +67,6 @@ export class Store<State extends Record<string, any>> extends EventBus {
     }
   }
 }
+
+
+export const store = new Store(defaultState);

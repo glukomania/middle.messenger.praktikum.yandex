@@ -11,11 +11,11 @@ export enum Page {
 }
 
 const map: Record<Page, typeof Block> = {
-  [Pages.Login]: LoginContainer,
-  [Pages.Signup]: SignupContainer,
-  [Pages.Profile]: ProfileContainer,
+  [Page.Login]: LoginContainer,
+  [Page.Signup]: SignupContainer,
+  [Page.Profile]: ProfileContainer,
 };
 
-export const getScreenComponent = (page: Page): typeof Block => {
+export const getPageComponent = (page: Page): typeof Block => {
   return map[[page]];
 };

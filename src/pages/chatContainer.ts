@@ -1,14 +1,16 @@
 import Block from "../utils/block";
 import {addToBlock} from "../utils/dom";
 import * as pug from "pug";
-import chat from "../templates/chat.tmpl";
+import chat from "../components/chat.tmpl";
 import Header from '../components/header';
 import ChatItem from '../components/chatItem';
-import ChatBar from "../components/chatBar";
 import MessagesList from '../components/MessagesList';
 import ProfileButton from '../components/profileButton';
-import DeleteChat from '../components/deleteChat';
-
+import chatServices from "../utils/services/chatServices";
+import {store} from '../utils/store/store';
+import ChatConversation from "../components/chatConversation";
+import authServices from "../utils/services/authServices";
+import LogoutButton from "../components/logoutButton"
 
 
 export default class ChatContainer extends Block {
@@ -17,20 +19,46 @@ export default class ChatContainer extends Block {
   }
   
   render() {
-    addToBlock(chatPage, ".header", header, "header");
-    addToBlock(chatPage, ".options-container", profileButton, 'user-container');
+    authServices.getUser().then(() => {
+      addToBlock(chatPage, ".header", header, "header");
 
-    chats.map((item) => {
-      const chatItem = new ChatItem(item)
-      addToBlock(chatPage, '.chats', chatItem, 'user-wrapper');
+      chatServices.getChats().then(() => {
+        const chats = store.getState().chats;
+        renderChats(chats)
+      })
+
+      const renderChats = (chats) => {
+        chats.length > 0 && chats.map((item) => {
+          const chatItem = new ChatItem({
+            ...item,
+            events: {
+              'click': () => {
+                store.dispatch({'currentChat': item})
+                chatConversation.setProps({chatName: store.getState().currentChat.title})
+              }
+            }
+          })
+          addToBlock(chatPage, '.chats', chatItem, 'user-wrapper');
+        })
+      }
+
+      const profileButton = new ProfileButton({
+        label: 'click me',
+        avatarUrl: 'https://ya-praktikum.tech/api/v2/resources' + (store.getState().user && store.getState().user.avatar),
+        events: {
+          'click': () => console.log('click profile')
+        }
+      })
+
+
+      addToBlock(chatPage, ".options-container", profileButton, 'user-profile-button');
+      addToBlock(chatPage, ".options-container", logoutButton, 'user-logout');
     })
 
+    addToBlock(chatPage, ".chat-wrapper", chatConversation, 'conversation-wrapper')
+    addToBlock(chatPage, ".message", messagesList, 'incert');  
 
-    addToBlock(chatPage, ".user-bar", chatBar, 'user-bar');
-    addToBlock(chatPage, ".chat-delete", deleteChat, 'chat-delete');
-    addToBlock(chatPage, ".message", messagesList, 'incert');
-
-    return chatPage.getContent() != null ? chatPage.getContent().innerHTML : '';
+    return chatPage.getContent();
   }
 
 }
@@ -45,18 +73,16 @@ class ChatPage extends Block {
   }
 }
 
-const chats = [
-  {
-    avatarUrl: 'https://ps.w.org/user-avatar-reloaded/assets/icon-256x256.png',
-    newMessages: 3,
-    chatName: 'Central Park'
-  },
-  {
-    avatarUrl: 'https://www.pavilionweb.com/wp-content/uploads/2017/03/man.png',
-    newMessages: 1,
-    chatName: 'Namesti Miru'
+const logoutButton = new LogoutButton({
+  events: {
+    'click': () => authServices.logout()
   }
-]
+})
+
+
+const chatConversation = new ChatConversation({
+  chatName: store.getState().currentChat && store.getState().currentChat.chatName
+})
 
 const messages=[
   {
@@ -82,33 +108,19 @@ const messages=[
   }
 ]
 
-// render page frame:
-
 const chatPage = new ChatPage({
   header: "Chat",
   classNames: ["container"],
-  chatName: 'Petr',
-});
+  events: {
+    'click': (e) => {
+      if (e.srcElement.className === 'fa fa-plus') {
+        const chatName = document.querySelector('.chats-name')?.value;
+        chatServices.createChat({'title': chatName})
+      }
+    }}
+  });
 
 const header = new Header({})
-
-const profileButton = new ProfileButton({
-  label: 'click me',
-  avatarUrl: 'https://us.123rf.com/450wm/in8finity/in8finity2102/in8finity210200060/163959727-cute-overweight-boy-avatar-character-young-man-cartoon-style-userpic-icon.jpg',
-  events: {
-    'click': () => console.log('click profile')
-  }
-})
-
-const chatBar = new ChatBar({
-  chatName: 'Ivan',
-})
-
-const deleteChat = new DeleteChat({
-  events: {
-    click: () => console.log('delete chat modal must open')
-  }
-})
 
 const messagesList = new MessagesList({
   messages,

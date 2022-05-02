@@ -1,4 +1,4 @@
-import {HTTPTransport} from '../utils/HTTPTransport';
+import HTTPTransport from '../utils/HTTPTransport';
 
 const baseURL = new HTTPTransport('https://ya-praktikum.tech/api/v2');
 

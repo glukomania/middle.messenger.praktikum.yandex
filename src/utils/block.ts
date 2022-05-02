@@ -1,6 +1,7 @@
 import {nanoid} from 'nanoid';
 import EventBus from './eventBus';
 import * as pug from "pug";
+import isObjectEqual from "../utils/isObjectEqual"
 
 class Block<P = any> {
   static EVENTS = {
@@ -31,7 +32,7 @@ class Block<P = any> {
       props,
     };
         
-    this.props = this._makePropsProxy(props);
+     this.props= this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
 
@@ -86,14 +87,9 @@ class Block<P = any> {
   }
 
   _componentDidUpdate(oldProps: any, newProps: any) {
-    if (this._element && this._element.style.display === 'none') {
-      return;
-    }
-
-    if (!this.componentDidUpdate(oldProps, newProps)) {
+    if (isObjectEqual(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidUpdate(oldProps: any, newProps: any) {
@@ -104,7 +100,6 @@ class Block<P = any> {
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
   };
   
@@ -161,10 +156,10 @@ class Block<P = any> {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
+
       set(target: Record<string, unknown>, prop: string, value: unknown) {
         target[prop] = value;
-
-        self.eventBus(). emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
         return true;
       },
       deleteProperty() {
@@ -187,14 +182,11 @@ class Block<P = any> {
   
   _addEvents() {
     const events: Record<string, () => void> = (this.props as any).events;
-    
-    console.log('events', events)
     if (!events) {
       return
     }
     
     Object.entries(events).forEach(([event, listener]) => {
-      console.log('this.element', this.element)
       this.element!.addEventListener(event, listener);
     })
   }
@@ -205,12 +197,10 @@ class Block<P = any> {
   }
 
   show() {
-    console.log('show!')
     this._element!.style.display = 'flex';
   }
 
   hide() {
-    console.log('hide!')
     this._element!.style.display = 'none';
   }
 

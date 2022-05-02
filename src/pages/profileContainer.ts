@@ -9,9 +9,9 @@ import ChangePasswodLink from '../components/changePasswordLink'
 import ChangePasswod from '../components/ChangePasswod'
 import {validate} from "../utils/validation"
 import BrowserRouter from '../utils/browserRouter'
-import EditProfile from "../components/editProfile";
-
-
+import {store} from '../utils/store/store';
+import authServices from "../utils/services/authServices";
+import userServices from "../utils/services/userServices";
 
 
 export default class ProfileContainer extends Block {
@@ -20,12 +20,24 @@ export default class ProfileContainer extends Block {
   }
   
   render() {
-    addToBlock(profileModal, ".modal-container", closeButton, "model-close__wrapper")
-    addToBlock(profileModal, ".modal-container", profile, "profile-wrapper");
-    addToBlock(profileModal, ".edit-profile-wrapper", editProfileLink, 'profile-options');
-    addToBlock(profileModal, ".change-password-wrapper", changePasswodLink, 'change-password-link')
+    authServices.getUser().then(() => {
+      const user = this.props.user || store.getState().user
+      addToBlock(profileModal, ".modal-container", closeButton, "model-close__wrapper")
+      const profile = new Profile({
+        ...user,
+        avatar: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar,
+        classNames: ['user-profile-container'],
+      })
+      
+      addToBlock(profileModal, ".modal-container", profile, "profile-wrapper");
 
+      addToBlock(profileModal, ".edit-profile-wrapper", editProfileLink, 'profile-options');
+      addToBlock(profileModal, ".change-password-wrapper", changePasswodLink, 'change-password-link')
+      window.profile = profile;
+    })
+    
     return profileModal.getContent();
+
   }
 }
 
@@ -33,18 +45,10 @@ export default class ProfileContainer extends Block {
 const profileModal = new ProfileModal({})
 
 const closeButton = new CloseProfile({
-  classNames: ['model-close__wrapper']
-})
-
-const profile = new Profile({
-  classNames: ['user-profile-container'],
-  avatarSrc: 'https://us.123rf.com/450wm/in8finity/in8finity2102/in8finity210200060/163959727-cute-overweight-boy-avatar-character-young-man-cartoon-style-userpic-icon.jpg?ver=6',
-  displayName: 'Sashok',
-  firstName: 'Aleksandr',
-  lastName: 'Vovk',
-  email: 'sashok@mail.com',
-  login: 'sashok',
-  phone: '777123456',
+  classNames: ['model-close__wrapper'],
+  events: {
+    'click': () => window.router.go('/chat')
+  }
 })
 
 const editProfileLink = new EditProfileLink({
@@ -70,8 +74,6 @@ const changePassword = new ChangePasswod({
           warningPlace.textContent = validate('password', newpassword.value)
         } else if (validate('password', repeatpassword.value) !== '') {
           warningPlace.textContent = validate('password', repeatpassword.value)
-        } else if (newpassword.value !== repeatpassword.value) {
-          warningPlace.textContent = 'password and confirm password does not match'
         } else {
           warningPlace.textContent = ''
         }
@@ -79,17 +81,16 @@ const changePassword = new ChangePasswod({
     },
     'submit': (event) => {
       event.preventDefault()
-
       const target = event.target
       const formData = new FormData(target)
       
       const dataToSend = {
-        password: formData.get('newpassword') ? formData.get('newpassword')?.toString() : '',
-        repeatpassword: formData.get('repeatpassword')?.toString(),
+        oldPassword: formData.get('newpassword') ? formData.get('newpassword')?.toString() : '',
+        newPassword: formData.get('repeatpassword')?.toString(),
       }
 
-      if(dataToSend.password === dataToSend.repeatpassword && validate('password', dataToSend.password) ==='' && validate('password', dataToSend.repeatpassword) === '') {
-        console.log('data can be sent')
+      if(validate('password', dataToSend.oldPassword) ==='' && validate('password', dataToSend.newPassword) === '') {
+        userServices.changePassword(dataToSend)
       } else {
         const warningPlace = document.querySelector('.password-warning');
         warningPlace!.textContent = 'Check the passwords again';

@@ -8,7 +8,6 @@ export default class Err404Container extends Block {
   }
   
   render() {
-
     return err404Page.getContent();
   }
 }

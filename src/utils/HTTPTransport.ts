@@ -60,6 +60,7 @@ export default class HTTPTransport {
               isGet && !!data
                   ? `${url}${queryStringify(data)}`
                   : url,
+
           );
 
           Object.keys(headers).forEach(key => {

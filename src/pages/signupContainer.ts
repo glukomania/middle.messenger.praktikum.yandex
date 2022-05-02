@@ -6,6 +6,7 @@ import Input from '../components/input';
 import Button from "../components/button";
 import SignupForm from '../components/signupForm'
 import Router from '../utils/browserRouter'
+import authServices from "../utils/services/authServices";
 
 
 
@@ -24,7 +25,7 @@ export default class SignupContainer extends Block {
     addToBlock(signupPage, ".signup-form", emailInput, 'signup-input-container');
     addToBlock(signupPage, ".signup-form", buttonSubmit, 'signup-container');
 
-    return signupPage.getContent() != null ? signupPage.getContent().innerHTML : '';
+    return signupPage.getContent();
   }
 
 }
@@ -48,11 +49,11 @@ const form = new SignupForm({
         login: formData.get('login'),
         email: formData.get('email'),
         phone: formData.get('phone'),
-        firstName: formData.get('firstName'),
-        secondName: formData.get('secondName'),
+        first_name: formData.get('first_name'),
+        second_name: formData.get('second_name'),
         password: formData.get('password'),
       }
-      
+
       let isOk: string = '';
       for (let key in dataToSend) {
         if (key.includes('Name')) {
@@ -61,12 +62,13 @@ const form = new SignupForm({
           isOk = isOk + validate(key, dataToSend[key])
         }
       } 
-
+      
       const wariningElement = document.querySelector('.submit-warning')
       if (isOk === '') {
-        console.log('data can be sent')
-        const router = new Router(".app");
-        router.go("/profile");
+        authServices.singUp(dataToSend)
+
+        const router = new Router
+        router.go("/chat");
       } else {
         wariningElement?.classList.remove('hidden')
 

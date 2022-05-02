@@ -5,7 +5,7 @@ div(class='header')
     div(class='header-options')
       a(href='/login', class='headerLink') Log in
     div(class='header-options') |
-    div(class="header-options") Sign up
+    div(class="header-options header-active") Sign up
 div(class='main')
   div(class='signup-container')
     div(class='signup-form-container')

@@ -20,10 +20,10 @@ class AuthAPI extends BaseAPI {
   }
 
   signUp(data: SignupFormData) {
-      return this.post('/auth/signup',{data});
+    return this.post('/auth/signup',{data});
   }
 
-  signIn(data: LoginFormData) {
+  login(data: LoginFormData) {
       return this.post('/auth/signin',{data});
   }
 

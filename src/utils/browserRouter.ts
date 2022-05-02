@@ -3,17 +3,6 @@ import renderDOM from './dom';
 import Block from './block';
 
 
-export enum RouterLinks {
-  LOGIN = '/',
-  SIGNUP = '/signup',
-  CHAT = '/chat',
-  PROFILE = '/profile',
-  EDIT_PROFILE = '/settings/editprofile',
-  CHANGE_PASSWORD = '/settings/changepassword',
-  ERROR_404 = '/404',
-  ERROR_500 = '/500',
-}
-
 
 function isEqual(lhs, rhs) {
   return lhs === rhs;
@@ -25,6 +14,7 @@ export default class BrowserRouter {
           return BrowserRouter.__instance;
       }
 
+      this.isAuth = false;
       this.routes = [];
       this.history = window.history;
       this._currentRoute = null;
@@ -34,7 +24,6 @@ export default class BrowserRouter {
 
   use(pathname, block, props) {
       const route = new Route(pathname, block, props);
-
       this.routes.push(route);
       return this;
   }
@@ -57,6 +46,11 @@ export default class BrowserRouter {
           this._currentRoute.leave();
       }
 
+      if (this.isAuth) {
+        this.go('/chat');
+        return;
+      }
+
       this._currentRoute = route;
       route.render();
   }
@@ -70,12 +64,18 @@ export default class BrowserRouter {
       this.history.back();
   }
 
+  enterAuth(value: boolean) {
+    this.isAuth = value;
+    return this;
+  }
+
   forward() {
       this.history.forward();
   }
 
   getRoute(pathname) {
       const route = this.routes.find(route => route.match(pathname));
+
       return route || this.routes.find(route => route.match('*'));
   }
 }
@@ -98,6 +98,7 @@ class Route {
           this.render();
       }
   }
+
   leave() {
       if (this._block) {
       this._block.hide();
@@ -109,6 +110,7 @@ class Route {
   render() {
     if (!this._block) {
       this._block = new this._blockClass(this._props);
+      window[this._pathname.replace('/', '')] = this._block
       renderDOM(this._props.selector, this._block, this._props.className)
       return;
     }
