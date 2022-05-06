@@ -97,8 +97,6 @@ class Block<P = any> {
   }
 
   setProps = (nextProps: any) => {
-    console.log('nextProps', nextProps)
-    console.log('this.props', this.props)
     if (!nextProps) {
       return;
     }

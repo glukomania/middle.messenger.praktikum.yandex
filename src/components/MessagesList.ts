@@ -2,6 +2,7 @@ import * as pug from "pug";
 import Block from "../utils/block";
 import messageOut from './messageOut.tmpl'
 import messageIn from './messageIn.tmpl'
+import {getTime} from '../utils/getTime'
 
 type Message = {
   chat_id: number,
@@ -19,10 +20,12 @@ export default class MessagesList extends Block {
   }
 
   getMessageslist (message: Message) {
-    if (message.user === window.store.getState().user.id) {
-      return pug.compile((messageOut), {})(message)
+    console.log('message', message)
+
+    if (message.user_id === window.store.getState().user.id) {
+      return pug.compile((messageOut), {})({...message, time: getTime(message.time)})
     } else {
-      return pug.compile((messageIn), {})(message)
+      return pug.compile((messageIn), {})({...message, time: getTime(message.time)})
     }
   }
 

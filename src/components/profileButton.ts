@@ -9,7 +9,6 @@ export default class ProfileButton extends Block {
   }
 
   getNewProps() {
-    console.log('window.store.getState()', window.store.getState())
     return 'https://ya-praktikum.tech/api/v2/resources' + (window.store.getState().user && window.store.getState().user.avatar)
   }
   render() {

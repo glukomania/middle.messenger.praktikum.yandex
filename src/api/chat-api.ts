@@ -26,7 +26,11 @@ class ChatAPI extends BaseAPI {
   }
 
   addUser(data: AddUser) {
-    return baseURL.put('/chats/users', {data})
+    return baseURL.put('/users', {data})
+  }
+
+  getChatUsers(chatId: number) {
+    return baseURL.get(`/${chatId}/users`)
   }
 }
 

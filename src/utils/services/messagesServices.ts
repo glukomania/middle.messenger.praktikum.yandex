@@ -24,12 +24,8 @@ class MessagesServices {
   }
 
   public launchSocket(userId: number, chatId: number): void {
-    console.log('socket init')
-    if (!this.socket) {
       const token = window.store.getState().token;
-      console.log('token', token)
       this.socket =  new WebSocket(`wss://ya-praktikum.tech/ws/chats/${userId}/${chatId}/${token}`); 
-    }
 
     this.socket.addEventListener('open', () => {
       this.socket?.send(JSON.stringify({
@@ -48,11 +44,10 @@ class MessagesServices {
       const data = JSON.parse(event.data);
 
       if (Array.isArray(data)) {
-        console.log('bunch of messages', data)
         window.store.dispatch({'messages': data});
 
       } else if (data.type === 'message') {
-        window.store.dispatch({'messages': [...window.store.getState().messages, data]});
+        window.store.dispatch({'messages': [data, ...window.store.getState().messages]});
       }
     });
   }
@@ -67,12 +62,12 @@ class MessagesServices {
 
   public sendMessageSocket(message: string): void {
     console.log('sendMessageSocket', message, this.socket)
-    if (this.socket) {
-      this.socket.send(JSON.stringify({
-        content: message,
-        type: 'message',
-      }));
-    }
+
+    this.socket.send(JSON.stringify({
+      content: message,
+      type: 'message',
+    }));
+
   }
 }
 

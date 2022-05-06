@@ -41,12 +41,15 @@ export default class ChatContainer extends Block {
             events: {
               'click': () => {
                 store.dispatch({'currentChat': item})
+                store.dispatch({messages: []})
 
                 messagesServices.getToken(item.id)
 
+                chatServices.getChatUsers(item.id)
+                
                 chatConversation.setProps({chatName: store.getState().currentChat.title})   
                 
-                setTimeout(() => {console.log('messages', store.getState().messages)
+                setTimeout(() => {
                   addToBlock(chatPage, ".message", messagesList, 'incert')
                   messagesList.setProps({messages: store.getState().messages})
                 }, 1000)
@@ -103,7 +106,7 @@ const chatConversation = new ChatConversation({
   chatName: store.getState().currentChat && store.getState().currentChat?.chatName,
   events: {
     'click': (e) => {
-      if (e.srcElement.className === 'fa fa-plus') {
+      if (e.srcElement.className === 'fa fa-user-plus') {
         const userId = document.querySelector('.add-user-input')?.value;
         chatServices.addUser({
           "users": [
@@ -115,11 +118,12 @@ const chatConversation = new ChatConversation({
 
       if (e.srcElement.className === 'fa fa-send') {
         const messageBox = document.querySelector('.send-input')
-        const message = messageBox?.value     
+        const message = messageBox?.value  
+
         messagesServices.sendMessageSocket(message)
-        console.log('messages', store.getState().messages)
-        setTimeout(() => messagesList.setProps({messages: store.getState().messages}), 2000)
-        // messagesList.setProps({messages: store.getState().messages})
+
+        setTimeout(() => messagesList.setProps({messages: store.getState().messages}), 1000)
+
         messageBox!.value = ''
 
 
@@ -129,29 +133,6 @@ const chatConversation = new ChatConversation({
   }
 })
 
-const messages=[
-  {
-    message: `how are you?`,
-    time: '11:20',
-    user: 'me'
-  },
-
-  {
-    message: `Im going out`,
-    time: '11:22',
-    user: 'Ivan'
-  },
-  {
-    message: `how are you?`,
-    time: '11:20',
-    user: 'me'
-  },
-  {
-    message: 'malaria? no way',
-    time: '11:22',
-    user: 'Ivan'
-  }
-]
 
 const chatPage = new ChatPage({
   header: "Chat",

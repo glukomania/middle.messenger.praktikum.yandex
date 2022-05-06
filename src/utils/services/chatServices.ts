@@ -33,6 +33,16 @@ class ChatServices {
   public async addUser(data: object): Promise<void> {
     try {
       await ChatAPI.addUser(data);
+      this.getChatUsers(window.store.getState().currentChat.id)
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  public async getChatUsers(chatId: number): Promise<void> {
+    try {
+      await ChatAPI.getChatUsers(chatId)
+        .then((resp) => window.store.dispatch({'chatUsers': JSON.parse(resp.response)}))
     } catch (e) {
       alert(e);
     }

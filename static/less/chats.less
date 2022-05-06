@@ -140,24 +140,27 @@
 }
 
 .conversation-part {
-  margin: 20px 20px 0 20px;
+  padding: 20px 20px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background-color: @brownText;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
 .user-bar {
   height: 30px;
   width: 100%;
-  border-bottom: 1px solid @bordergrey;
   display: flex;
   flex-direction: row;
   font-size: 18px;
-  color: @brownText;
+  color: @white;
 }
 
 .user-bar-username {
   margin-left: 15px;
+  color: @white;
 }
 
 .chat-delete {
@@ -166,6 +169,7 @@
 
 .scroll {
   width: 100%;
+  height: 420px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -278,6 +282,7 @@
 
 .plus-icon {
   margin-left: -25px;
+  color: @brownText;
 }
 
 .plus-icon:hover {

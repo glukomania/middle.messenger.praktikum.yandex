@@ -43,9 +43,16 @@ class AuthServices {
 
   public async logout(): Promise<void> {
     try {
-      await authAPI.logout();
-      store.dispatch({'user': null});
-      window.router.go('/');
+      await authAPI.logout()?.then(() => {
+        store.dispatch({ 
+          loginFormError: null,
+          user: null,
+          currentChat: null,
+          messages: [],
+        });
+        window.router.go('/');
+      })
+
     } catch (e) {
       console.log(e);
     }
