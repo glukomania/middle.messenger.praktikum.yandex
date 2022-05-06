@@ -9,7 +9,6 @@ export default class Error extends Block {
   }
 
   render() {
-    console.log('errors.ts')
     return pug.compile(errorTmpl, {})(this.props);
   }
 }

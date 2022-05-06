@@ -10,7 +10,8 @@ import chatServices from "../utils/services/chatServices";
 import {store} from '../utils/store/store';
 import ChatConversation from "../components/chatConversation";
 import authServices from "../utils/services/authServices";
-import LogoutButton from "../components/logoutButton"
+import LogoutButton from "../components/logoutButton";
+import messagesServices from "../utils/services/messagesServices";
 
 
 export default class ChatContainer extends Block {
@@ -18,6 +19,12 @@ export default class ChatContainer extends Block {
     super("div", { ...props, classNames: ["login_container"] });
   }
   
+  scrollToBottom() {
+    const element = document.querySelector('.incert');
+    console.log('element', element.scrollTop, element.scrollHeight, )
+    element.scrollTop = element.scrollHeight
+  }
+
   render() {
     authServices.getUser().then(() => {
       addToBlock(chatPage, ".header", header, "header");
@@ -34,7 +41,20 @@ export default class ChatContainer extends Block {
             events: {
               'click': () => {
                 store.dispatch({'currentChat': item})
-                chatConversation.setProps({chatName: store.getState().currentChat.title})
+
+                messagesServices.getToken(item.id)
+
+                chatConversation.setProps({chatName: store.getState().currentChat.title})   
+                
+                setTimeout(() => {console.log('messages', store.getState().messages)
+                  addToBlock(chatPage, ".message", messagesList, 'incert')
+                  messagesList.setProps({messages: store.getState().messages})
+                }, 1000)
+        
+                  
+                setTimeout(() => this.scrollToBottom(), 2000);
+
+                
               }
             }
           })
@@ -46,7 +66,7 @@ export default class ChatContainer extends Block {
         label: 'click me',
         avatarUrl: 'https://ya-praktikum.tech/api/v2/resources' + (store.getState().user && store.getState().user.avatar),
         events: {
-          'click': () => console.log('click profile')
+          'click': () => window.router.go('/profile')
         }
       })
 
@@ -56,7 +76,6 @@ export default class ChatContainer extends Block {
     })
 
     addToBlock(chatPage, ".chat-wrapper", chatConversation, 'conversation-wrapper')
-    addToBlock(chatPage, ".message", messagesList, 'incert');  
 
     return chatPage.getContent();
   }
@@ -81,7 +100,33 @@ const logoutButton = new LogoutButton({
 
 
 const chatConversation = new ChatConversation({
-  chatName: store.getState().currentChat && store.getState().currentChat.chatName
+  chatName: store.getState().currentChat && store.getState().currentChat?.chatName,
+  events: {
+    'click': (e) => {
+      if (e.srcElement.className === 'fa fa-plus') {
+        const userId = document.querySelector('.add-user-input')?.value;
+        chatServices.addUser({
+          "users": [
+            userId
+          ],
+          "chatId": store.getState().currentChat?.id
+        })
+      }
+
+      if (e.srcElement.className === 'fa fa-send') {
+        const messageBox = document.querySelector('.send-input')
+        const message = messageBox?.value     
+        messagesServices.sendMessageSocket(message)
+        console.log('messages', store.getState().messages)
+        setTimeout(() => messagesList.setProps({messages: store.getState().messages}), 2000)
+        // messagesList.setProps({messages: store.getState().messages})
+        messageBox!.value = ''
+
+
+      }
+    }
+
+  }
 })
 
 const messages=[
@@ -123,5 +168,5 @@ const chatPage = new ChatPage({
 const header = new Header({})
 
 const messagesList = new MessagesList({
-  messages,
+  messages: window.store && window.store.getState().messages,
 })

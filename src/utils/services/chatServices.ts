@@ -29,6 +29,14 @@ class ChatServices {
       alert(e);
     }
   }
+
+  public async addUser(data: object): Promise<void> {
+    try {
+      await ChatAPI.addUser(data);
+    } catch (e) {
+      alert(e);
+    }
+  }
 }
 
 export default new ChatServices();

@@ -2,7 +2,7 @@ export default `
 div(class='user-profile-container')
   div(class='profile-avatar-wrapper')
     img(src=avatar, class='profile-avatar')
-  div(class='profile-display-name') #{display_name}
+  div(class='profile-display-name') #{display_name} (id #{id})
   div(class='profile-info-container')
     div(class='profile-value-container')
       div(class='profile-label') First name

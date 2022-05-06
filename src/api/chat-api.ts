@@ -3,18 +3,30 @@ import { BaseAPI } from "./base-api";
 
 const baseURL = new HTTPTransport('https://ya-praktikum.tech/api/v2/chats');
 
+type AddUser = {
+  "users": [
+    number
+  ],
+  "chatId": number
+}
+
+type CreateChat = {
+  "title": string
+}
+
+
 
 class ChatAPI extends BaseAPI {
   getChats() {
     return baseURL.get("/");
   }
 
-  createChat(data) {
+  createChat(data: CreateChat) {
     return baseURL.post('/', {data});
   }
 
-  deleteChat(chatId: number) {
-    return baseURL.delete('/',{chatId});
+  addUser(data: AddUser) {
+    return baseURL.put('/chats/users', {data})
   }
 }
 

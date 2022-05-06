@@ -34,6 +34,8 @@ export const defaultState = {
   isLoading: false,
   loginFormError: null,
   user: null,
+  currentChat: null,
+  messages: [],
 };
 
 
@@ -44,7 +46,7 @@ export class Store<State extends Record<string, any>> extends EventBus {
     super();
     this.state = defaultState;
     this.on('updated', () => {
-    });
+    });    
   }
 
   public getState() {

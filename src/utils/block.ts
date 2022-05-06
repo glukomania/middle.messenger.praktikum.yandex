@@ -97,6 +97,8 @@ class Block<P = any> {
   }
 
   setProps = (nextProps: any) => {
+    console.log('nextProps', nextProps)
+    console.log('this.props', this.props)
     if (!nextProps) {
       return;
     }
@@ -150,7 +152,7 @@ class Block<P = any> {
 
   _makePropsProxy(props: any) {    // непонятно
     const self = this;
-    
+        
     return new Proxy(props as unknown as object, {
       get(target: Record<string, unknown>, prop: string) {
         const value = target[prop];

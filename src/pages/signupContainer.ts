@@ -66,12 +66,8 @@ const form = new SignupForm({
       const wariningElement = document.querySelector('.submit-warning')
       if (isOk === '') {
         authServices.singUp(dataToSend)
-
-        const router = new Router
-        router.go("/chat");
       } else {
         wariningElement?.classList.remove('hidden')
-
       }
     },
   }

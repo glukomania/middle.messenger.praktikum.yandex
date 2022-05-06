@@ -13,20 +13,23 @@ class AuthServices {
   }
 
   public async singUp(payload): Promise<void> {
-    try {
-      await authAPI.signUp(payload);
-      await this.getUser()
 
-      window.router.enterAuth(true).start();
+    try {
+      await authAPI.signUp(payload)?.then((resp) => {
+        if (resp.status < 230) {
+          this.getUser().then(() => window.router.go('/chat'))
+        }
+      })
     } catch (e) {
       alert(e);
     }
+
   }
 
   public async login(payload): Promise<void> {
     try {
+      
       await authAPI.login(payload)?.then(response => {
-          console.log('resp', response)
           if (response.status === 200 || response.status === 400 && response.responseText.includes('User already in system')){
             this.getUser().then(() => window.router.go("/chat"))
           } else {
@@ -34,7 +37,6 @@ class AuthServices {
           }
         })
     } catch (e) {
-      console.log('service', e);
       window.router.go("/")
     }
   }
@@ -43,8 +45,7 @@ class AuthServices {
     try {
       await authAPI.logout();
       store.dispatch({'user': null});
-      window.router.enterAuth(false).start();
-      window.router.go('/login');
+      window.router.go('/');
     } catch (e) {
       console.log(e);
     }

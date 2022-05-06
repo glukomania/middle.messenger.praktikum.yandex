@@ -1,4 +1,3 @@
-import block from './block'
 import  {Store} from './store/store';
 
 
@@ -15,6 +14,7 @@ export function withStore<P extends WithStateProps>(WrappedBlock: BlockClass<P>)
     }
 
     __onChangeStoreCallback = () => {
+      console.log('+++  Set through withStore')
       this.setProps({ ...this.props, store: window.store });
     }
 
