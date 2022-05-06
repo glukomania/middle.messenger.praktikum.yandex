@@ -20,7 +20,6 @@ export default class MessagesList extends Block {
   }
 
   getMessageslist (message: Message) {
-    console.log('message', message)
 
     if (message.user_id === window.store.getState().user.id) {
       return pug.compile((messageOut), {})({...message, time: getTime(message.time)})

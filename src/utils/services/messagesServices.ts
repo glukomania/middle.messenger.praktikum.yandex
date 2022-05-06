@@ -61,7 +61,6 @@ class MessagesServices {
   }
 
   public sendMessageSocket(message: string): void {
-    console.log('sendMessageSocket', message, this.socket)
 
     this.socket.send(JSON.stringify({
       content: message,

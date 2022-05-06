@@ -21,8 +21,35 @@ export default class ChatContainer extends Block {
   
   scrollToBottom() {
     const element = document.querySelector('.incert');
-    console.log('element', element.scrollTop, element.scrollHeight, )
-    element.scrollTop = element.scrollHeight
+    element!.scrollTop = element!.scrollHeight
+  }
+
+  renderChatList(chats: object) {
+    chats.length > 0 && chats.map((item) => {
+      const chatItem = new ChatItem({
+        ...item,
+        events: {
+          'click': () => {
+            store.dispatch({'currentChat': item})
+            store.dispatch({messages: []})
+
+            messagesServices.getToken(item.id)
+
+            chatServices.getChatUsers(item.id)
+            
+            chatConversation.setProps({chatName: store.getState().currentChat.title})   
+            
+            setTimeout(() => {
+              addToBlock(chatPage, ".message", messagesList, 'incert')
+              messagesList.setProps({messages: store.getState().messages})
+            }, 1000)
+    
+            setTimeout(() => this.scrollToBottom(), 2000);
+          }
+        }
+      })
+      addToBlock(chatPage, '.chats', chatItem, 'user-wrapper');
+    })
   }
 
   render() {
@@ -31,39 +58,8 @@ export default class ChatContainer extends Block {
 
       chatServices.getChats().then(() => {
         const chats = store.getState().chats;
-        renderChats(chats)
+        this.renderChatList(chats)
       })
-
-      const renderChats = (chats) => {
-        chats.length > 0 && chats.map((item) => {
-          const chatItem = new ChatItem({
-            ...item,
-            events: {
-              'click': () => {
-                store.dispatch({'currentChat': item})
-                store.dispatch({messages: []})
-
-                messagesServices.getToken(item.id)
-
-                chatServices.getChatUsers(item.id)
-                
-                chatConversation.setProps({chatName: store.getState().currentChat.title})   
-                
-                setTimeout(() => {
-                  addToBlock(chatPage, ".message", messagesList, 'incert')
-                  messagesList.setProps({messages: store.getState().messages})
-                }, 1000)
-        
-                  
-                setTimeout(() => this.scrollToBottom(), 2000);
-
-                
-              }
-            }
-          })
-          addToBlock(chatPage, '.chats', chatItem, 'user-wrapper');
-        })
-      }
 
       const profileButton = new ProfileButton({
         label: 'click me',
@@ -85,8 +81,43 @@ export default class ChatContainer extends Block {
 
 }
 
+
+const logoutButton = new LogoutButton({
+  events: {
+    'click': () => authServices.logout()
+  }
+})
+
+const addUserToChat = (e) => {
+  const userId = document.querySelector('.add-user-input')?.value;
+  chatServices.addUser({
+    "users": [
+      userId
+    ],
+    "chatId": store.getState().currentChat?.id
+  })
+}
+
+const sendmessage = (e) => {
+  const messageBox = document.querySelector('.send-input')
+  const message: string = messageBox?.value  
+
+  messagesServices.sendMessageSocket(message)
+
+  setTimeout(() => messagesList.setProps({messages: store.getState().messages}), 1000)
+
+  messageBox!.value = ''
+}
+
+const clickToChat = (e) => {
+  if (e.srcElement.className === 'fa fa-plus') {
+    const chatName: string = document.querySelector('.chats-name')?.value;
+    chatServices.createChat({'title': chatName})
+  }
+}
+
 class ChatPage extends Block {
-  constructor(props) {
+  constructor(props: any) {
     super("div", { ...props, classNames: ["container"] });
   }
 
@@ -95,55 +126,28 @@ class ChatPage extends Block {
   }
 }
 
-const logoutButton = new LogoutButton({
-  events: {
-    'click': () => authServices.logout()
-  }
-})
-
-
 const chatConversation = new ChatConversation({
   chatName: store.getState().currentChat && store.getState().currentChat?.chatName,
   events: {
     'click': (e) => {
+
       if (e.srcElement.className === 'fa fa-user-plus') {
-        const userId = document.querySelector('.add-user-input')?.value;
-        chatServices.addUser({
-          "users": [
-            userId
-          ],
-          "chatId": store.getState().currentChat?.id
-        })
+        addUserToChat(e)
       }
-
+    
       if (e.srcElement.className === 'fa fa-send') {
-        const messageBox = document.querySelector('.send-input')
-        const message = messageBox?.value  
-
-        messagesServices.sendMessageSocket(message)
-
-        setTimeout(() => messagesList.setProps({messages: store.getState().messages}), 1000)
-
-        messageBox!.value = ''
-
-
+        sendmessage(e)
       }
     }
-
   }
 })
-
 
 const chatPage = new ChatPage({
   header: "Chat",
   classNames: ["container"],
   events: {
-    'click': (e) => {
-      if (e.srcElement.className === 'fa fa-plus') {
-        const chatName = document.querySelector('.chats-name')?.value;
-        chatServices.createChat({'title': chatName})
-      }
-    }}
+    'click': clickToChat
+  }
   });
 
 const header = new Header({})
