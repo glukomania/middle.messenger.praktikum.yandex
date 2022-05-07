@@ -21,8 +21,9 @@ export default class ProfileContainer extends Block {
   
   render() {
     authServices.getUser().then(() => {
-      const user = this.props.user || store.getState().user
       addToBlock(profileModal, ".modal-container", closeButton, "model-close__wrapper")
+
+      const user = this.props.user || store.getState().user
       const profile = new Profile({
         ...user,
         avatar: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar,
@@ -30,9 +31,9 @@ export default class ProfileContainer extends Block {
       })
       
       addToBlock(profileModal, ".modal-container", profile, "profile-wrapper");
-
       addToBlock(profileModal, ".edit-profile-wrapper", editProfileLink, 'profile-options');
       addToBlock(profileModal, ".change-password-wrapper", changePasswodLink, 'change-password-link')
+      
       window.profile = profile;
     })
     

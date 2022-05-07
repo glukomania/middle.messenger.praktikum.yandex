@@ -6,7 +6,7 @@ class MessagesServices {
     try {
       await ChatMessagesAPI.getToken(chatId)
         .then((response) => {
-          window.store.dispatch({'token': JSON.parse((response as object).response).token});
+          store.dispatch({'token': JSON.parse((response as object).response).token});
         })
         .then(() => {
           this.launchSocket(store.getState().user.id, store.getState().currentChat.id)

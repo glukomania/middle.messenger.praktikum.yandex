@@ -5,10 +5,16 @@ import {addToBlock} from "../utils/dom";
 import Input from '../components/input';
 import Button from "../components/button";
 import SignupForm from '../components/signupForm'
-import Router from '../utils/browserRouter'
 import authServices from "../utils/services/authServices";
 
-
+type dataToSendType = {
+  login: FormDataEntryValue | null,
+  email: FormDataEntryValue | null,
+  phone: FormDataEntryValue | null,
+  first_name: FormDataEntryValue | null,
+  second_name: FormDataEntryValue | null,
+  password: FormDataEntryValue | null,
+}
 
 export default class SignupContainer extends Block {
   constructor(props: any) {
@@ -40,12 +46,12 @@ const form = new SignupForm({
   type: 'submit',
   classNames: ['signup-form'],
   events: {
-    'submit': (event) => {
+    'submit': (event: Event) => {
       event.preventDefault()
       const target = event.target
-      const formData = new FormData(target)
+      const formData = new FormData(target as HTMLFormElement)
 
-      const dataToSend: object = {
+      const dataToSend: dataToSendType = {
         login: formData.get('login'),
         email: formData.get('email'),
         phone: formData.get('phone'),

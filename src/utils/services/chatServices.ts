@@ -1,5 +1,11 @@
 import ChatAPI from '../../api/chat-api';
 
+type AddUsersToChat = {
+  "users": [
+    number
+  ],
+  "chatId": number
+}
 class ChatServices {
   public async getChats(): Promise<void> {
     try {
@@ -11,12 +17,12 @@ class ChatServices {
     }
   }
 
-  public async createChat(chatName: string): Promise<void> {
+  public async createChat(chatName: any): Promise<void> {
     try {
       await ChatAPI.createChat(chatName);
       await this.getChats()
     } catch (e) {
-      alert(e);
+      console.log('createChat', e);
     }
   }
 
@@ -26,25 +32,25 @@ class ChatServices {
       await ChatAPI.deleteChat(chatNumber);
       await this.getChats()
     } catch (e) {
-      alert(e);
+      console.log('deleteChat', e);
     }
   }
 
-  public async addUser(data: object): Promise<void> {
+  public async addUser(data: AddUsersToChat): Promise<void> {
     try {
       await ChatAPI.addUser(data);
       this.getChatUsers(window.store.getState().currentChat.id)
     } catch (e) {
-      alert(e);
+      console.log('addUser', e);
     }
   }
 
   public async getChatUsers(chatId: number): Promise<void> {
     try {
       await ChatAPI.getChatUsers(chatId)
-        .then((resp) => window.store.dispatch({'chatUsers': JSON.parse(resp.response)}))
+        .then((resp: any) => window.store.dispatch({'chatUsers': JSON.parse(resp.response)}))
     } catch (e) {
-      alert(e);
+      console.log('getChatUsers', e);
     }
   }
 }

@@ -10,10 +10,13 @@ type AddUser = {
   "chatId": number
 }
 
-type CreateChat = {
+type CreateChatType = {
   "title": string
 }
 
+type deleteChatData = {
+  "chatId": number
+}
 
 
 class ChatAPI extends BaseAPI {
@@ -21,7 +24,7 @@ class ChatAPI extends BaseAPI {
     return baseURL.get("/");
   }
 
-  createChat(data: CreateChat) {
+  createChat(data: CreateChatType) {
     return baseURL.post('/', {data});
   }
 
@@ -31,6 +34,10 @@ class ChatAPI extends BaseAPI {
 
   getChatUsers(chatId: number) {
     return baseURL.get(`/${chatId}/users`)
+  }
+
+  deleteChat(data: deleteChatData) {
+    return baseURL.delete('/', {data})
   }
 }
 

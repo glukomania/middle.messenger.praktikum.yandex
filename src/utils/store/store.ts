@@ -36,6 +36,7 @@ export const defaultState = {
   user: null,
   currentChat: null,
   messages: [],
+  chats: [],
 };
 
 

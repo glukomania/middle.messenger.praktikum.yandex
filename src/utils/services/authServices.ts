@@ -21,7 +21,7 @@ class AuthServices {
         }
       })
     } catch (e) {
-      alert(e);
+      console.log('singUp', e);
     }
 
   }
