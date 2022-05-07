@@ -29,7 +29,7 @@ class AuthServices {
   public async login(payload): Promise<void> {
     try {
       
-      await authAPI.login(payload)?.then(response => {
+      await authAPI.login(payload)?.then((response: any) => {
           if (response.status === 200 || response.status === 400 && response.responseText.includes('User already in system')){
             this.getUser().then(() => window.router.go("/chat"))
           } else {

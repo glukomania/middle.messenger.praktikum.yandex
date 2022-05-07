@@ -111,7 +111,7 @@ const sendmessage = (e) => {
   messageBox!.value = ''
 }
 
-const clickToChat = (e) => {
+const addChat = (e: any) => {
   if (e.srcElement.className === 'fa fa-plus') {
     const chatName: string = document.querySelector('.chats-name')?.value
     chatServices.createChat({'title': chatName})
@@ -120,6 +120,7 @@ const clickToChat = (e) => {
 
 class ChatPage extends Block {
   constructor(props: any) {
+    console.log('props', props)
     super('div', { ...props, classNames: ['container'] })
   }
 
@@ -148,7 +149,7 @@ const chatPage = new ChatPage({
   header: 'Chat',
   classNames: ["container"],
   events: {
-    'click': clickToChat
+    'click': addChat
   }
   });
 

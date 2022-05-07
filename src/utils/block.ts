@@ -3,7 +3,7 @@ import EventBus from './eventBus';
 import * as pug from "pug";
 import isObjectEqual from "../utils/isObjectEqual"
 
-class Block<P = any> {
+class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
