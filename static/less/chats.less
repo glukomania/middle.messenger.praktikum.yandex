@@ -52,10 +52,15 @@
   width: 10%;
   font-size: 18px;
 }
-.chats-search-container {
+
+.chats-add:hover{
+  cursor: pointer;
+}
+
+.chats-name-container {
   padding: 10px;
 }
-.chats-search {
+.chats-name {
   width: 100%;
   font-size: 14px;
   color: @greyText;
@@ -73,6 +78,21 @@
   flex-direction: row;
   font-size: 14px;
   padding: 10px 20px;
+}
+
+.user-container:hover {
+  cursor: pointer;
+}
+
+.user-profile-button {
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  padding: 10px 0px;
+}
+
+.user-profile-button:hover {
+  cursor: pointer;
 }
 
 .user-name-container {
@@ -120,25 +140,27 @@
 }
 
 .conversation-part {
-  height: 80%;
-  margin: 20px 20px 0 20px;
+  padding: 20px 20px 0 20px;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  background-color: @brownText;
+  border-top-left-radius: inherit;
+  border-top-right-radius: inherit;
 }
 
 .user-bar {
   height: 30px;
   width: 100%;
-  border-bottom: 1px solid @bordergrey;
   display: flex;
   flex-direction: row;
   font-size: 18px;
-  color: @brownText;
+  color: @white;
 }
 
 .user-bar-username {
   margin-left: 15px;
+  color: @white;
 }
 
 .chat-delete {
@@ -147,6 +169,7 @@
 
 .scroll {
   width: 100%;
+  height: 420px;
   overflow-x: hidden;
   overflow-y: auto;
 }
@@ -225,4 +248,43 @@
 
 .send-icon:hover {
   color: @salmon;
+}
+
+.stub {
+  font-size: 18px;
+  margin-top: 30px;
+  margin-left: 100px;
+  color: @brownText;
+}
+
+.stub-text {
+  font-size: 18px;
+  margin-top: 30px;
+  margin-left: 100px;
+  color: @greyText;
+}
+
+.user-logout {
+  font-size: 18px;
+  margin: 20px 20px 0 0;
+}
+
+.add-user-input {
+  height: 15px;
+  margin-top: -10px
+}
+
+.add-user {
+  margin: 0 0 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.plus-icon {
+  margin-left: -25px;
+  color: @brownText;
+}
+
+.plus-icon:hover {
+  cursor: pointer;
 }

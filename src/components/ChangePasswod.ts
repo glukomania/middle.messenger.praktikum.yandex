@@ -3,7 +3,7 @@ import Block from "../utils/block";
 import changePasswordTmpl from './changePassword.tmpl'
 
 export default class ChangePasswordLink extends Block {
-  constructor(props) {
+  constructor(props: any) {
     super("div", { ...props});
   }
 

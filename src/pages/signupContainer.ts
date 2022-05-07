@@ -1,20 +1,39 @@
-import * as pug from "pug";
 import Block from "../utils/block";
-import renderDOM from "../utils/dom";
-import signup from "../components/signup.tmpl";
-import Input from '../components/input';
 import {validate} from "../utils/validation";
+import Signup from "../components/signup";
+import {addToBlock} from "../utils/dom";
+import Input from '../components/input';
 import Button from "../components/button";
 import SignupForm from '../components/signupForm'
+import authServices from "../utils/services/authServices";
 
-export default class Signup extends Block {
-  constructor(props) {
+type dataToSendType = {
+  login: FormDataEntryValue | null,
+  email: FormDataEntryValue | null,
+  phone: FormDataEntryValue | null,
+  first_name: FormDataEntryValue | null,
+  second_name: FormDataEntryValue | null,
+  password: FormDataEntryValue | null,
+}
+
+export default class SignupContainer extends Block {
+  constructor(props: any) {
     super("div", { ...props, classNames: ["login_container"] });
   }
-
+  
   render() {
-    return pug.compile(signup, {})(this.props);
+    addToBlock(signupPage, ".signup-form-container", form, "signup-form");
+    addToBlock(signupPage, ".signup-form", firstNameInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", secondNameInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", loginInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", passwordInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", phoneInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", emailInput, 'signup-input-container');
+    addToBlock(signupPage, ".signup-form", buttonSubmit, 'signup-container');
+
+    return signupPage.getContent();
   }
+
 }
 
 const signupPage = new Signup({
@@ -22,36 +41,39 @@ const signupPage = new Signup({
   classNames: ["container"],
 });
 
+
 const form = new SignupForm({
   type: 'submit',
   classNames: ['signup-form'],
   events: {
-    'submit': (event) => {
+    'submit': (event: Event) => {
       event.preventDefault()
       const target = event.target
-      const formData = new FormData(target)
+      const formData = new FormData(target as HTMLFormElement)
 
-      const dataToSend = {
+      const dataToSend: dataToSendType = {
         login: formData.get('login'),
         email: formData.get('email'),
         phone: formData.get('phone'),
-        firstName: formData.get('firstName'),
-        secondName: formData.get('secondName'),
+        first_name: formData.get('first_name'),
+        second_name: formData.get('second_name'),
         password: formData.get('password'),
       }
-      
+
       let isOk: string = '';
       for (let key in dataToSend) {
-        isOk = isOk + validate(key, dataToSend[key])
-      }
-
+        if (key.includes('Name')) {
+          isOk = isOk + validate('names', dataToSend[key])
+        } else {
+          isOk = isOk + validate(key, dataToSend[key])
+        }
+      } 
+      
       const wariningElement = document.querySelector('.submit-warning')
-
       if (isOk === '') {
-        console.log('data can be sent')
+        authServices.singUp(dataToSend)
       } else {
         wariningElement?.classList.remove('hidden')
-
       }
     },
   }
@@ -151,13 +173,3 @@ const buttonSubmit = new Button({
   buttonName: 'Sign up',
   classNames: ['login-button-container'],
 })
-
-renderDOM(".root", signupPage, "container");
-renderDOM('.signup-form-container', form, 'signup-form')
-renderDOM('.signup-form', firstNameInput, 'signup-input-container')
-renderDOM('.signup-form', secondNameInput, 'signup-input-container')
-renderDOM('.signup-form', loginInput, 'signup-input-container')
-renderDOM('.signup-form', passwordInput, 'signup-input-container')
-renderDOM('.signup-form', phoneInput, 'signup-input-container')
-renderDOM('.signup-form', emailInput, 'signup-input-container')
-renderDOM('.signup-form', buttonSubmit, 'signup-container')

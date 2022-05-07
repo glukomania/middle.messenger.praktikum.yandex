@@ -1,13 +1,16 @@
 import {nanoid} from 'nanoid';
 import EventBus from './eventBus';
+import * as pug from "pug";
+import isObjectEqual from "../utils/isObjectEqual"
 
 class Block {
   static EVENTS = {
     INIT: 'init',
     FLOW_CDM: 'flow:component-did-mount',
     FLOW_CDU: 'flow:component-did-update',
-    FLOW_RENDER: 'flow:render'
-  };
+    FLOW_RENDER: 'flow:render',
+    FLOW_CWU: 'flow:component-will-unmount',
+  } as const;
   
   public id = nanoid(6);
   private _element: HTMLElement | null = null;
@@ -29,18 +32,30 @@ class Block {
       props,
     };
         
-    this.props = this._makePropsProxy(props);
+     this.props= this._makePropsProxy(props);
 
     this.eventBus = () => eventBus;
 
     this._registerEvents(eventBus);
     eventBus.emit(Block.EVENTS.INIT);
   }
+
+  _checkInDom() {
+    const elementInDOM = document.body.contains(this._element);
+
+    if (elementInDOM) {
+      setTimeout(() => this._checkInDom(), 1000);
+      return;
+    }
+
+    this.eventBus().emit(Block.EVENTS.FLOW_CWU, this.props);
+  }
   
   _registerEvents(eventBus: EventBus) {
     eventBus.on(Block.EVENTS.INIT, this.init.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDM, this._componentDidMount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_CDU, this._componentDidUpdate.bind(this));
+    eventBus.on(Block.EVENTS.FLOW_CWU, this._componentWillUnmount.bind(this));
     eventBus.on(Block.EVENTS.FLOW_RENDER, this._render.bind(this));
   }
 
@@ -58,6 +73,13 @@ class Block {
     this.componentDidMount();
   }
 
+  componentWillUnmount() {}
+
+  _componentWillUnmount() {
+    this.eventBus().destroy();
+    this.componentWillUnmount();
+  }
+
   componentDidMount() {}
 
   dispatchComponentDidMoun() {
@@ -65,10 +87,9 @@ class Block {
   }
 
   _componentDidUpdate(oldProps: any, newProps: any) {
-    if (!this.componentDidUpdate(oldProps, newProps)) {
+    if (isObjectEqual(oldProps, newProps)) {
       this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
     }
-    this.eventBus().emit(Block.EVENTS.FLOW_RENDER);
   }
 
   componentDidUpdate(oldProps: any, newProps: any) {
@@ -79,7 +100,6 @@ class Block {
     if (!nextProps) {
       return;
     }
-
     Object.assign(this.props, nextProps);
   };
   
@@ -91,13 +111,38 @@ class Block {
   _render() {
     const block = this.render();
     this._removeEvents();
-    this._element!.innerHTML = block;
+    if((typeof block) === 'string') {
+      this._element!.innerHTML = block;
+    } else {
+       this._element = block;
+    }
     this._addEvents();
+
   }
 
-  render(): string {
-    return ''
+  render(): HTMLElement | String | null {
+    return this.getContent();
   }
+
+  compile(template, props: Object) {
+    const propsAndStubs = { ...props };
+
+    Object.entries(this.children).forEach(([key, child]) => {
+        propsAndStubs[key] = `<div data-id="${child.id}"></div>`
+    });
+
+    const fragment = this._createDocumentElement('template');
+
+    fragment.innerHTML = pug.compile(template, propsAndStubs);
+
+    Object.values(this.children).forEach(child => {
+        const stub = fragment.content.querySelector(`[data-id="${child.id}"]`);
+        
+        stub.replaceWith(child.getContent());
+    });
+
+    return fragment.content;
+}
 
   getContent(): HTMLElement | null {
     return this.element;
@@ -105,16 +150,16 @@ class Block {
 
   _makePropsProxy(props: any) {    // непонятно
     const self = this;
-    
+        
     return new Proxy(props as unknown as object, {
       get(target: Record<string, unknown>, prop: string) {
         const value = target[prop];
         return typeof value === 'function' ? value.bind(target) : value;
       },
+
       set(target: Record<string, unknown>, prop: string, value: unknown) {
         target[prop] = value;
-
-        self.eventBus(). emit(Block.EVENTS.FLOW_CDU, {...target}, target);
+        self.eventBus().emit(Block.EVENTS.FLOW_CDU, {...target}, target);
         return true;
       },
       deleteProperty() {
@@ -137,7 +182,6 @@ class Block {
   
   _addEvents() {
     const events: Record<string, () => void> = (this.props as any).events;
-    
     if (!events) {
       return
     }
@@ -153,7 +197,7 @@ class Block {
   }
 
   show() {
-    this._element!.style.display = 'block';
+    this._element!.style.display = 'flex';
   }
 
   hide() {

@@ -1,5 +1,3 @@
-import * as pug from "pug";
-import Block from "../utils/block";
 import renderDOM from "../utils/dom";
 import Error from "../components/error";
 
