@@ -35,18 +35,17 @@ class LoginContainer extends Block {
             password: formData.get('password'),
           }
 
-          let isOk: string = '';
+          let isOk: boolean = false
+
           for (let key in dataToSend) {
             if (key.includes('Name')) {
-              isOk = isOk + validate('names', dataToSend[key])
+              isOk = validate('names', dataToSend[key]) ? true : false
             } else {
-              isOk = isOk + validate(key, dataToSend[key])
+              isOk = validate(key, dataToSend[key]) ? true : false
             }
           } 
-
           
-
-          if (isOk === '') {
+          if (!isOk) {
             authServices.login(dataToSend)
           } 
         }

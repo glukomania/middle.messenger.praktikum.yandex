@@ -73,17 +73,19 @@ const form = new SignupForm({
     password: formData.get('password'),
    }
 
-   let isOk: string = ''
+   let isOk: boolean = false
+
    for (let key in dataToSend) {
-    if (key.includes('Name')) {
-     isOk = isOk + validate('names', dataToSend[key])
-    } else {
-     isOk = isOk + validate(key, dataToSend[key])
-    }
-   }
+     if (key.includes('Name')) {
+       isOk = validate('names', dataToSend[key]) ? true : false
+     } else {
+       isOk = validate(key, dataToSend[key]) ? true : false
+     }
+   } 
 
    const wariningElement = document.querySelector('.submit-warning')
-   if (isOk === '') {
+   
+   if (!isOk) {
     authServices.singUp(dataToSend)
    } else {
     wariningElement?.classList.remove('hidden')

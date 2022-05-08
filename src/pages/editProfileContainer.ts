@@ -42,16 +42,17 @@ export default class EditProfileContainer extends Block {
       avatar: formData.get('avatar'),
      }
 
-     let isOk: string = ''
-     for (let key in dataToSend) {
-      if (key.includes('name')) {
-       isOk = isOk + validate('name', dataToSend[key])
-      } else {
-       isOk = isOk + validate(key, dataToSend[key])
-      }
-     }
+     let isOk: boolean = false
 
-     if (isOk === '') {
+     for (let key in dataToSend) {
+       if (key.includes('Name')) {
+         isOk = validate('names', dataToSend[key]) ? true : false
+       } else {
+         isOk = validate(key, dataToSend[key]) ? true : false
+       }
+     } 
+
+     if (!isOk) {
       UserServices.updateProfile(dataToSend)
       if (formData.get('avatar')) {
        UserServices.changeAvatar(formData)
