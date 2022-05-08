@@ -14,7 +14,7 @@ import LogoutButton from '../components/logoutButton'
 import messagesServices from '../utils/services/messagesServices'
 
 export default class ChatContainer extends Block {
- constructor(props: any) {
+ constructor(props: unknown) {
   super('div', { ...props, classNames: ['login_container'] })
  }
 
@@ -131,7 +131,7 @@ const addChat = (e: any) => {
 }
 
 class ChatPage extends Block {
- constructor(props: any) {
+ constructor(props: unknown) {
   console.log('props', props)
   super('div', { ...props, classNames: ['container'] })
  }

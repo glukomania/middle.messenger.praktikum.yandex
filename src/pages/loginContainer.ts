@@ -10,7 +10,7 @@ import authServices from "../utils/services/authServices";
 
 
 class LoginContainer extends Block {
-  constructor(props: any) {
+  constructor(props: unknown) {
     super("div", { ...props, classNames: ["login_container"] });
   }
 

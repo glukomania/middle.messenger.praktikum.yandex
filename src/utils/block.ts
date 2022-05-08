@@ -14,8 +14,8 @@ class Block {
 
  public id = nanoid(6)
  private _element: HTMLElement | null = null
- private _meta: { tagName: string; props: any }
- public props: any
+ private _meta: { tagName: string; props: unknown }
+ public props: unknown
  private eventBus: () => EventBus
 
  /** JSDoc
@@ -25,7 +25,7 @@ class Block {
   * @returns {void}
   */
 
- constructor(tagName: string = 'div', props: any = {}) {
+ constructor(tagName: string = 'div', props: unknown = {}) {
   const eventBus = new EventBus()
   this._meta = {
    tagName,
@@ -86,17 +86,17 @@ class Block {
   this.eventBus().emit(Block.EVENTS.FLOW_CDM)
  }
 
- _componentDidUpdate(oldProps: any, newProps: any) {
+ _componentDidUpdate(oldProps: unknown, newProps: unknown) {
   if (isObjectEqual(oldProps, newProps)) {
    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
  }
 
- componentDidUpdate(oldProps: any, newProps: any) {
+ componentDidUpdate(oldProps: unknown, newProps: unknown) {
   return true
  }
 
- setProps = (nextProps: any) => {
+ setProps = (nextProps: unknown) => {
   if (!nextProps) {
    return
   }
@@ -146,7 +146,7 @@ class Block {
   return this.element
  }
 
- _makePropsProxy(props: any) {
+ _makePropsProxy(props: unknown) {
   // непонятно
   const self = this
 

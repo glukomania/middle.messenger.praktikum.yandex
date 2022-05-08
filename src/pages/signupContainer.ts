@@ -17,7 +17,7 @@ type dataToSendType = {
 }
 
 export default class SignupContainer extends Block {
- constructor(props: any) {
+ constructor(props: unknown) {
   super('div', { ...props, classNames: ['login_container'] })
  }
 

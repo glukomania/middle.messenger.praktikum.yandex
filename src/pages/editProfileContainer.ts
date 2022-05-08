@@ -10,7 +10,7 @@ import UserServices from '../utils/services/userServices'
 import authServices from '../utils/services/authServices'
 
 export default class EditProfileContainer extends Block {
- constructor(props: any) {
+ constructor(props: unknown) {
   super('div', { ...props, classNames: ['login_container'] })
  }
 

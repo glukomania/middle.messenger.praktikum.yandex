@@ -3,7 +3,7 @@ import * as pug from 'pug'
 import signup from './signup.tmpl'
 
 export default class Signup extends Block {
- constructor(props: any) {
+ constructor(props: unknown) {
   super('div', { ...props, classNames: ['login_container'] })
  }
 

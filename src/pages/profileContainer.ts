@@ -15,7 +15,7 @@ import userServices from "../utils/services/userServices";
 
 
 export default class ProfileContainer extends Block {
-  constructor(props: any) {
+  constructor(props: unknown) {
     super("div", { ...props, classNames: ["login_container"] });
   }
   
