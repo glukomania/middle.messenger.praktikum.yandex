@@ -1,44 +1,41 @@
-import HTTPTransport from '../utils/HTTPTransport';
-import { BaseAPI } from "./base-api";
+import HTTPTransport from '../utils/HTTPTransport'
+import { BaseAPI } from './base-api'
 
-const baseURL = new HTTPTransport('https://ya-praktikum.tech/api/v2/chats');
+const baseURL = new HTTPTransport('https://ya-praktikum.tech/api/v2/chats')
 
 type AddUser = {
-  "users": [
-    number
-  ],
-  "chatId": number
+ users: [number]
+ chatId: number
 }
 
 type CreateChatType = {
-  "title": string
+ title: string
 }
 
 type deleteChatData = {
-  "chatId": number
+ chatId: number
 }
-
 
 class ChatAPI extends BaseAPI {
-  getChats() {
-    return baseURL.get("/");
-  }
+ getChats() {
+  return baseURL.get('/')
+ }
 
-  createChat(data: CreateChatType) {
-    return baseURL.post('/', {data});
-  }
+ createChat(data: CreateChatType) {
+  return baseURL.post('/', { data })
+ }
 
-  addUser(data: AddUser) {
-    return baseURL.put('/users', {data})
-  }
+ addUser(data: AddUser) {
+  return baseURL.put('/users', { data })
+ }
 
-  getChatUsers(chatId: number) {
-    return baseURL.get(`/${chatId}/users`)
-  }
+ getChatUsers(chatId: number) {
+  return baseURL.get(`/${chatId}/users`)
+ }
 
-  deleteChat(data: deleteChatData) {
-    return baseURL.delete('/', {data})
-  }
+ deleteChat(data: deleteChatData) {
+  return baseURL.delete('/', { data })
+ }
 }
 
-export default new ChatAPI();
+export default new ChatAPI()
