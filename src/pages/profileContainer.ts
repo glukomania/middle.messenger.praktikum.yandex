@@ -26,7 +26,6 @@ export default class ProfileContainer extends Block {
       const user = this.props.user || store.getState().user
       const profile = new Profile({
         ...user,
-        avatar: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar,
         classNames: ['user-profile-container'],
       })
       

@@ -20,17 +20,13 @@ export default class MessagesList extends Block {
  }
 
  getMessageslist(message: Message) {
-  if (message.user_id === window.store.getState().user.id) {
-   return pug.compile(
-    messageOut,
+  const msg = message.user_id === window.store.getState().user.id ? messageOut : messageIn;
+
+  return pug.compile(
+    msg,
     {},
    )({ ...message, time: getTime(message.time) })
-  } else {
-   return pug.compile(
-    messageIn,
-    {},
-   )({ ...message, time: getTime(message.time) })
-  }
+
  }
 
  render() {

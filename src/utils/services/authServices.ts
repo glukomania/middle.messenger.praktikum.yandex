@@ -5,7 +5,15 @@ class AuthServices {
  public async getUser(): Promise<void> {
   try {
    const user = await authAPI.getUserInfo()
-   store.dispatch({ user: JSON.parse(user.response) })
+   store.dispatch({ user: JSON.parse(user.response)})
+   const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
+   console.log('avatar', avatar)
+
+   const userWithAvatar = store.getState().user
+   userWithAvatar.avatar = avatar
+
+   console.log('user', userWithAvatar)
+   store.dispatch({ user: userWithAvatar })
   } catch (e) {
    window.router.enterAuth(false).start()
    window.router.go('/login')

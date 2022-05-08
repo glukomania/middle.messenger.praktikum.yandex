@@ -24,7 +24,6 @@ export default class EditProfileContainer extends Block {
 
   const editProfilePage = new EditProfile({
    ...user,
-   avatar: 'https://ya-praktikum.tech/api/v2/resources' + user.avatar,
    events: {
     submit: (e) => {
      e.preventDefault()

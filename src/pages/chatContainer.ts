@@ -64,10 +64,7 @@ export default class ChatContainer extends Block {
    })
 
    const profileButton = new ProfileButton({
-    label: 'click me',
-    avatarUrl:
-     'https://ya-praktikum.tech/api/v2/resources' +
-     (store.getState().user && store.getState().user.avatar),
+    avatarUrl: store.getState().user.avatar,
     events: {
      click: () => window.router.go('/profile'),
     },
