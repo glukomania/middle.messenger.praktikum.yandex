@@ -11,7 +11,6 @@ export default class BrowserRouter {
    return BrowserRouter.__instance
   }
 
-  this.isAuth = false
   this.routes = []
   this.history = window.history
   this._currentRoute = null
@@ -40,11 +39,6 @@ export default class BrowserRouter {
   }
   if (this._currentRoute && this._currentRoute !== route) {
    this._currentRoute.leave()
-  }
-
-  if (this.isAuth) {
-   this.go('/chat')
-   return
   }
 
   this._currentRoute = route

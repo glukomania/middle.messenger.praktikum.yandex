@@ -15,7 +15,7 @@ class AuthServices {
    console.log('user', userWithAvatar)
    store.dispatch({ user: userWithAvatar })
   } catch (e) {
-   window.router.enterAuth(false).start()
+   window.router.start()
    window.router.go('/login')
   }
  }
@@ -23,9 +23,7 @@ class AuthServices {
  public async singUp(payload): Promise<void> {
   try {
    await authAPI.signUp(payload)?.then((resp) => {
-    if (resp.status < 230) {
      this.getUser().then(() => window.router.go('/chat'))
-    }
    })
   } catch (e) {
    console.log('singUp', e)

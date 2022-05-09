@@ -16,7 +16,7 @@ export const isObjectEqual = (value: object, compare: object): boolean => {
      if (property.length !== compared.length) {
       result = false
      } else {
-      const merge = property.filter((v, i) => v !== compared[i])
+      const merge = property.some((v, i) => v !== compared[i])
       if (merge.length) {
        result = false
       }

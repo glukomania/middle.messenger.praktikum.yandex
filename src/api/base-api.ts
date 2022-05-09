@@ -7,15 +7,17 @@ export class BaseAPI {
   return
  }
 
- protected ErrorHandler = (e: Error) => {
-  throw new Error(`Transport error ${e}`)
- }
+//  protected ErrorHandler = (e: Error) => {
+//   throw new Error(`Transport error ${e}`)
+//  }
 
  protected get = (url: string, options: any) => {
   try {
    return baseURL.get(url, options)
   } catch (err) {
-   this.ErrorHandler(err as Error)
+    if( err instanceof Error) {
+      console.log('err: ', err)
+    }
   }
  }
 
@@ -23,7 +25,9 @@ export class BaseAPI {
   try {
    return baseURL.put(url, options)
   } catch (err) {
-   this.ErrorHandler(err as Error)
+    if( err instanceof Error) {
+      console.log('err: ', err)
+    }
   }
  }
 
@@ -31,7 +35,9 @@ export class BaseAPI {
   try {
    return baseURL.post(url, options)
   } catch (err) {
-   this.ErrorHandler(err as Error)
+    if( err instanceof Error) {
+      console.log('err: ', err)
+    }
   }
  }
 
@@ -39,7 +45,9 @@ export class BaseAPI {
   try {
    return baseURL.delete(url, options)
   } catch (err) {
-   this.ErrorHandler(err as Error)
+    if( err instanceof Error) {
+      console.log('err: ', err)
+    }
   }
  }
 }

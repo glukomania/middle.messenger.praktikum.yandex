@@ -147,7 +147,6 @@ class Block {
  }
 
  _makePropsProxy(props: unknown) {
-  // непонятно
   const self = this
 
   return new Proxy(props as unknown as object, {

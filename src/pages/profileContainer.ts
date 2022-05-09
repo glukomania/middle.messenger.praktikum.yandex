@@ -24,6 +24,7 @@ export default class ProfileContainer extends Block {
       addToBlock(profileModal, ".modal-container", closeButton, "model-close__wrapper")
 
       const user = this.props.user || store.getState().user
+      
       const profile = new Profile({
         ...user,
         classNames: ['user-profile-container'],
