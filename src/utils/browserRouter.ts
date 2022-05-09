@@ -54,10 +54,10 @@ export default class BrowserRouter {
   this.history.back()
  }
 
- enterAuth(value: boolean) {
-  this.isAuth = value
-  return this
- }
+//  enterAuth(value: boolean) {
+//   this.isAuth = value
+//   return this
+//  }
 
  forward() {
   this.history.forward()
