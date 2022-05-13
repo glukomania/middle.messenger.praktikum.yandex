@@ -1,53 +1,26 @@
-import * as pug from "pug";
-import Block from "../utils/block";
-import renderDOM from "../utils/dom";
-import login from "../components/login.tmpl";
-import LoginInput from "../components/input";
-import {validate} from "../utils/validation";
+import LoginContainer from "./loginContainer";
+import browserRouter from "../utils/browserRouter";
+import SignupContainer from "./signupContainer";
+import ChatContainer from "./chatContainer";
+import ProfileContainer from "./profileContainer";
+import EditProfileContainer from './editProfileContainer';
+import Err404Container from './err404Container';
+import Err500Container from './err500Container';
+import {store} from '../utils/store/store';
+import {withStore} from "../utils/withStore"
 
-export default class Login extends Block {
-  constructor(props) {
-    super("div", { ...props, classNames: ["login_container"] });
-  }
+document.addEventListener('DOMContentLoaded', () => {
+  const router = new browserRouter();
+  window.router = router;
+  window.store = store;
 
-  render() {
-    return pug.compile(login, {})(this.props);
-  }
-}
-
-
-const loginPage = new Login({
-  buttonName: "Log in",
-});
-
-const loginInput = new LoginInput({
-  type: 'text',
-  placeholder: 'login',
-  warningClass: 'login-warning warning',
-  inputClassName: 'common-input',
-  name: 'login',
-  events: {
-    'focusout': ev => {
-      const warningPlace = document.querySelector('.login-warning');
-      if (warningPlace) warningPlace.textContent = validate('login', ev.srcElement.value);
-    }
-  }
+ router.use('/', LoginContainer, {selector: '.root', className:"login_container"})
+       .use('/login', LoginContainer, {selector: '.root', className:"login_container"})
+       .use('/signup', SignupContainer, {selector: '.root', className:"login_container"})
+       .use('/chat', withStore(ChatContainer), {selector: '.root', className:"container"})
+       .use('/profile', ProfileContainer, {selector: '.root', className:"container"})
+       .use('/editprofile', EditProfileContainer, {selector: '.root', className:"container"})
+       .use('/err404', Err404Container, {selector: '.root', className:"container"})
+       .use('/err500', Err500Container, {selector: '.root', className:"container"})
+       .start()
 })
-
-const passwordInput = new LoginInput({
-  type: 'password',
-  placeholder: 'password',
-  warningClass: 'password-warning warning',
-  inputClassName: 'common-input',
-  name: 'password',
-  events: {
-    'focusout': ev => {
-      const warningPlace = document.querySelector('.password-warning');
-      if (warningPlace) warningPlace.textContent = validate('password', ev.srcElement.value);
-    }
-  }
-})
-
-renderDOM('.root', loginPage, 'container');
-renderDOM('.login-form', loginInput, 'input-container');
-renderDOM('.login-form', passwordInput, 'input-container');
