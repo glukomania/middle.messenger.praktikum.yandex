@@ -3,7 +3,7 @@ import Block from '../utils/block'
 import profileButton from './profileButton.tmpl'
 
 export default class ProfileButton extends Block {
- constructor(props) {
+ constructor(props: object) {
   super('div', { ...props, classNames: ['user-profile-button'] })
  }
 
@@ -17,6 +17,7 @@ export default class ProfileButton extends Block {
   return pug.compile(
    profileButton,
    {},
+   // @ts-expect-error
   )(this.props)
  }
 }

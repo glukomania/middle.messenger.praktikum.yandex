@@ -1,11 +1,15 @@
 import renderDOM from './dom'
 import Block from './block'
 
-function isEqual(lhs, rhs) {
+function isEqual(lhs: any, rhs: any) {
  return lhs === rhs
 }
 
 export default class BrowserRouter {
+ static __instance: any
+  routes: never[]
+  history: History
+  private _currentRoute: null
  constructor() {
   if (BrowserRouter.__instance) {
    return BrowserRouter.__instance
@@ -18,30 +22,33 @@ export default class BrowserRouter {
   BrowserRouter.__instance = this
  }
 
- use(pathname, block, props) {
+ use(pathname: string, block: any, props: any) {
   const route = new Route(pathname, block, props)
+  // @ts-expect-error
   this.routes.push(route)
   return this
  }
 
  start() {
-  window.onpopstate = ((event) => {
+  window.onpopstate = ((event: any) => {
    this._onRoute(event.currentTarget.location.pathname)
   }).bind(this)
 
   this._onRoute(window.location.pathname)
  }
 
- _onRoute(pathname) {
+ _onRoute(pathname: any) {
   let route = this.getRoute(pathname)
   if (!route) {
    return
   }
   if (this._currentRoute && this._currentRoute !== route) {
+    // @ts-expect-error
    this._currentRoute.leave()
   }
 
   this._currentRoute = route
+  // @ts-expect-error
   route.render()
  }
 
@@ -63,9 +70,10 @@ export default class BrowserRouter {
   this.history.forward()
  }
 
- getRoute(pathname) {
+ getRoute(pathname: any) {
+   // @ts-expect-error
   const route = this.routes.find((route) => route.match(pathname))
-
+  // @ts-expect-error
   return route || this.routes.find((route) => route.match('*'))
  }
 }
@@ -73,9 +81,10 @@ export default class BrowserRouter {
 class Route {
  protected _pathname
  protected _blockClass
+ // @ts-expect-error
  protected _block
  protected _props
-
+// @ts-expect-error
  constructor(pathname: string, view: Block<any>, props: object) {
   this._pathname = pathname
   this._blockClass = view
@@ -99,7 +108,9 @@ class Route {
  render() {
   if (!this._block) {
    this._block = new this._blockClass(this._props)
-   window[this._pathname.replace('/', '')] = this._block
+   const blockname: any = this._pathname.replace('/', '')
+   window[blockname] = this._block
+   // @ts-expect-error
    renderDOM(this._props.selector, this._block, this._props.className)
    return
   }

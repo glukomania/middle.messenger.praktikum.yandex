@@ -11,10 +11,10 @@ import authServices from '../utils/services/authServices'
 
 export default class EditProfileContainer extends Block {
  constructor(props: unknown) {
-  super('div', { ...props, classNames: ['login_container'] })
+  super('div', { ...props as object, classNames: ['login_container'] })
  }
 
- renderAllPage(user) {
+ renderAllPage(user: any) {
   addToBlock(
    profileModal,
    '.modal-container',
@@ -25,11 +25,12 @@ export default class EditProfileContainer extends Block {
   const editProfilePage = new EditProfile({
    ...user,
    events: {
-    submit: (e) => {
+    submit: (e: Event) => {
      e.preventDefault()
      const warning = document.querySelector('.warning')
 
      const target = e.target
+     // @ts-expect-error
      const formData = new FormData(target)
 
      const dataToSend: object = {
@@ -46,13 +47,16 @@ export default class EditProfileContainer extends Block {
 
      for (let key in dataToSend) {
        if (key.includes('Name')) {
+         // @ts-expect-error
          isOk = validate('names', dataToSend[key]) ? true : false
        } else {
+         // @ts-expect-error
          isOk = validate(key, dataToSend[key]) ? true : false
        }
      } 
 
      if (!isOk) {
+       // @ts-expect-error
       UserServices.updateProfile(dataToSend)
       if (formData.get('avatar')) {
        UserServices.changeAvatar(formData)

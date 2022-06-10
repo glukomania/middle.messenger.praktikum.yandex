@@ -5,15 +5,15 @@ class UserAPI extends BaseAPI {
   super()
  }
 
- uploadAvatar(data) {
+ uploadAvatar(data: any) {
   return this.put('/user/profile/avatar', { data })
  }
 
- updateProfile(data) {
+ updateProfile(data: any) {
   return this.put('/user/profile', { data })
  }
 
- changePassword(data) {
+ changePassword(data: any) {
   return this.put('/user/password', { data })
  }
 }

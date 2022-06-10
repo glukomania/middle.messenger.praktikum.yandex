@@ -15,8 +15,8 @@ type Message = {
  user_id: number
 }
 export default class MessagesList extends Block {
- constructor(props) {
-  super('div', { ...props })
+ constructor(props: unknown) {
+  super('div', { ...props as object })
  }
 
  getMessageslist(message: Message) {
@@ -30,7 +30,9 @@ export default class MessagesList extends Block {
  }
 
  render() {
+   // @ts-expect-error
   return this.props.messages
+  // @ts-expect-error
    ? this.props.messages.map(this.getMessageslist).join(`\n`)
    : pug.compile(`div`, {})([])
  }

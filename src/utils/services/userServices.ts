@@ -24,6 +24,7 @@ class UserServices {
      store.dispatch({ user: JSON.parse(response.response) })
     })
     .then(() => {
+    // @ts-expect-error
      window.profile.setProps({ user: window.store.getState().user })
      window.router.go('/profile')
     })
@@ -50,6 +51,7 @@ class UserServices {
    await UserAPI.uploadAvatar(data)!
     .then((response: any) => {
      window.store.dispatch('user', response.response)
+         // @ts-expect-error
      window.chat.setProps({ user: response.response })
     })
     .catch((err) => console.log('uploadAvatar Error', err))

@@ -18,7 +18,7 @@ type dataToSendType = {
 
 export default class SignupContainer extends Block {
  constructor(props: unknown) {
-  super('div', { ...props, classNames: ['login_container'] })
+  super('div', { ...props as object, classNames: ['login_container'] })
  }
 
  render() {
@@ -77,8 +77,10 @@ const form = new SignupForm({
 
    for (let key in dataToSend) {
      if (key.includes('Name')) {
+       // @ts-expect-error
        isOk = validate('names', dataToSend[key]) ? true : false
      } else {
+      // @ts-expect-error
        isOk = validate(key, dataToSend[key]) ? true : false
      }
    } 
@@ -102,9 +104,10 @@ const firstNameInput = new Input({
  inputClassName: 'common-input signup-input firstname',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (ev: Event) => {
    const warningPlace = document.querySelector('.firstname-warning')
    if (warningPlace)
+   // @ts-expect-error
     warningPlace.textContent = validate('names', ev.srcElement.value)
   },
  },
@@ -118,9 +121,10 @@ const secondNameInput = new Input({
  inputClassName: 'common-input signup-input secondname',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (ev: Event) => {
    const warningPlace = document.querySelector('.secondname-warning')
    if (warningPlace)
+   // @ts-expect-error
     warningPlace.textContent = validate('names', ev.srcElement.value)
   },
  },
@@ -134,10 +138,11 @@ const loginInput = new Input({
  inputClassName: 'common-input signup-input login',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (ev: Event) => {
    const warningPlace = document.querySelector('.login-warning')
    if (warningPlace)
-    warningPlace.textContent = validate('login', ev.srcElement.value)
+   // @ts-expect-error
+    warningPlace.textContent = validate('login', ev.srcElement?.value)
   },
  },
 })
@@ -150,9 +155,10 @@ const passwordInput = new Input({
  inputClassName: 'common-input signup-input password',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (ev: Event) => {
    const warningPlace = document.querySelector('.password-warning')
    if (warningPlace)
+   // @ts-expect-error
     warningPlace.textContent = validate('password', ev.srcElement.value)
   },
  },
@@ -166,10 +172,10 @@ const phoneInput = new Input({
  inputClassName: 'common-input signup-input phone',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (e: any) => {
    const warningPlace = document.querySelector('.phone-warning')
    if (warningPlace)
-    warningPlace.textContent = validate('phone', ev.srcElement.value)
+    warningPlace.textContent = validate('phone', e.srcElement.value)
   },
  },
 })
@@ -182,10 +188,10 @@ const emailInput = new Input({
  inputClassName: 'common-input signup-input email',
  classNames: ['signup-input-container'],
  events: {
-  focusout: (ev) => {
+  focusout: (e: any) => {
    const warningPlace = document.querySelector('.email-warning')
    if (warningPlace)
-    warningPlace.textContent = validate('email', ev.srcElement.value)
+    warningPlace.textContent = validate('email', e.srcElement.value)
   },
  },
 })

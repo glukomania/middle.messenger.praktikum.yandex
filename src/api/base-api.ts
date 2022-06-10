@@ -7,11 +7,8 @@ export class BaseAPI {
   return
  }
 
-//  protected ErrorHandler = (e: Error) => {
-//   throw new Error(`Transport error ${e}`)
-//  }
 
- protected get = (url: string, options: any) => {
+ protected get = (url: string, options?: any) => {
   try {
    return baseURL.get(url, options)
   } catch (err) {
@@ -21,7 +18,7 @@ export class BaseAPI {
   }
  }
 
- protected put = (url: string, options: any) => {
+ protected put = (url: string, options?: any) => {
   try {
    return baseURL.put(url, options)
   } catch (err) {
@@ -31,7 +28,7 @@ export class BaseAPI {
   }
  }
 
- protected post = (url: string, options: any) => {
+ protected post = (url: string, options?: any) => {
   try {
    return baseURL.post(url, options)
   } catch (err) {
@@ -41,7 +38,7 @@ export class BaseAPI {
   }
  }
 
- protected delete = (url: string, options: any) => {
+ protected delete = (url: string, options?: any) => {
   try {
    return baseURL.delete(url, options)
   } catch (err) {

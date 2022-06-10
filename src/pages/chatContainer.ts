@@ -15,7 +15,7 @@ import messagesServices from '../utils/services/messagesServices'
 
 export default class ChatContainer extends Block {
  constructor(props: unknown) {
-  super('div', { ...props, classNames: ['login_container'] })
+  super('div', { ...props as object, classNames: ['login_container'] })
  }
 
  scrollToBottom() {
@@ -23,9 +23,9 @@ export default class ChatContainer extends Block {
   element!.scrollTop = element!.scrollHeight
  }
 
- renderChatList(chats: object) {
+ renderChatList(chats: any) {
   chats.length > 0 &&
-   chats.map((item) => {
+   chats.map((item: any) => {
     const chatItem = new ChatItem({
      ...item,
      events: {
@@ -38,7 +38,8 @@ export default class ChatContainer extends Block {
        chatServices.getChatUsers(item.id)
 
        chatConversation.setProps({
-        chatName: store.getState().currentChat.title,
+         // @ts-expect-error 
+        chatName: store.getState().currentChat?.title,
        })
 
        setTimeout(() => {
@@ -64,7 +65,8 @@ export default class ChatContainer extends Block {
    })
 
    const profileButton = new ProfileButton({
-    avatarUrl: store.getState().user.avatar,
+     // @ts-expect-error 
+    avatarUrl: store.getState().user?.avatar,
     events: {
      click: () => window.router.go('/profile'),
     },
@@ -96,18 +98,22 @@ const logoutButton = new LogoutButton({
  },
 })
 
-const addUserToChat = (e) => {
+const addUserToChat = () => {
+  // @ts-expect-error 
  const userId = document.querySelector('.add-user-input')?.value
+ 
  chatServices
   .addUser({
    users: [userId],
+   // @ts-expect-error 
    chatId: store.getState().currentChat?.id,
   })
   .then(() => (userId.value = ''))
 }
 
-const sendmessage = (e) => {
+const sendmessage = () => {
  const messageBox = document.querySelector('.send-input')
+ // @ts-expect-error 
  const message: string = messageBox?.value
 
  messagesServices.sendMessageSocket(message)
@@ -117,11 +123,13 @@ const sendmessage = (e) => {
   1000,
  )
 
+ // @ts-expect-error 
  messageBox!.value = ''
 }
 
 const addChat = (e: any) => {
  if (e.srcElement.className === 'fa fa-plus') {
+   // @ts-expect-error 
   const chatName: string = document.querySelector('.chats-name')?.value
   chatServices.createChat({ title: chatName })
  }
@@ -130,25 +138,26 @@ const addChat = (e: any) => {
 class ChatPage extends Block {
  constructor(props: unknown) {
   console.log('props', props)
-  super('div', { ...props, classNames: ['container'] })
+  super('div', { ...props as object, classNames: ['container'] })
  }
 
  render() {
-  return pug.compile(chat, {})(this.props)
+  return pug.compile(chat, {})(this.props as object)
  }
 }
 
 const chatConversation = new ChatConversation({
  chatName:
+ // @ts-expect-error 
   store.getState().currentChat && store.getState().currentChat?.chatName,
  events: {
-  click: (e) => {
+  click: (e: any) => {
    if (e.srcElement.className === 'fa fa-user-plus') {
-    addUserToChat(e)
+    addUserToChat()
    }
 
    if (e.srcElement.className === 'fa fa-send') {
-    sendmessage(e)
+    sendmessage()
    }
   },
  },

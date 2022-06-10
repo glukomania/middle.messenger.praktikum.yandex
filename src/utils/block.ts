@@ -76,7 +76,7 @@ class Block {
  componentWillUnmount() {}
 
  _componentWillUnmount() {
-  this.eventBus().destroy()
+  // this.eventBus().off()
   this.componentWillUnmount()
  }
 
@@ -87,12 +87,12 @@ class Block {
  }
 
  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
-  if (isObjectEqual(oldProps, newProps)) {
+  if (isObjectEqual(oldProps as object, newProps as object)) {
    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
  }
 
- componentDidUpdate(oldProps: unknown, newProps: unknown) {
+ componentDidUpdate() {
   return true
  }
 
@@ -113,6 +113,7 @@ class Block {
   if (typeof block === 'string') {
    this._element!.innerHTML = block
   } else {
+  // @ts-expect-error
    this._element = block
   }
   this._addEvents()
@@ -122,23 +123,30 @@ class Block {
   return this.getContent()
  }
 
- compile(template, props: Object) {
+ compile(template: any, props: Object) {
   const propsAndStubs = { ...props }
 
+  // @ts-expect-error
   Object.entries(this.children).forEach(([key, child]) => {
+    // @ts-expect-error
    propsAndStubs[key] = `<div data-id="${child.id}"></div>`
   })
 
   const fragment = this._createDocumentElement('template')
 
+  // @ts-expect-error
   fragment.innerHTML = pug.compile(template, propsAndStubs)
 
+  // @ts-expect-error
   Object.values(this.children).forEach((child) => {
+    // @ts-expect-error
    const stub = fragment.content.querySelector(`[data-id="${child.id}"]`)
 
+   // @ts-expect-error
    stub.replaceWith(child.getContent())
   })
 
+  // @ts-expect-error
   return fragment.content
  }
 

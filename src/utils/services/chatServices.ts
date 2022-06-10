@@ -8,6 +8,7 @@ class ChatServices {
  public async getChats(): Promise<void> {
   try {
    const chats = await ChatAPI.getChats()
+   // @ts-expect-error
    window.store.dispatch({ chats: JSON.parse(chats.response) })
   } catch (e) {
    alert(e)

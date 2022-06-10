@@ -7,7 +7,19 @@ import EditProfileContainer from './editProfileContainer';
 import Err404Container from './err404Container';
 import Err500Container from './err500Container';
 import {store} from '../utils/store/store';
-import {withStore} from "../utils/withStore"
+
+declare global {
+  interface Window {
+    store: unknown;
+    router: any;
+    chat: object;
+    profile: object;
+    login: object;
+    signup: object;
+    err500: object;
+    err404: object;
+  }
+}
 
 document.addEventListener('DOMContentLoaded', () => {
   const router = new browserRouter();
@@ -17,7 +29,7 @@ document.addEventListener('DOMContentLoaded', () => {
  router.use('/', LoginContainer, {selector: '.root', className:"login_container"})
        .use('/login', LoginContainer, {selector: '.root', className:"login_container"})
        .use('/signup', SignupContainer, {selector: '.root', className:"login_container"})
-       .use('/chat', withStore(ChatContainer), {selector: '.root', className:"container"})
+       .use('/chat', ChatContainer, {selector: '.root', className:"container"})
        .use('/profile', ProfileContainer, {selector: '.root', className:"container"})
        .use('/editprofile', EditProfileContainer, {selector: '.root', className:"container"})
        .use('/err404', Err404Container, {selector: '.root', className:"container"})

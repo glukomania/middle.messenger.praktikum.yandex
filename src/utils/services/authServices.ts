@@ -5,12 +5,15 @@ class AuthServices {
  public async getUser(): Promise<void> {
   try {
    const user = await authAPI.getUserInfo()
+    // @ts-expect-error
    store.dispatch({ user: JSON.parse(user.response)})
+    // @ts-expect-error
    const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
    console.log('avatar', avatar)
 
    const userWithAvatar = store.getState().user
-   userWithAvatar.avatar = avatar
+   // @ts-expect-error
+   userWithAvatar!.avatar = avatar
 
    console.log('user', userWithAvatar)
    store.dispatch({ user: userWithAvatar })
@@ -20,9 +23,9 @@ class AuthServices {
   }
  }
 
- public async singUp(payload): Promise<void> {
+ public async singUp(payload: any): Promise<void> {
   try {
-   await authAPI.signUp(payload)?.then((resp) => {
+   await authAPI.signUp(payload)?.then(() => {
      this.getUser().then(() => window.router.go('/chat'))
    })
   } catch (e) {
@@ -30,7 +33,7 @@ class AuthServices {
   }
  }
 
- public async login(payload): Promise<void> {
+ public async login(payload: any): Promise<void> {
   try {
    await authAPI.login(payload)?.then((response: any) => {
     if (

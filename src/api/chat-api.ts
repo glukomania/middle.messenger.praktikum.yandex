@@ -12,9 +12,9 @@ type CreateChatType = {
  title: string
 }
 
-type deleteChatData = {
- chatId: number
-}
+// type deleteChatData = {
+//  chatId: number
+// }
 
 class ChatAPI extends BaseAPI {
  getChats() {
@@ -33,7 +33,7 @@ class ChatAPI extends BaseAPI {
   return baseURL.get(`/${chatId}/users`)
  }
 
- deleteChat(data: deleteChatData) {
+ deleteChat(data: number) {
   return baseURL.delete('/', { data })
  }
 }

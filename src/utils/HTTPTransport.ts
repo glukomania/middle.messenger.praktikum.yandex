@@ -66,6 +66,7 @@ export default class HTTPTransport {
    xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url)
 
    Object.keys(headers).forEach((key) => {
+     // @ts-expect-error
     xhr.setRequestHeader(key, headers[key])
    })
 
