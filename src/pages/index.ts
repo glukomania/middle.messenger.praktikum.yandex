@@ -10,7 +10,7 @@ import {store} from '../utils/store/store';
 
 declare global {
   interface Window {
-    store: unknown;
+    store: any;
     router: any;
     chat: object;
     profile: object;
