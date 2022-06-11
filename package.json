@@ -2,6 +2,11 @@
   "name": "dog_chat",
   "version": "1.0.0",
   "description": "",
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false
+  },
   "scripts": {
     "start": "parcel src/pages/index.html -p 3000 --no-cache",
     "oldbuild": "parcel build src/pages/index.html",
