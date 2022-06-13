@@ -28,6 +28,7 @@ module.exports = {
    fs: false,
    path: false,
    os: false,
+   require: false,
   },
  },
  module: {
@@ -57,7 +58,7 @@ module.exports = {
     test: /\.pug/,
     use: [
      {
-      loader: 'pug-loader',
+      loader: 'pug-plain-loader',
      },
     ],
    },

@@ -36,6 +36,8 @@
     "@types/mocha": "^9.1.0",
     "@types/node": "^17.0.38",
     "@types/pug": "^2.0.6",
+    "@typescript-eslint/eslint-plugin": "^5.27.1",
+    "@typescript-eslint/parser": "^5.27.1",
     "assert": "^2.0.0",
     "babel-register": "^6.26.0",
     "buffer": "^6.0.3",
@@ -56,13 +58,15 @@
     "pug-plugin": "^2.3.1",
     "stylelint": "^14.6.0",
     "ts-loader": "^9.3.0",
-    "typescript": "^4.6.4",
+    "typescript": "^4.7.3",
     "webpack": "^5.72.1",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.1"
+    "webpack-dev-server": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
     "nanoid": "^3.3.1",
+    "pug-plain-loader": "^1.1.0",
     "transparency": "^1.0.0"
   }
 }

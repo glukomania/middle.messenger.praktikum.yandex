@@ -100,6 +100,7 @@ class Block {
   if (!nextProps) {
    return
   }
+  // @ts-expect-error
   Object.assign(this.props, nextProps)
  }
 
@@ -134,7 +135,7 @@ class Block {
 
   const fragment = this._createDocumentElement('template')
 
-  // @ts-expect-error
+// @ts-expect-error
   fragment.innerHTML = pug.compile(template, propsAndStubs)
 
   // @ts-expect-error
