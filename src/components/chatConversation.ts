@@ -1,7 +1,7 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import chatConversationTmpl from './chatConversation.tmpl'
-import chatStub from './chatStub.tmpl'
+const chatConversationTmpl = require('./chatConversation.pug');
+const chatStub = require('./chatStub.pug');
+
 
 export default class ChatConversation extends Block {
  constructor(props: object) {
@@ -11,11 +11,9 @@ export default class ChatConversation extends Block {
  render() {
   // @ts-expect-error
   if (this.props.chatName) {
-  // @ts-expect-error
-   return pug.compile(chatConversationTmpl, {})(this.props)
+   return this.compile(chatConversationTmpl, {})(this.props)
   } else {
-  // @ts-expect-error
-   return pug.compile(chatStub, {})(this.props)
+   return this.compile(chatStub, {})(this.props)
   }
  }
 }

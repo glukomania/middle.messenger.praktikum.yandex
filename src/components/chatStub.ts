@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import chatStub from './chatStub.tmpl'
+const chatStub = require('./chatStub.pug');
+
 
 export default class ChatStub extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class ChatStub extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(chatStub, {})(this.props)
+  return this.compile(chatStub, {})(this.props)
  }
 }

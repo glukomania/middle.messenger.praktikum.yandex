@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import loginFormTmpl from './loginForm.tmpl'
+const loginFormTmpl = require('./loginForm.pug');
+
 
 export default class LoginForm extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class LoginForm extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(loginFormTmpl, {})(this.props)
+  return this.compile(loginFormTmpl, {})(this.props)
  }
 }

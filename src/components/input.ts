@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import inputTmpl from './input.tmpl'
+const inputTmpl = require('./input.pug');
+
 
 export default class Input extends Block {
  constructor(props: unknown) {
@@ -8,7 +8,6 @@ export default class Input extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(inputTmpl, {})(this.props)
+  return this.compile(inputTmpl, {})(this.props)
  }
 }

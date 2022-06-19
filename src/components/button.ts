@@ -1,6 +1,5 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import buttonTmpl from './button.tmpl'
+const button = require('./button.pug');
 
 export default class Button extends Block {
  constructor(props: object) {
@@ -8,7 +7,6 @@ export default class Button extends Block {
  }
 
  render() {
-   // @ts-expect-error
-  return pug.compile(buttonTmpl, {})(this.props)
+  return this.compile(button, {})(this.props)
  }
 }

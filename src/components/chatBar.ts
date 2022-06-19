@@ -1,6 +1,5 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import chatBarTmpl from './chatBar.tmpl'
+const chatBarTmpl = require('./chatBar.pug');
 
 export default class ChatBar extends Block {
  constructor(props: object) {
@@ -8,7 +7,6 @@ export default class ChatBar extends Block {
  }
 
  render() {
-   // @ts-expect-error
-  return pug.compile(chatBarTmpl, {})(this.props)
+  return this.compile(chatBarTmpl, {})(this.props)
  }
 }

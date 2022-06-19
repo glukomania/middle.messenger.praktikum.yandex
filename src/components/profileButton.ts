@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import profileButton from './profileButton.tmpl'
+const profileButton = require('./profileButton.pug');
+
 
 export default class ProfileButton extends Block {
  constructor(props: object) {
@@ -14,10 +14,9 @@ export default class ProfileButton extends Block {
 //   )
 //  }
  render() {
-  return pug.compile(
+  return this.compile(
    profileButton,
    {},
-   // @ts-expect-error
   )(this.props)
  }
 }

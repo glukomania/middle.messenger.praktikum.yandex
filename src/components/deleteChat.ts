@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import deleteChatTmpl from './deleteChat.tmpl'
+const deleteChatTmpl = require('./deleteChat.pug');
+
 
 export default class DeleteChat extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class DeleteChat extends Block {
  }
 
  render() {
-   // @ts-expect-error
-  return pug.compile(deleteChatTmpl, {})(this.props)
+  return this.compile(deleteChatTmpl, {})(this.props)
  }
 }

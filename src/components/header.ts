@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import header from './header.tmpl'
+const headerTmpl = require('./header.pug');
+
 
 export default class Header extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class Header extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(header, {})(this.props)
+  return this.compile(headerTmpl, {})(this.props)
  }
 }

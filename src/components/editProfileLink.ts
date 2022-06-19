@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import editProfileLinkTmpl from './editProfileLink.tmpl'
+const editProfileLinkTmpl = require('./editProfileLink.pug');
+
 
 export default class EditProfileLink extends Block {
  constructor(props: unknown) {
@@ -8,7 +8,6 @@ export default class EditProfileLink extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(editProfileLinkTmpl, {})(this.props)
+  return this.compile(editProfileLinkTmpl, {})(this.props)
  }
 }

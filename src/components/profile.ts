@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import profileTmpl from './profile.tmpl'
+const profileTmpl = require('./profile.pug');
+
 
 export default class Profile extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class Profile extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(profileTmpl, {})(this.props)
+  return this.compile(profileTmpl, {})(this.props)
  }
 }

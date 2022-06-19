@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import logoutButtonTmpl from './logoutButton.tmpl'
+const logoutButtonTmpl = require('./logoutButton.pug');
+
 
 export default class LogoutButton extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class LogoutButton extends Block {
  }
 
  render() {
-  // @ts-expect-error
-  return pug.compile(logoutButtonTmpl, {})(this.props)
+  return this.compile(logoutButtonTmpl, {})(this.props)
  }
 }

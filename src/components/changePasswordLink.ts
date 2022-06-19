@@ -1,6 +1,5 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import changePasswordLinkTmpl from './changePasswordLink.tmpl'
+const changePasswordLinkTmpl = require('./changePasswordLink.pug');
 
 export default class ChangePasswordLink extends Block {
  constructor(props: object) {
@@ -8,7 +7,6 @@ export default class ChangePasswordLink extends Block {
  }
 
  render() {
-   // @ts-expect-error
-  return pug.compile(changePasswordLinkTmpl, {})(this.props)
+  return this.compile(changePasswordLinkTmpl, {})(this.props)
  }
 }

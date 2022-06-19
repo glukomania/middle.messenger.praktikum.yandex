@@ -1,7 +1,6 @@
 import Block from '../utils/block'
 import { addToBlock } from '../utils/dom'
-import * as pug from 'pug'
-import chat from '../components/chat.tmpl'
+const chat = require('../components/chat.pug');
 import Header from '../components/header'
 import ChatItem from '../components/chatItem'
 import MessagesList from '../components/MessagesList'
@@ -142,7 +141,7 @@ class ChatPage extends Block {
  }
 
  render() {
-  return pug.compile(chat, {})(this.props as object)
+  return this.compile(chat, {})(this.props as object)
  }
 }
 

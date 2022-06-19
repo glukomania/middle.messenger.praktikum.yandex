@@ -1,9 +1,10 @@
 {
  "compilerOptions": {
   "outDir": "dist",
-  "target": "es2017",
+  "target": "ES2015",
+  "module": "ES2015",
   "declaration": false,
-  "module": "commonjs",
+  // "module": "commonjs",
   "strictNullChecks": true,
   "sourceMap": true,
   "noImplicitAny": true,

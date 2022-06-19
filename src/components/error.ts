@@ -1,6 +1,6 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import errorTmpl from './error.tmpl'
+const errorTmpl = require('./error.pug');
+
 
 export default class Error extends Block {
  constructor(props: object) {
@@ -8,7 +8,6 @@ export default class Error extends Block {
  }
 
  render() {
-   // @ts-expect-error
-  return pug.compile(errorTmpl, {})(this.props)
+  return this.compile(errorTmpl, {})(this.props)
  }
 }

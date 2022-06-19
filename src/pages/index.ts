@@ -7,6 +7,7 @@ import EditProfileContainer from './editProfileContainer';
 import Err404Container from './err404Container';
 import Err500Container from './err500Container';
 import {store} from '../utils/store/store';
+import '../../static/less/styles.less';
 
 declare global {
   interface Window {

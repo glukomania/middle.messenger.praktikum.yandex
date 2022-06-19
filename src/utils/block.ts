@@ -1,7 +1,6 @@
-import { nanoid } from 'nanoid'
 import EventBus from './eventBus'
-import * as pug from 'pug'
 import isObjectEqual from '../utils/isObjectEqual'
+import genId from './genId'
 
 class Block {
  static EVENTS = {
@@ -12,7 +11,7 @@ class Block {
   FLOW_CWU: 'flow:component-will-unmount',
  } as const
 
- public id = nanoid(6)
+ public id = genId()
  private _element: HTMLElement | null = null
  private _meta: { tagName: string; props: unknown }
  public props: unknown
@@ -129,14 +128,14 @@ class Block {
 
   // @ts-expect-error
   Object.entries(this.children).forEach(([key, child]) => {
-    // @ts-expect-error
+  // @ts-expect-error
    propsAndStubs[key] = `<div data-id="${child.id}"></div>`
   })
 
   const fragment = this._createDocumentElement('template')
 
-// @ts-expect-error
-  fragment.innerHTML = pug.compile(template, propsAndStubs)
+  fragment.innerHTML = template(propsAndStubs)
+  // fragment.innerHTML = pug.compile(template, propsAndStubs)
 
   // @ts-expect-error
   Object.values(this.children).forEach((child) => {
