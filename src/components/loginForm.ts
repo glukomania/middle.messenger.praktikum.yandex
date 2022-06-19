@@ -8,6 +8,6 @@ export default class LoginForm extends Block {
  }
 
  render() {
-  return this.compile(loginFormTmpl, {})(this.props)
+  return loginFormTmpl(this.props)
  }
 }

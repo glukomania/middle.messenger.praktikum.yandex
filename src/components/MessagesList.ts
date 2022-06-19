@@ -22,10 +22,7 @@ export default class MessagesList extends Block {
  getMessageslist(message: Message) {
   const msg = message.user_id === window.store.getState().user.id ? messageOut : messageIn;
 
-  return this.compile(
-    msg,
-    {},
-   )({ ...message, time: getTime(message.time) })
+  return msg({ ...message, time: getTime(message.time) })
 
  }
 
@@ -34,6 +31,6 @@ export default class MessagesList extends Block {
   return this.props.messages
   // @ts-expect-error
    ? this.props.messages.map(this.getMessageslist).join(`\n`)
-   : this.compile(`div`, {})([])
+   : `<div></div>`
  }
 }

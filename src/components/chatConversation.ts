@@ -11,9 +11,9 @@ export default class ChatConversation extends Block {
  render() {
   // @ts-expect-error
   if (this.props.chatName) {
-   return this.compile(chatConversationTmpl, {})(this.props)
+   return chatConversationTmpl(this.props)
   } else {
-   return this.compile(chatStub, {})(this.props)
+   return chatStub(this.props)
   }
  }
 }

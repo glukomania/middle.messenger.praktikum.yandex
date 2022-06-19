@@ -8,6 +8,6 @@ export default class CloseProfile extends Block {
  }
 
  render() {
-  return this.compile(closeProfileTmpl, {})(this.props)
+  return closeProfileTmpl(this.props)
  }
 }

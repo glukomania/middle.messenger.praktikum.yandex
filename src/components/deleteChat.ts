@@ -8,6 +8,6 @@ export default class DeleteChat extends Block {
  }
 
  render() {
-  return this.compile(deleteChatTmpl, {})(this.props)
+  return deleteChatTmpl(this.props)
  }
 }

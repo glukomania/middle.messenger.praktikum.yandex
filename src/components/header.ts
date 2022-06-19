@@ -8,6 +8,6 @@ export default class Header extends Block {
  }
 
  render() {
-  return this.compile(headerTmpl, {})(this.props)
+  return headerTmpl(this.props)
  }
 }

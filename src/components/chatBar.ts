@@ -7,6 +7,6 @@ export default class ChatBar extends Block {
  }
 
  render() {
-  return this.compile(chatBarTmpl, {})(this.props)
+  return chatBarTmpl(this.props)
  }
 }

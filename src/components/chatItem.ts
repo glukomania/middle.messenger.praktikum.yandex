@@ -8,6 +8,6 @@ export default class ChatItem extends Block {
  }
 
  render() {
-  return this.compile(chatItemTmpl, {})(this.props)
+  return chatItemTmpl(this.props)
  }
 }

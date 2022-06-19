@@ -8,6 +8,6 @@ export default class Input extends Block {
  }
 
  render() {
-  return this.compile(inputTmpl, {})(this.props)
+  return inputTmpl(this.props)
  }
 }

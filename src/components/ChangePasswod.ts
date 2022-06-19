@@ -8,6 +8,6 @@ export default class ChangePasswordLink extends Block {
  }
 
  render() {
-  return this.compile(changePasswordTmpl, {})(this.props)
+  return changePasswordTmpl(this.props)
  }
 }

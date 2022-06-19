@@ -66,6 +66,22 @@ class LoginContainer extends Block {
 
 const loginPage = new Login({
   buttonName: "Log in",
+  events: {
+    'click': (event: any) => {
+      if (event.srcElement.className === 'header-options signup-link headerLink') {
+        window.router.go('/signup')
+       }
+
+      if (event.srcElement.className === '404 headerLink') {
+        window.router.go('/err404')
+      }
+
+      if (event.srcElement.className === '500 headerLink') {
+        window.router.go('/err500')
+      }
+
+    }
+  }
 });
 
 const loginInput = new LoginInput({

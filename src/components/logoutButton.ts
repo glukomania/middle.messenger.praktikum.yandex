@@ -8,6 +8,6 @@ export default class LogoutButton extends Block {
  }
 
  render() {
-  return this.compile(logoutButtonTmpl, {})(this.props)
+  return logoutButtonTmpl(this.props)
  }
 }

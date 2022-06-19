@@ -53,6 +53,14 @@ export default class SignupContainer extends Block {
 const signupPage = new Signup({
  buttonName: 'Sign up',
  classNames: ['container'],
+ events: {
+  'click': (event: any) => {
+    console.log('click')
+    if (event.srcElement.className === 'headerLink Login') {
+      window.router.go('/')
+     }
+    }
+ }
 })
 
 const form = new SignupForm({

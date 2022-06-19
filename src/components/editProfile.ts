@@ -8,6 +8,6 @@ export default class EditProfile extends Block {
  }
 
  render() {
-  return this.compile(editProfileTmpl, {})(this.props)
+  return editProfileTmpl(this.props)
  }
 }

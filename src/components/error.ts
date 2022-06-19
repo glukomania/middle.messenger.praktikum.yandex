@@ -8,6 +8,6 @@ export default class Error extends Block {
  }
 
  render() {
-  return this.compile(errorTmpl, {})(this.props)
+  return errorTmpl(this.props)
  }
 }

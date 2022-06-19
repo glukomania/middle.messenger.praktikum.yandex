@@ -8,6 +8,6 @@ export default class ChatStub extends Block {
  }
 
  render() {
-  return this.compile(chatStub, {})(this.props)
+  return chatStub(this.props)
  }
 }

@@ -8,6 +8,6 @@ export default class ChatBar extends Block {
  }
 
  render() {
-  return this.compile(profileModalTmpl, {})(this.props)
+  return profileModalTmpl(this.props)
  }
 }

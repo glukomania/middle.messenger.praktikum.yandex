@@ -7,6 +7,6 @@ export default class ChangePasswordLink extends Block {
  }
 
  render() {
-  return this.compile(changePasswordLinkTmpl, {})(this.props)
+  return changePasswordLinkTmpl(this.props)
  }
 }

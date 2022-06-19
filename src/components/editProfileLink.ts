@@ -8,6 +8,6 @@ export default class EditProfileLink extends Block {
  }
 
  render() {
-  return this.compile(editProfileLinkTmpl, {})(this.props)
+  return editProfileLinkTmpl(this.props)
  }
 }

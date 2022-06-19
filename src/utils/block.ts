@@ -125,29 +125,7 @@ class Block {
 
  compile(template: any, props: Object) {
   const propsAndStubs = { ...props }
-
-  // @ts-expect-error
-  Object.entries(this.children).forEach(([key, child]) => {
-  // @ts-expect-error
-   propsAndStubs[key] = `<div data-id="${child.id}"></div>`
-  })
-
-  const fragment = this._createDocumentElement('template')
-
-  fragment.innerHTML = template(propsAndStubs)
-  // fragment.innerHTML = pug.compile(template, propsAndStubs)
-
-  // @ts-expect-error
-  Object.values(this.children).forEach((child) => {
-    // @ts-expect-error
-   const stub = fragment.content.querySelector(`[data-id="${child.id}"]`)
-
-   // @ts-expect-error
-   stub.replaceWith(child.getContent())
-  })
-
-  // @ts-expect-error
-  return fragment.content
+  return template(propsAndStubs)
  }
 
  getContent(): HTMLElement | null {

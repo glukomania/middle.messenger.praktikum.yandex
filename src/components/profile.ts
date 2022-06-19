@@ -8,6 +8,6 @@ export default class Profile extends Block {
  }
 
  render() {
-  return this.compile(profileTmpl, {})(this.props)
+  return profileTmpl(this.props)
  }
 }

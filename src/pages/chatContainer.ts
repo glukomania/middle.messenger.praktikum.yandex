@@ -141,7 +141,7 @@ class ChatPage extends Block {
  }
 
  render() {
-  return this.compile(chat, {})(this.props as object)
+  return chat(this.props as object)
  }
 }
 

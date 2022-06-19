@@ -8,6 +8,6 @@ export default class Login extends Block {
  }
 
  render() {
-  return this.compile(loginTmpl, {})(this.props)
+  return loginTmpl(this.props)
  }
 }
