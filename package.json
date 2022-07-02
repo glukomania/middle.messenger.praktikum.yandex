@@ -15,23 +15,23 @@
     "webpack": "webpack",
     "dev": "webpack-dev-server --mode development --open",
     "devv": "npx webpack serve --open",
-    "husky-precommit": "npm-run-all test eslint stylelintFixed"
+    "husky": "npm-run-all test eslint stylelintFixed"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@parcel/config-default": "^2.2.1",
-    "@parcel/core": "^2.2.1",
-    "@parcel/diagnostic": "^2.2.1",
-    "@parcel/events": "^2.2.1",
-    "@parcel/fs": "^2.2.1",
-    "@parcel/logger": "^2.2.1",
-    "@parcel/package-manager": "^2.2.1",
-    "@parcel/reporter-cli": "^2.2.1",
-    "@parcel/reporter-dev-server": "^2.2.1",
-    "@parcel/transformer-less": "^2.2.1",
-    "@parcel/transformer-pug": "^2.3.1",
+    "@parcel/config-default": "2.2.1",
+    "@parcel/core": "2.2.1",
+    "@parcel/diagnostic": "2.2.1",
+    "@parcel/events": "2.2.1",
+    "@parcel/fs": "2.2.1",
+    "@parcel/logger": "2.2.1",
+    "@parcel/package-manager": "2.2.1",
+    "@parcel/reporter-cli": "2.2.1",
+    "@parcel/reporter-dev-server": "2.2.1",
+    "@parcel/transformer-less": "2.2.1",
+    "@parcel/transformer-pug": "2.3.1",
     "@parcel/utils": "^2.2.1",
     "@types/chai": "^4.3.1",
     "@types/mocha": "^9.1.0",
@@ -69,8 +69,8 @@
   },
   "dependencies": {
     "jstransformer": "^1.0.0",
-    "pug": "~2.0.0",
-    "pug-loader": "^2.4.0",
+    "pug": "2.0.0",
+    "pug-loader": "2.4.0",
     "transparency": "^1.0.0"
   }
 }
