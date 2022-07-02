@@ -136,7 +136,6 @@ const addChat = (e: any) => {
 
 class ChatPage extends Block {
  constructor(props: unknown) {
-  console.log('props', props)
   super('div', { ...props as object, classNames: ['container'] })
  }
 

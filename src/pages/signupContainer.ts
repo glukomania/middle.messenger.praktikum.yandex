@@ -55,7 +55,6 @@ const signupPage = new Signup({
  classNames: ['container'],
  events: {
   'click': (event: any) => {
-    console.log('click')
     if (event.srcElement.className === 'headerLink Login') {
       window.router.go('/')
      }
