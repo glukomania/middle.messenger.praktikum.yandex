@@ -23,7 +23,6 @@ export default class BrowserRouter {
  }
 
  use(pathname: string, block: any, props: any) {
-  console.log(pathname, block, props)
   const route = new Route(pathname, block, props)
   // @ts-expect-error
   this.routes.push(route)

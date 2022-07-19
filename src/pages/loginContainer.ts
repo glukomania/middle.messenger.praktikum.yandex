@@ -49,6 +49,7 @@ class LoginContainer extends Block {
           } 
           
           if (!isOk) {
+            console.log('loginContainer auth request')
             authServices.login(dataToSend)
           } 
         }

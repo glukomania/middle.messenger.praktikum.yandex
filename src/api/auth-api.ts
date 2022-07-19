@@ -1,4 +1,4 @@
-import { BaseAPI } from './base-api'
+import { BaseApi } from '../utils/HTTPTransport'
 
 interface SignupFormData {
  first_name: string
@@ -7,6 +7,7 @@ interface SignupFormData {
  password: string
  email: string
  phone: string
+ avatar: string
 }
 
 interface LoginFormData {
@@ -14,7 +15,7 @@ interface LoginFormData {
  password: string
 }
 
-class AuthAPI extends BaseAPI {
+class AuthAPI extends BaseApi {
  constructor() {
   super()
  }
@@ -28,11 +29,11 @@ class AuthAPI extends BaseAPI {
  }
 
  getUserInfo() {
-  return this.get('/auth/user')
+  return this.get('/auth/user', {})
  }
 
  logout() {
-  return this.post('/auth/logout')
+  return this.post('/auth/logout', {})
  }
 }
 

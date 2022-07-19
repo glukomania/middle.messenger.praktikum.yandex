@@ -59,6 +59,7 @@ export default class EditProfileContainer extends Block {
        // @ts-expect-error
       UserServices.updateProfile(dataToSend)
       if (formData.get('avatar')) {
+        console.log('formData.get', formData.get('avatar'))
        UserServices.changeAvatar(formData)
       }
      } else {

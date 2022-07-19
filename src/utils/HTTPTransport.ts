@@ -5,89 +5,97 @@ enum METHODS {
  DELETE = 'DELETE',
 }
 
-type Option = {
- timeout?: number
- headers?: object
- method?: METHODS
- data?: any
+export interface Option {
+  timeout?: number;
+  method?: METHODS;
+  data?: any;
+  headers?: Record<string, string>;
+  retries?: number;
+  file?: boolean;
+}
+/**
+* Input: object. I.e: {a: 1, b: 2, c: {d: 123}, k: [1, 2, 3]}
+* Output: string. I.e: ?a=1&b=2&c=[object Object]&k=1,2,3
+*/
+function queryStringify(data: { [key: string]: any }) {
+  const array: string[] = [];
+  Object.keys(data).forEach((key) => {
+      const param = data[key];
+      if (Array.isArray(param)) {
+          array.push(`${key}=${param.join(',')}`);
+      } else if (typeof param === 'object') {
+          array.push(`${key}=${param}`);
+      } else if (typeof param === 'boolean') {
+          array.push(`${key}=${Boolean(param)}`);
+      } else {
+          array.push(`${key}=${param}`);
+      }
+  });
+  return `?${array.join('&')}`;
 }
 
-const queryStringify = (data: Record<string, any>): string => {
- if (typeof data !== 'object') {
-  throw new Error('Data must be object')
- }
+export class BaseApi {
+  public get(url: string, options: Option) {
+      return this.request(url, { ...options, method: METHODS.GET }, options.timeout).catch((err) =>
+          console.log(err),
+      );
+  }
 
- const keys = Object.keys(data)
- return keys.reduce((result, key, index) => {
-  return `${result}${key}=${data[key]}${index < keys.length - 1 ? '&' : ''}`
- }, '?')
-}
+  public post(url: string, options: Option) {
+      return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  }
 
-export default class HTTPTransport {
- constructor(readonly _baseURL: string) {}
+  public put(url: string, options: Option) {
+      return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  }
 
- get = (url: string, options: Option = {}) => {
-  return this.request(url, { ...options, method: METHODS.GET }, options.timeout)
- }
+  public delete(url: string, options: Option) {
+      return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  }
 
- post = (url: string, options: Option = {}) => {
-  return this.request(
-   url,
-   { ...options, method: METHODS.POST },
-   options.timeout,
-  )
- }
+  private request(url: string, options: Option, timeout = 5000) {
+      const host = `https://ya-praktikum.tech/api/v2`;
+      return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          if (options.method === METHODS.GET && options.data) {
+              xhr.open(options.method, host + url + queryStringify(options.data), true);
+          } else {
+              xhr.open(options.method as any, host + url, true);
+          }
 
- put = (url: string, options: Option = {}) => {
-  return this.request(url, { ...options, method: METHODS.PUT }, options.timeout)
- }
+          xhr.onload = function () {
+              resolve(xhr.response);
+          };
+          xhr.withCredentials = true;
+          xhr.onabort = reject;
 
- delete = (url: string, options: Option = {}) => {
-  return this.request(
-   url,
-   { ...options, method: METHODS.DELETE },
-   options.timeout,
-  )
- }
+          xhr.timeout = timeout;
+          xhr.ontimeout = reject;
 
- request = (url: string, options: Option = {}, timeout = 5000) => {
-  const { headers = {}, method, data } = options
-  url = `${this._baseURL}${url}`
+          xhr.onerror = () => {
+              reject({
+                  status: xhr.status,
+                  statusText: xhr.statusText,
+              });
+          };
 
-  return new Promise((resolve, reject) => {
-   if (!method) {
-    reject('No method')
-    return
-   }
+          if (options.headers) {
+              Object.keys(options.headers).forEach((key) => {
+                options.headers && xhr.setRequestHeader(key, options.headers[key]);
+              });
+          } else if (!options.file) {
+              xhr.setRequestHeader('Content-Type', 'application/json');
+          }
 
-   const xhr = new XMLHttpRequest()
-   const isGet = method === METHODS.GET
-
-   xhr.open(method, isGet && !!data ? `${url}${queryStringify(data)}` : url)
-
-   Object.keys(headers).forEach((key) => {
-     // @ts-expect-error
-    xhr.setRequestHeader(key, headers[key])
-   })
-
-   xhr.onload = function () {
-    resolve(xhr)
-   }
-
-   xhr.onabort = reject
-   xhr.onerror = reject
-   xhr.withCredentials = true
-   xhr.timeout = timeout
-   xhr.ontimeout = reject
-
-   if (isGet || !data) {
-    xhr.send()
-   } else if (data instanceof FormData) {
-    xhr.send(data)
-   } else {
-    xhr.setRequestHeader('Content-Type', 'application/json')
-    xhr.send(JSON.stringify(data))
-   }
-  })
- }
+          if (options.data) {
+              if (options.file) {
+                  xhr.send(options.data as unknown as FormData);
+              } else {
+                  xhr.send(JSON.stringify(options.data));
+              }
+          } else {
+              xhr.send();
+          }
+      });
+  }
 }

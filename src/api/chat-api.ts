@@ -1,7 +1,4 @@
-import HTTPTransport from '../utils/HTTPTransport'
-import { BaseAPI } from './base-api'
-
-const baseURL = new HTTPTransport('https://ya-praktikum.tech/api/v2/chats')
+import { BaseApi } from '../utils/HTTPTransport'
 
 type AddUser = {
  users: [number]
@@ -12,29 +9,30 @@ type CreateChatType = {
  title: string
 }
 
-// type deleteChatData = {
-//  chatId: number
-// }
-
-class ChatAPI extends BaseAPI {
- getChats() {
-  return baseURL.get('/')
+class ChatAPI extends BaseApi {
+ constructor() {
+  super()
  }
 
+ getChats() {
+  return this.get('/chats', {})
+ }
+ 
+
  createChat(data: CreateChatType) {
-  return baseURL.post('/', { data })
+  return this.post('/chats', { data })
  }
 
  addUser(data: AddUser) {
-  return baseURL.put('/users', { data })
+  return this.put('/users', { data })
  }
 
  getChatUsers(chatId: number) {
-  return baseURL.get(`/${chatId}/users`)
+  return this.get(`/${chatId}/users`, {})
  }
 
  deleteChat(data: number) {
-  return baseURL.delete('/', { data })
+  return this.delete('/', { data })
  }
 }
 

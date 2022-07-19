@@ -55,7 +55,8 @@ export default class ChatContainer extends Block {
  }
 
  render() {
-  authServices.getUser().then(() => {
+   authServices.getUser()
+
    addToBlock(chatPage, '.header', header, 'header')
 
    chatServices.getChats().then(() => {
@@ -63,22 +64,24 @@ export default class ChatContainer extends Block {
     this.renderChatList(chats)
    })
 
-   const profileButton = new ProfileButton({
-     // @ts-expect-error 
-    avatarUrl: store.getState().user?.avatar,
-    events: {
-     click: () => window.router.go('/profile'),
-    },
-   })
-
-   addToBlock(
-    chatPage,
-    '.options-container',
-    profileButton,
-    'user-profile-button',
-   )
-   addToBlock(chatPage, '.options-container', logoutButton, 'user-logout')
-  })
+   setTimeout(() => {
+    const profileButton = new ProfileButton({
+      // @ts-expect-error 
+     avatarUrl: store.getState().user?.avatar,
+     events: {
+      click: () => window.router.go('/profile'),
+     },
+    })
+ 
+    addToBlock(
+     chatPage,
+     '.options-container',
+     profileButton,
+     'user-profile-button',
+    )
+    addToBlock(chatPage, '.options-container', logoutButton, 'user-logout')
+   
+   }, 200)
 
   addToBlock(
    chatPage,
@@ -86,6 +89,7 @@ export default class ChatContainer extends Block {
    chatConversation,
    'conversation-wrapper',
   )
+
 
   return chatPage.getContent()
  }

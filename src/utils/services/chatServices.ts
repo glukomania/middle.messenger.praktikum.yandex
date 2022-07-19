@@ -9,9 +9,10 @@ class ChatServices {
   try {
    const chats = await ChatAPI.getChats()
    // @ts-expect-error
-   window.store.dispatch({ chats: JSON.parse(chats.response) })
+   window.store.dispatch({ chats: JSON.parse(chats) })
+
   } catch (e) {
-   alert(e)
+   alert('getChats:' + e)
   }
  }
 
@@ -20,7 +21,7 @@ class ChatServices {
    await ChatAPI.createChat(chatName)
    await this.getChats()
   } catch (e) {
-   console.log('createChat', e)
+   console.log('createChat:', e)
   }
  }
 
