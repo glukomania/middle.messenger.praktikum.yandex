@@ -65,16 +65,3 @@ test('Router.go() returns Router', () => {
     router.go('/test');
     expect(document.querySelector('.test-div')).not.toBe(null);
 });
-
-// test('Router.back() работает корректно', () => {
-//   const router = new BrowserRouter();
-//   router.use('/test', TestContainer as any, {selector: 'div', className:"test-div"});
-//   router.use('/test2', TestContainer2 as any, {selector: 'div', className:"test-div2"});
-//   router.go('/test');
-//   console.log(window.location.pathname)
-//   router.go('/test2');
-//   console.log(window.location.pathname)
-//   router.back();
-//   console.log(window.location.pathname)
-//   expect(window.location.pathname).toBe('/test');
-// });

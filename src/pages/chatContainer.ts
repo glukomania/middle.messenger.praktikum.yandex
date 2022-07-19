@@ -55,33 +55,36 @@ export default class ChatContainer extends Block {
  }
 
  render() {
-   authServices.getUser()
+   authServices.getUser().then(() => {
+    console.log('Enter to then')
+    console.log('state.user', store.getState().user )
 
-   addToBlock(chatPage, '.header', header, 'header')
+    addToBlock(chatPage, '.header', header, 'header')
 
-   chatServices.getChats().then(() => {
-    const chats = store.getState().chats
-    this.renderChatList(chats)
-   })
-
-   setTimeout(() => {
-    const profileButton = new ProfileButton({
-      // @ts-expect-error 
-     avatarUrl: store.getState().user?.avatar,
-     events: {
-      click: () => window.router.go('/profile'),
-     },
+    chatServices.getChats().then(() => {
+     const chats = store.getState().chats
+     this.renderChatList(chats)
     })
  
-    addToBlock(
-     chatPage,
-     '.options-container',
-     profileButton,
-     'user-profile-button',
-    )
-    addToBlock(chatPage, '.options-container', logoutButton, 'user-logout')
-   
-   }, 200)
+     const profileButton = new ProfileButton({
+       // @ts-expect-error 
+      avatarUrl: store.getState().user?.avatar,
+      events: {
+       click: () => window.router.go('/profile'),
+      },
+     })
+  
+     addToBlock(
+      chatPage,
+      '.options-container',
+      profileButton,
+      'user-profile-button',
+     )
+     addToBlock(chatPage, '.options-container', logoutButton, 'user-logout')
+
+   })
+
+
 
   addToBlock(
    chatPage,

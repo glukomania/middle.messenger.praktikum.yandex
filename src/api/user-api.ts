@@ -6,7 +6,6 @@ class UserAPI extends BaseApi {
  }
 
  uploadAvatar(data: any) {
-  console.log('avatar data', data)
   return this.put('/user/profile/avatar', { data })
  }
 

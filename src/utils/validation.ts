@@ -1,9 +1,9 @@
 export const validate = (type: string, value: string | null | undefined) => {
  const patterns = {
-  login: /[a-zA-Z0-9-_]+$/,
+  login: /^[a-zA-Z0-9-_]{3,20}$/,
   onlyletters: /[a-zA-Z]+$/,
   onlynumbers: /^\d+$/,
-  password: /([A-Z]+[0-9]+\w*)$/,
+  password: /^(?=^.{8,40}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
   phone: /^([+]?[0-9]*)$/,
   email: /^([a-z0-9.-]+@[a-z0-9-]+[.]+[a-z]*)$/,
   names: /^([A-Z]+[A-z]*)$/,

@@ -50,7 +50,6 @@ class UserServices {
   try {
    await UserAPI.uploadAvatar(data)!
     .then((response: any) => {
-      console.log('response', response)
      window.store.dispatch('user', response.response)
          // @ts-expect-error
      window.chat.setProps({ user: response.response })

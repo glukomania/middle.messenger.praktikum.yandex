@@ -1,7 +1,6 @@
 import mock from 'xhr-mock';
 import {authAPI} from '../../api/auth-api';
 
-
 const baseUrl = `https://ya-praktikum.tech/api/v2`
 const signUpData = {"id":1415};
 const profileInfoData = {
@@ -23,14 +22,12 @@ afterEach(() => {
 });
 
 test('Login', async () => {
-
     mock.post(`${baseUrl}/auth/signin`, (req, res) => {
       expect(req.header('Content-Type')).toEqual('application/json');
       expect(req.body()).toEqual('{"login":"natalia","password":"Q1w2e3r4"}');
       return res.status(200).body("OK");
     });
 
-    
     const res = await authAPI.login({ login: 'natalia', password: 'Q1w2e3r4' });
     expect(res).toEqual('OK');
 });
@@ -45,20 +42,22 @@ test('Signup', async () => {
 });
 
 test('User info', async () => {
-    mock.get(`${baseUrl}/auth/user`, {
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(profileInfoData),
-    });
+  mock.post(`${baseUrl}/auth/user`, (req, res) => {
+    expect(req.header('Content-Type')).toEqual('application/json');
+    expect(req.body()).toEqual(JSON.stringify(profileInfoData));
+    return res.status(200).body(JSON.stringify(profileInfoData));
+  });
+
     const res = await authAPI.getUserInfo();
     expect(res).toEqual(profileInfoData);
 });
 
-// test('Logout', async () => {
-//   mock.post(`${baseUrl}/auth/logout`, {
-//     headers: { 'Content-Type': 'application/json' },
-//     body: "OK",
-//   });
+test('Logout', async () => {
+  mock.post(`${baseUrl}/auth/logout`, {
+    headers: { 'Content-Type': 'application/json' },
+    body: "OK",
+  });
 
-//     const res = await authAPI.logout();
-//     expect(res).toEqual('OK');
-// });
+    const res = await authAPI.logout();
+    expect(res).toEqual('OK');
+});

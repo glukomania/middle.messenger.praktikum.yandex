@@ -3,9 +3,13 @@ import { store } from '../store/store'
 
 class AuthServices {
  public async getUser(): Promise<void> {
+  console.log("getUser: enter async")
   try {
    authAPI.getUserInfo()
     .then(res => {
+      console.log("getUser: enter then of getUserInfo")
+      console.log("getUser: going to dispanch user data")
+
       // @ts-expect-error
       store.dispatch({ user: JSON.parse(res)})
       console.log('store.getState()', store.getState())
@@ -42,13 +46,10 @@ class AuthServices {
  public async login(payload: any): Promise<void> {
   try {
    await authAPI.login(payload)?.then((response: any) => {
-    console.log('auth.login', response)
     if (
      response.status > 250 || 
      response.includes('User already in system')
     ) {
-      console.log('redirect to /chat')
-      // this.getUser()
       window.router.go('/chat')
     } else {
      throw Error('authentification failed')
