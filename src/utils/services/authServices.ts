@@ -3,7 +3,6 @@ import { store } from '../store/store'
 
 class AuthServices {
  public async getUser(): Promise<void> {
-  console.log("getUser: enter async")
   try {
    await authAPI.getUserInfo()
     .then(res => {
@@ -11,7 +10,6 @@ class AuthServices {
       // @ts-expect-error
       const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
 
-      console.log('avatar', avatar)
       const userWithAvatar = store.getState().user
       // @ts-expect-error
       userWithAvatar!.avatar = avatar
