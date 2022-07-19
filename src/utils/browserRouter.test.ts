@@ -27,17 +27,6 @@ class TestContainer extends Block {
   }
 }
 
-class TestContainer2 extends Block {
-  constructor(props: unknown) {
-    super("test-div2", { ...props as object, classNames: ["test_container"] });
-  }
-  
-  render() {
-    return testBlock.getContent();
-  }
-}
-
-
 beforeEach(() => {
     (global as any).window = {
         history: createBrowserHistory(),

@@ -9,7 +9,6 @@
   },
   "scripts": {
     "start": "node server.js",
-    "oldbuild": "parcel build src/pages/index.html",
     "build": "webpack --mode production",
     "test": "jest --config ./jest.config.ts",
     "webpack": "webpack",

@@ -54,10 +54,9 @@ export default class ChatContainer extends Block {
    })
  }
 
- render() {
+  render() {
    authServices.getUser().then(() => {
-    console.log('Enter to then')
-    console.log('state.user', store.getState().user )
+    console.log('Enter to then', store.getState().user)
 
     addToBlock(chatPage, '.header', header, 'header')
 

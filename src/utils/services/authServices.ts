@@ -5,23 +5,18 @@ class AuthServices {
  public async getUser(): Promise<void> {
   console.log("getUser: enter async")
   try {
-   authAPI.getUserInfo()
+   await authAPI.getUserInfo()
     .then(res => {
-      console.log("getUser: enter then of getUserInfo")
-      console.log("getUser: going to dispanch user data")
-
+      store.dispatch({ user: JSON.parse(res as any)})
       // @ts-expect-error
-      store.dispatch({ user: JSON.parse(res)})
-      console.log('store.getState()', store.getState())
+      const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
+
+      console.log('avatar', avatar)
+      const userWithAvatar = store.getState().user
       // @ts-expect-error
-    const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
+      userWithAvatar!.avatar = avatar
 
-    console.log('avatar', avatar)
-    const userWithAvatar = store.getState().user
-    // @ts-expect-error
-    userWithAvatar!.avatar = avatar
-
-    store.dispatch({ user: userWithAvatar })
+      store.dispatch({ user: userWithAvatar })
 
     })
     .catch(err => console.log('getUserInfo err', err))
