@@ -1,9 +1,15 @@
 import Block from '../utils/block'
 const signupFormTmpl = require('./signupForm.pug');
 
+type SignupFormProps = {
+  type: string,
+  classNames: string[],
+  events: object
+}
+
 
 export default class SignupForm extends Block {
- constructor(props: object) {
+ constructor(props: SignupFormProps) {
   super('form', { ...props })
  }
 

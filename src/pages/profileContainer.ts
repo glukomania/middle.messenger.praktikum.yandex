@@ -13,7 +13,6 @@ import {store} from '../utils/store/store';
 import authServices from "../utils/services/authServices";
 import userServices from "../utils/services/userServices";
 
-
 export default class ProfileContainer extends Block {
   constructor(props: object) {
     super("div", { ...props as object, classNames: ["login_container"] });

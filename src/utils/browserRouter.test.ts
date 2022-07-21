@@ -6,8 +6,8 @@ const testTmpl = require('./test.pug');
 
 
 class TestBlock extends Block {
-  constructor(props: object) {
-   super('div', { ...props })
+  constructor() {
+   super('div')
   }
  
   render() {
@@ -15,7 +15,7 @@ class TestBlock extends Block {
   }
  }
 
-const testBlock = new TestBlock({})
+const testBlock = new TestBlock()
 
 class TestContainer extends Block {
   constructor(props: unknown) {

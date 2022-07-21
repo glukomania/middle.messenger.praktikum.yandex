@@ -29,11 +29,11 @@ class AuthAPI extends BaseApi {
  }
 
  getUserInfo() {
-  return this.get('/auth/user', {})
+  return this.get('/auth/user')
  }
 
  logout() {
-  return this.post('/auth/logout', {})
+  return this.post('/auth/logout')
  }
 }
 

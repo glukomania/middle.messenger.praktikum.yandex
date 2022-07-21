@@ -35,32 +35,32 @@ function queryStringify(data: { [key: string]: any }) {
 }
 
 export class BaseApi {
-  public get(url: string, options: Option) {
-      return this.request(url, { ...options, method: METHODS.GET }, options.timeout).catch((err) =>
+  public get(url: string, options?: Option) {
+      return this.request(url, { ...options, method: METHODS.GET }, options?.timeout).catch((err) =>
           console.log(err),
       );
   }
 
-  public post(url: string, options: Option) {
-      return this.request(url, { ...options, method: METHODS.POST }, options.timeout);
+  public post(url: string, options?: Option) {
+      return this.request(url, { ...options, method: METHODS.POST }, options?.timeout);
   }
 
-  public put(url: string, options: Option) {
-      return this.request(url, { ...options, method: METHODS.PUT }, options.timeout);
+  public put(url: string, options?: Option) {
+      return this.request(url, { ...options, method: METHODS.PUT }, options?.timeout);
   }
 
-  public delete(url: string, options: Option) {
-      return this.request(url, { ...options, method: METHODS.DELETE }, options.timeout);
+  public delete(url: string, options?: Option) {
+      return this.request(url, { ...options, method: METHODS.DELETE }, options?.timeout);
   }
 
-  private request(url: string, options: Option, timeout = 5000) {
+  private request(url: string, options?: Option, timeout = 5000) {
       const host = `https://ya-praktikum.tech/api/v2`;
       return new Promise((resolve, reject) => {
           const xhr = new XMLHttpRequest();
-          if (options.method === METHODS.GET && options.data) {
-              xhr.open(options.method, host + url + queryStringify(options.data), true);
+          if (options?.method === METHODS.GET && options?.data) {
+              xhr.open(options?.method, host + url + queryStringify(options?.data), true);
           } else {
-              xhr.open(options.method as any, host + url, true);
+              xhr.open(options?.method as any, host + url, true);
           }
 
           xhr.onload = function () {
@@ -79,19 +79,19 @@ export class BaseApi {
               });
           };
 
-          if (options.headers) {
+          if (options && options.headers) {
               Object.keys(options.headers).forEach((key) => {
                 options.headers && xhr.setRequestHeader(key, options.headers[key]);
               });
-          } else if (!options.file) {
+          } else if (!options?.file) {
               xhr.setRequestHeader('Content-Type', 'application/json');
           }
 
-          if (options.data) {
+          if (options?.data) {
               if (options.file) {
-                  xhr.send(options.data as unknown as FormData);
+                  xhr.send(options?.data as unknown as FormData);
               } else {
-                  xhr.send(JSON.stringify(options.data));
+                  xhr.send(JSON.stringify(options?.data));
               }
           } else {
               xhr.send();
