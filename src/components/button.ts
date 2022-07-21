@@ -1,13 +1,20 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import buttonTmpl from './button.tmpl'
+const button = require('./button.pug');
 
+type ButtonProps = {
+  link: string; 
+  buttonName: string; 
+  classNames: string[];
+}
 export default class Button extends Block {
- constructor(props) {
+ constructor(props: ButtonProps) {
+  console.log('props button', props)
   super('div', { ...props })
  }
 
+
  render() {
-  return pug.compile(buttonTmpl, {})(this.props)
+  console.log('props button', this.props)
+  return button(this.props)
  }
 }

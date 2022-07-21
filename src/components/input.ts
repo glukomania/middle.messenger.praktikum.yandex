@@ -1,13 +1,13 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import inputTmpl from './input.tmpl'
+const inputTmpl = require('./input.pug');
+
 
 export default class Input extends Block {
- constructor(props) {
-  super('div', { ...props })
+ constructor(props: unknown) {
+  super('div', { ...props as object })
  }
 
  render() {
-  return pug.compile(inputTmpl, {})(this.props)
+  return inputTmpl(this.props)
  }
 }

@@ -1,19 +1,19 @@
-import { BaseAPI } from './base-api'
+import { BaseApi } from '../utils/HTTPTransport'
 
-class UserAPI extends BaseAPI {
+class UserAPI extends BaseApi {
  constructor() {
   super()
  }
 
- uploadAvatar(data) {
+ uploadAvatar(data: any) {
   return this.put('/user/profile/avatar', { data })
  }
 
- updateProfile(data) {
+ updateProfile(data: any) {
   return this.put('/user/profile', { data })
  }
 
- changePassword(data) {
+ changePassword(data: any) {
   return this.put('/user/password', { data })
  }
 }

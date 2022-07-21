@@ -1,13 +1,13 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import changePasswordTmpl from './changePassword.tmpl'
+const changePasswordTmpl = require('./changePassword.pug');
+
 
 export default class ChangePasswordLink extends Block {
  constructor(props: unknown) {
-  super('div', { ...props })
+  super('div', { ...props as object })
  }
 
  render() {
-  return pug.compile(changePasswordTmpl, {})(this.props)
+  return changePasswordTmpl(this.props)
  }
 }

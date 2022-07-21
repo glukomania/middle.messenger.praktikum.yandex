@@ -1,13 +1,19 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import changePasswordLinkTmpl from './changePasswordLink.tmpl'
+const changePasswordLinkTmpl = require('./changePasswordLink.pug');
+
+
+type ChangePasswordProps = {
+  events: { click: () => void; };
+}
 
 export default class ChangePasswordLink extends Block {
- constructor(props) {
+ constructor(props: ChangePasswordProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(changePasswordLinkTmpl, {})(this.props)
+  console.log('props button', this.props)
+
+  return changePasswordLinkTmpl(this.props)
  }
 }

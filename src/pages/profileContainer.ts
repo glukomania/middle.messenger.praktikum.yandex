@@ -13,16 +13,16 @@ import {store} from '../utils/store/store';
 import authServices from "../utils/services/authServices";
 import userServices from "../utils/services/userServices";
 
-
 export default class ProfileContainer extends Block {
-  constructor(props: unknown) {
-    super("div", { ...props, classNames: ["login_container"] });
+  constructor(props: object) {
+    super("div", { ...props as object, classNames: ["login_container"] });
   }
   
   render() {
     authServices.getUser().then(() => {
       addToBlock(profileModal, ".modal-container", closeButton, "model-close__wrapper")
 
+      // @ts-expect-error
       const user = this.props.user || store.getState().user
       
       const profile = new Profile({
@@ -80,9 +80,10 @@ const changePassword = new ChangePasswod({
         }
       }
     },
-    'submit': (event) => {
+    'submit': (event: Event) => {
       event.preventDefault()
       const target = event.target
+       // @ts-expect-error
       const formData = new FormData(target)
       
       const dataToSend = {
@@ -91,6 +92,8 @@ const changePassword = new ChangePasswod({
       }
 
       if(validate('password', dataToSend.oldPassword) ==='' && validate('password', dataToSend.newPassword) === '') {
+        
+        // @ts-expect-error
         userServices.changePassword(dataToSend)
       } else {
         const warningPlace = document.querySelector('.password-warning');

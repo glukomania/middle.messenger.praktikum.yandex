@@ -4,7 +4,7 @@ import Error from "../components/error";
 
 export default class Err404Container extends Block {
   constructor(props: unknown) {
-    super("div", { ...props, classNames: ["login_container"] });
+    super("div", { ...props as object, classNames: ["login_container"] });
   }
   
   render() {

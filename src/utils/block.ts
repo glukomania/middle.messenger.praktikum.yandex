@@ -1,7 +1,6 @@
-import { nanoid } from 'nanoid'
 import EventBus from './eventBus'
-import * as pug from 'pug'
 import isObjectEqual from '../utils/isObjectEqual'
+import genId from './genId'
 
 class Block {
  static EVENTS = {
@@ -12,7 +11,7 @@ class Block {
   FLOW_CWU: 'flow:component-will-unmount',
  } as const
 
- public id = nanoid(6)
+ public id = genId()
  private _element: HTMLElement | null = null
  private _meta: { tagName: string; props: unknown }
  public props: unknown
@@ -76,7 +75,7 @@ class Block {
  componentWillUnmount() {}
 
  _componentWillUnmount() {
-  this.eventBus().destroy()
+  // this.eventBus().off()
   this.componentWillUnmount()
  }
 
@@ -87,12 +86,12 @@ class Block {
  }
 
  _componentDidUpdate(oldProps: unknown, newProps: unknown) {
-  if (isObjectEqual(oldProps, newProps)) {
+  if (isObjectEqual(oldProps as object, newProps as object)) {
    this.eventBus().emit(Block.EVENTS.FLOW_RENDER)
   }
  }
 
- componentDidUpdate(oldProps: unknown, newProps: unknown) {
+ componentDidUpdate() {
   return true
  }
 
@@ -100,6 +99,7 @@ class Block {
   if (!nextProps) {
    return
   }
+  // @ts-expect-error
   Object.assign(this.props, nextProps)
  }
 
@@ -113,6 +113,7 @@ class Block {
   if (typeof block === 'string') {
    this._element!.innerHTML = block
   } else {
+  // @ts-expect-error
    this._element = block
   }
   this._addEvents()
@@ -122,24 +123,9 @@ class Block {
   return this.getContent()
  }
 
- compile(template, props: Object) {
+ compile(template: any, props: Object) {
   const propsAndStubs = { ...props }
-
-  Object.entries(this.children).forEach(([key, child]) => {
-   propsAndStubs[key] = `<div data-id="${child.id}"></div>`
-  })
-
-  const fragment = this._createDocumentElement('template')
-
-  fragment.innerHTML = pug.compile(template, propsAndStubs)
-
-  Object.values(this.children).forEach((child) => {
-   const stub = fragment.content.querySelector(`[data-id="${child.id}"]`)
-
-   stub.replaceWith(child.getContent())
-  })
-
-  return fragment.content
+  return template(propsAndStubs)
  }
 
  getContent(): HTMLElement | null {

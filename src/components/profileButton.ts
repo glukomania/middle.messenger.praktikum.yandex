@@ -1,22 +1,16 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import profileButton from './profileButton.tmpl'
+const profileButton = require('./profileButton.pug');
 
+type ProfileButtonProps = {
+  avatarUrl: string;
+  events: { click: () => Promise<void>; };
+}
 export default class ProfileButton extends Block {
- constructor(props) {
+ constructor(props: ProfileButtonProps) {
   super('div', { ...props, classNames: ['user-profile-button'] })
  }
 
-//  getNewProps() {
-//   return (
-//    'https://ya-praktikum.tech/api/v2/resources' +
-//    (window.store.getState().user && window.store.getState().user.avatar)
-//   )
-//  }
  render() {
-  return pug.compile(
-   profileButton,
-   {},
-  )(this.props)
+  return profileButton(this.props)
  }
 }

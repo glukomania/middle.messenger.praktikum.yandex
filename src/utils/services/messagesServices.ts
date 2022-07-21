@@ -1,16 +1,18 @@
 import ChatMessagesAPI from '../../api/messages-api'
 
 class MessagesServices {
+ socket: WebSocket
  public async getToken(chatId: number): Promise<void> {
   try {
    await ChatMessagesAPI.getToken(chatId)
     .then((response) => {
-     store.dispatch({ token: JSON.parse((response as object).response).token })
+      // @ts-expect-error
+     window.store.dispatch({ token: JSON.parse((response as object).response).token })
     })
     .then(() => {
      this.launchSocket(
-      store.getState().user.id,
-      store.getState().currentChat.id,
+      window.store.getState().user.id,
+      window.store.getState().currentChat.id,
      )
     })
     .catch((e) => console.log('getToken error: ', e))

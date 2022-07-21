@@ -1,14 +1,15 @@
 export const validate = (type: string, value: string | null | undefined) => {
  const patterns = {
-  login: /[a-zA-Z0-9-_]+$/,
+  login: /^[a-zA-Z0-9-_]{3,20}$/,
   onlyletters: /[a-zA-Z]+$/,
   onlynumbers: /^\d+$/,
-  password: /([A-Z]+[0-9]+\w*)$/,
+  password: /^(?=^.{8,40}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/,
   phone: /^([+]?[0-9]*)$/,
   email: /^([a-z0-9.-]+@[a-z0-9-]+[.]+[a-z]*)$/,
   names: /^([A-Z]+[A-z]*)$/,
  }
 
+ // @ts-expect-error
  if (value !== null || value !== undefined || value.length === 0) {
   switch (type) {
    case 'login':
@@ -19,10 +20,12 @@ export const validate = (type: string, value: string | null | undefined) => {
      return 'Your login should have less than 20 symbols.'
     }
 
+    // @ts-expect-error
     if (patterns.onlynumbers.test(value)) {
      return 'Your login must contain at least one letter'
     }
 
+    // @ts-expect-error
     if (patterns.login.test(value)) {
      return ''
     } else {
@@ -37,6 +40,7 @@ export const validate = (type: string, value: string | null | undefined) => {
      return 'Your password is too long'
     }
 
+    // @ts-expect-error
     if (!patterns.password.test(value)) {
      return 'Your password must contain at least one capital letter and number'
     } else {
@@ -44,6 +48,7 @@ export const validate = (type: string, value: string | null | undefined) => {
     }
 
    case 'email':
+     // @ts-expect-error
     if (!patterns.email.test(value)) {
      return 'It seems like your email is incorrect'
     }
@@ -56,33 +61,37 @@ export const validate = (type: string, value: string | null | undefined) => {
      return 'Your phone is too long. Please check.'
     }
 
+    // @ts-expect-error
     if (!patterns.phone.test(value)) {
      return 'Phone number should contain only numeric symbols'
     }
     return ''
    case 'names':
+     // @ts-expect-error
     if (!patterns.names.test(value)) {
      return 'Name must start with a capital letter and contain only letters'
     }
     return ''
    case 'second_name':
+     // @ts-expect-error
     if (!patterns.names.test(value)) {
      return 'Name must start with a capital letter and contain only letters'
     }
     return ''
    case 'first_name':
+     // @ts-expect-error
     if (!patterns.names.test(value)) {
      return 'Name must start with a capital letter and contain only letters'
     }
     return ''
    case 'message':
-    if (value.length === 0) {
+    if (value?.length === 0) {
      return 'No message'
     }
     return ''
 
    case 'display_name':
-    if (value.length === 0) {
+    if (value?.length === 0) {
      return 'No message'
     }
     return ''
@@ -94,12 +103,12 @@ export const validate = (type: string, value: string | null | undefined) => {
  }
 }
 
-const check = (type, element) => {
+const check = (type: string, element: any) => {
  const warningPlace = document.querySelector('.warning')
  warningPlace!.textContent = validate(type, element.value)
 }
 
-export const validateFields = (type, selector) => {
+export const validateFields = (type: string, selector: any) => {
  const element = document.querySelector(`.${selector}`)
- element?.addEventListener('focusout', () => check(type, element))
+ element?.addEventListener('focusout', () => check(type as string, element))
 }

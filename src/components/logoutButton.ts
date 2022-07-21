@@ -1,13 +1,15 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import logoutButtonTmpl from './logoutButton.tmpl'
+const logoutButtonTmpl = require('./logoutButton.pug');
 
+type LogoutButtonProps = {
+  events: { click: () => Promise<void>; };
+}
 export default class LogoutButton extends Block {
- constructor(props) {
+ constructor(props: LogoutButtonProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(logoutButtonTmpl, {})(this.props)
+  return logoutButtonTmpl(this.props)
  }
 }

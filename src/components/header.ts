@@ -1,13 +1,13 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import header from './header.tmpl'
+const headerTmpl = require('./header.pug');
 
+type HeaderProps = {}
 export default class Header extends Block {
- constructor(props) {
+ constructor(props: HeaderProps) {
   super('div', { ...props, classNames: ['logo_container'] })
  }
 
  render() {
-  return pug.compile(header, {})(this.props)
+  return headerTmpl(this.props)
  }
 }

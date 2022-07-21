@@ -1,13 +1,18 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import chatStub from './chatStub.tmpl'
+const chatStub = require('./chatStub.pug');
+
+type ChatStubProps = {
+  chatName: null; 
+  // eslint-disable-next-line no-unused-vars
+  events: { click: (e: any) => void; };
+}
 
 export default class ChatStub extends Block {
- constructor(props) {
+ constructor(props: ChatStubProps) {
   super('div', { ...props, classNames: ['stub-text'] })
  }
 
  render() {
-  return pug.compile(chatStub, {})(this.props)
+  return chatStub(this.props)
  }
 }

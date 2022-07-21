@@ -11,7 +11,7 @@ import authServices from "../utils/services/authServices";
 
 class LoginContainer extends Block {
   constructor(props: unknown) {
-    super("div", { ...props, classNames: ["login_container"] });
+    super("div", { ...props as object, classNames: ["login_container"] });
   }
 
   componentDidMount() {
@@ -23,10 +23,11 @@ class LoginContainer extends Block {
   render() {
     const loginForm = new LoginForm({
       events: {
-        'submit': (event) => {
+        'submit': (event: Event) => {
           event.preventDefault();
 
           const target = event.target
+          // @ts-expect-error
           const formData = new FormData(target)
     
 
@@ -39,8 +40,10 @@ class LoginContainer extends Block {
 
           for (let key in dataToSend) {
             if (key.includes('Name')) {
+              // @ts-expect-error
               isOk = validate('names', dataToSend[key]) ? true : false
             } else {
+              // @ts-expect-error
               isOk = validate(key, dataToSend[key]) ? true : false
             }
           } 
@@ -63,6 +66,22 @@ class LoginContainer extends Block {
 
 const loginPage = new Login({
   buttonName: "Log in",
+  events: {
+    'click': (event: any) => {
+      if (event.srcElement.className === 'header-options signup-link headerLink') {
+        window.router.go('/signup')
+       }
+
+      if (event.srcElement.className === '404 headerLink') {
+        window.router.go('/err404')
+      }
+
+      if (event.srcElement.className === '500 headerLink') {
+        window.router.go('/err500')
+      }
+
+    }
+  }
 });
 
 const loginInput = new LoginInput({
@@ -72,7 +91,7 @@ const loginInput = new LoginInput({
   inputClassName: 'common-input',
   name: 'login',
   events: {
-    'focusout': ev  => {
+    'focusout': (ev: any)  => {
       const warningPlace = document.querySelector('.login-warning');
       if (warningPlace) warningPlace.textContent = validate('login', ev.srcElement.value);
     }
@@ -86,7 +105,7 @@ const passwordInput = new LoginInput({
   inputClassName: 'common-input',
   name: 'password',
   events: {
-    'focusout': ev => {
+    'focusout': (ev: any) => {
       const warningPlace = document.querySelector('.password-warning');
       if (warningPlace) warningPlace.textContent = validate('password', ev.srcElement.value);
     }

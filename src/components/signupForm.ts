@@ -1,13 +1,19 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import formTmpl from './signupForm.tmpl'
+const signupFormTmpl = require('./signupForm.pug');
+
+type SignupFormProps = {
+  type: string,
+  classNames: string[],
+  events: object
+}
+
 
 export default class SignupForm extends Block {
- constructor(props) {
+ constructor(props: SignupFormProps) {
   super('form', { ...props })
  }
 
  render() {
-  return pug.compile(formTmpl, {})(this.props)
+  return signupFormTmpl(this.props)
  }
 }

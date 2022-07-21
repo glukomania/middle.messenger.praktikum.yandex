@@ -1,13 +1,15 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import profileTmpl from './profile.tmpl'
+const profileTmpl = require('./profile.pug');
 
+type ProfileProps = {
+  events: { click: () => Promise<void>; };
+}
 export default class Profile extends Block {
- constructor(props) {
+ constructor(props: ProfileProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(profileTmpl, {})(this.props)
+  return profileTmpl(this.props)
  }
 }

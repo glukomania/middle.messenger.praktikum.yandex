@@ -1,13 +1,17 @@
-import * as pug from 'pug'
-import Block from '../utils/block'
-import editProfileTmpl from './editProfile.tmpl'
+ import Block from '../utils/block'
+const editProfileTmpl = require('./editProfile.pug');
+
+type EditProfileProps = {
+  events: object
+}
+
 
 export default class EditProfile extends Block {
- constructor(props) {
+ constructor(props: EditProfileProps) {
   super('div', { ...props, classNames: ['user-profile-container'] })
  }
 
  render() {
-  return pug.compile(editProfileTmpl, {})(this.props)
+  return editProfileTmpl(this.props)
  }
 }

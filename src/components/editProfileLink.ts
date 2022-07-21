@@ -1,13 +1,13 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import editProfileLinkTmpl from './editProfileLink.tmpl'
+const editProfileLinkTmpl = require('./editProfileLink.pug');
+
 
 export default class EditProfileLink extends Block {
- constructor(props) {
-  super('div', { ...props })
+ constructor(props: unknown) {
+  super('div', { ...props as object })
  }
 
  render() {
-  return pug.compile(editProfileLinkTmpl, {})(this.props)
+  return editProfileLinkTmpl(this.props)
  }
 }

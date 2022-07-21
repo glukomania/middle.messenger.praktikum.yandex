@@ -1,13 +1,16 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import chatBarTmpl from './chatBar.tmpl'
+const chatBarTmpl = require('./chatBar.pug');
+
+type ChatBarProps = {
+  events: { click: () => void; };
+}
 
 export default class ChatBar extends Block {
- constructor(props) {
+ constructor(props: ChatBarProps) {
   super('div', { ...props, classNames: ['user-bar'] })
  }
 
  render() {
-  return pug.compile(chatBarTmpl, {})(this.props)
+  return chatBarTmpl(this.props)
  }
 }

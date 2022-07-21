@@ -1,13 +1,14 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import profileModalTmpl from './profileModal.tmpl'
+const profileModalTmpl = require('./profileModal.pug');
+
+type ChatBarProps = {}
 
 export default class ChatBar extends Block {
- constructor(props) {
+ constructor(props: ChatBarProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(profileModalTmpl, {})(this.props)
+  return profileModalTmpl(this.props)
  }
 }

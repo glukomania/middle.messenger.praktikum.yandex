@@ -4,25 +4,31 @@ import { store } from '../store/store'
 class AuthServices {
  public async getUser(): Promise<void> {
   try {
-   const user = await authAPI.getUserInfo()
-   store.dispatch({ user: JSON.parse(user.response)})
-   const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
-   console.log('avatar', avatar)
+   await authAPI.getUserInfo()
+    .then(res => {
+      store.dispatch({ user: JSON.parse(res as any)})
+      // @ts-expect-error
+      const avatar = 'https://ya-praktikum.tech/api/v2/resources' + store.getState().user.avatar
 
-   const userWithAvatar = store.getState().user
-   userWithAvatar.avatar = avatar
+      const userWithAvatar = store.getState().user
+      // @ts-expect-error
+      userWithAvatar!.avatar = avatar
 
-   console.log('user', userWithAvatar)
-   store.dispatch({ user: userWithAvatar })
+      store.dispatch({ user: userWithAvatar })
+
+    })
+    .catch(err => console.log('getUserInfo err', err))
+     
   } catch (e) {
-   window.router.start()
+  //  window.router.start()
+  alert("getUserInfo reuqest failed")
    window.router.go('/login')
   }
  }
 
- public async singUp(payload): Promise<void> {
+ public async singUp(payload: any): Promise<void> {
   try {
-   await authAPI.signUp(payload)?.then((resp) => {
+   await authAPI.signUp(payload)?.then(() => {
      this.getUser().then(() => window.router.go('/chat'))
    })
   } catch (e) {
@@ -30,21 +36,21 @@ class AuthServices {
   }
  }
 
- public async login(payload): Promise<void> {
+ public async login(payload: any): Promise<void> {
   try {
    await authAPI.login(payload)?.then((response: any) => {
     if (
-     response.status === 200 ||
-     (response.status === 400 &&
-      response.responseText.includes('User already in system'))
+     response.status > 250 || 
+     response.includes('User already in system')
     ) {
-     this.getUser().then(() => window.router.go('/chat'))
+      window.router.go('/chat')
     } else {
      throw Error('authentification failed')
     }
    })
   } catch (e) {
-   window.router.go('/')
+    alert('Login request failed')
+    window.router.go('/')
   }
  }
 

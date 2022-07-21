@@ -1,13 +1,13 @@
 import Block from '../utils/block'
-import * as pug from 'pug'
-import signup from './signup.tmpl'
+const signupTmpl = require('./signup.pug');
+
 
 export default class Signup extends Block {
  constructor(props: unknown) {
-  super('div', { ...props, classNames: ['login_container'] })
+  super('div', { ...props as object, classNames: ['login_container'] })
  }
 
  render() {
-  return pug.compile(signup, {})(this.props)
+  return signupTmpl(this.props)
  }
 }

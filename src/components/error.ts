@@ -1,13 +1,20 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import errorTmpl from './error.tmpl'
+const errorTmpl = require('./error.pug');
+
+
+type ErrorProps = {
+  errorCode: string; 
+  errorTitle: string; 
+  errorAdvise: string;
+}
+
 
 export default class Error extends Block {
- constructor(props) {
+ constructor(props: ErrorProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(errorTmpl, {})(this.props)
+  return errorTmpl(this.props)
  }
 }

@@ -1,13 +1,18 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import closeProfileTmpl from './closeProfile.tmpl'
+const closeProfileTmpl = require('./closeProfile.pug');
+
+type CloseProfileProps = {
+  classNames: string[]; 
+  events: { click: () => any; };
+}
+
 
 export default class CloseProfile extends Block {
- constructor(props) {
+ constructor(props: CloseProfileProps) {
   super('div', { ...props })
  }
 
  render() {
-  return pug.compile(closeProfileTmpl, {})(this.props)
+  return closeProfileTmpl(this.props)
  }
 }

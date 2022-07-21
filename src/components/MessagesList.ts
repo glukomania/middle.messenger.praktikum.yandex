@@ -1,7 +1,7 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import messageOut from './messageOut.tmpl'
-import messageIn from './messageIn.tmpl'
+const messageOut = require('./messageOut.pug');
+const messageIn = require('./messageIn.pug');
+
 import { getTime } from '../utils/getTime'
 
 type Message = {
@@ -15,23 +15,22 @@ type Message = {
  user_id: number
 }
 export default class MessagesList extends Block {
- constructor(props) {
-  super('div', { ...props })
+ constructor(props: unknown) {
+  super('div', { ...props as object })
  }
 
  getMessageslist(message: Message) {
   const msg = message.user_id === window.store.getState().user.id ? messageOut : messageIn;
 
-  return pug.compile(
-    msg,
-    {},
-   )({ ...message, time: getTime(message.time) })
+  return msg({ ...message, time: getTime(message.time) })
 
  }
 
  render() {
+   // @ts-expect-error
   return this.props.messages
+  // @ts-expect-error
    ? this.props.messages.map(this.getMessageslist).join(`\n`)
-   : pug.compile(`div`, {})([])
+   : `<div></div>`
  }
 }

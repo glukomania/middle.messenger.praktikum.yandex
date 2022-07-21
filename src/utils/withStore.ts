@@ -1,10 +1,6 @@
-import { Store } from './store/store'
+type WithStateProps = { store: object }
 
-type WithStateProps = { store: Store<AppState> }
-
-export function withStore<P extends WithStateProps>(
- WrappedBlock: BlockClass<P>,
-) {
+export function withStore<P extends WithStateProps>(WrappedBlock: any) {
  return class extends WrappedBlock<P> {
   public static componentName = WrappedBlock.componentName || WrappedBlock.name
 
@@ -25,5 +21,5 @@ export function withStore<P extends WithStateProps>(
    super.componentWillUnmount()
    window.store.off('changed', this.__onChangeStoreCallback)
   }
- } as BlockClass<Omit<P, 'store'>>
+ }
 }

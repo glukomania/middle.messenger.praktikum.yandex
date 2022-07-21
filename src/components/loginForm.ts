@@ -1,13 +1,16 @@
-import * as pug from 'pug'
 import Block from '../utils/block'
-import loginFormTmpl from './loginForm.tmpl'
+const loginFormTmpl = require('./loginForm.pug');
 
+type LoginFormProps = {
+    // eslint-disable-next-line no-unused-vars
+  events: { submit: (event: Event) => void; };
+}
 export default class LoginForm extends Block {
- constructor(props) {
+ constructor(props: LoginFormProps) {
   super('form', { ...props })
  }
 
  render() {
-  return pug.compile(loginFormTmpl, {})(this.props)
+  return loginFormTmpl(this.props)
  }
 }
